@@ -7,15 +7,14 @@
 <!-- badges: end -->
 
 The goal of GeoLineages is to provide a set of functions that are used
-to analyse ancestral state outputs.
+to analyse the outputs from ancestral state analyses.
 
 ## Installation
 
-You can install the released version of GeoLineages from
-[CRAN](https://CRAN.R-project.org) with:
+You can install the latest version of GeoLineages this repository using
 
 ``` r
-install.packages("GeoLineages")
+devtools::github_install("magnusnosnes/GeoLineages")
 ```
 
 ## Example
