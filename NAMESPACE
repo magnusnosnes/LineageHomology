@@ -3,7 +3,6 @@
 export(Relative_load_import_multi)
 export(count_import_export_ace)
 export(count_import_export_ace_uncertainty)
-export(hello)
 importFrom(ape,nodepath)
 importFrom(ips,descendants)
 importFrom(phytools,nodeHeights)

@@ -6,8 +6,10 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of GeoLineages is to provide a set of functions that are used
-to analyse the outputs from ancestral state analyses.
+GeoLineages provides a set of functions that can analyze the outputs
+from ancestral state reconstruction to estimate if taxa have inhereted
+traits by homology or if their character state represents a novelty wrt.
+the other taxa in the tree.
 
 ## Installation
 
@@ -19,22 +21,17 @@ devtools::github_install("magnusnosnes/GeoLineages")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example which shows how used reconstructed ancestral
+state histories to estimate local transmission lineages.
 
 ``` r
 library(GeoLineages)
 ## basic example code
-```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
-
-``` r
 set.seed(400)
-library(phytools)
-#> Loading required package: ape
-#> Loading required package: maps
 library(ape)
+library(phytools)
+#> Loading required package: maps
 library(phangorn)
 library(BactDating)
 
@@ -43,13 +40,11 @@ library(BactDating)
 tree_test = simdatedtree(nsam=10, dateroot=2000)
 tree_test = ladderize(tree_test)
 Q=matrix(c(0.5,0.5,0.5,0.5), nrow=2,ncol=2, byrow=F)
+colnames(Q)=c("Norway","RoW")
 loc = c("Norway", "Norway","Norway","RoW", "RoW", "Norway", "Norway", "RoW", "RoW", "RoW")
 names(loc) = tree_test$tip.label
-mapped_Q = sim.history(tree_test, Q,nsim=10)
-#> Some columns (or rows) of Q don't sum to 0.0. Fixing.
-#> Done simulation(s).
-colnames(Q)=c("Norway","RoW")
 
+#Reconstruct ancestral states using ace. 
 fit1 = ace(x=loc, phy= tree_test, type="discrete", mod="ARD")
 plot.phylo(tree_test,lwd=2,label.offset = 0.15, mar=c(0.2,0.2,0.2,0.2))
 axisPhylo(root.time=2000, backward=F)

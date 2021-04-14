@@ -5,30 +5,6 @@ library(TreeTools)
 library(BactDating)
 library(ips)
 
-#Simulate
-# set.seed(350)
-# tree_test = simdatedtree(nsam=10, dateroot=2000)
-# tree_test = ladderize(tree_test)
-# Q=matrix(c(0.5,0.5,0.5,0.5), nrow=2,ncol=2, byrow=F)
-# loc = c("Norway", "Norway","Norway","RoW", "RoW", "Norway", "Norway", "RoW", "RoW", "RoW")
-# names(loc) = tree_test$tip.label
-# mapped_Q = sim.history(tree_test, Q,nsim=10)
-# colnames(Q)=c("Norway","RoW")
-# Q
-# mapped_Q = make.simmap(tree_test, x = loc, nsim=10, mod="ER")
-# plot(mapped_Q[[2]])
-# consensus_Q = summary(mapped_Q)
-# plot(consensus_Q)
-# nodelabels()
-#
-# fit1 = ace(x=loc, phy= tree_test, type="discrete", mod="ARD")
-# tree_test$tip.label
-# fit1
-# plot.phylo(tree_test)
-# nodelabels(pie=fit1$lik.anc)
-# tips = to.matrix(loc,seq=c("Norway", "RoW"))
-# tiplabels(pie=tips, cex=0.1)
-# fit1$lik.anc
 
 #Algorithm:
 #Fint the parent nodes of all tips.
