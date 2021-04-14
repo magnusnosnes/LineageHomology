@@ -30,25 +30,59 @@ What is special about using `README.Rmd` instead of just `README.md`?
 You can include R chunks like so:
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+set.seed(400)
+library(phytools)
+#> Loading required package: ape
+#> Loading required package: maps
+library(ape)
+library(phangorn)
+library(BactDating)
+
+#Simulate data from Norway and rest of the world
+#set.seed(400)
+tree_test = simdatedtree(nsam=10, dateroot=2000)
+tree_test = ladderize(tree_test)
+Q=matrix(c(0.5,0.5,0.5,0.5), nrow=2,ncol=2, byrow=F)
+loc = c("Norway", "Norway","Norway","RoW", "RoW", "Norway", "Norway", "RoW", "RoW", "RoW")
+names(loc) = tree_test$tip.label
+mapped_Q = sim.history(tree_test, Q,nsim=10)
+#> Some columns (or rows) of Q don't sum to 0.0. Fixing.
+#> Done simulation(s).
+colnames(Q)=c("Norway","RoW")
+
+fit1 = ace(x=loc, phy= tree_test, type="discrete", mod="ARD")
+plot.phylo(tree_test,lwd=2,label.offset = 0.15, mar=c(0.2,0.2,0.2,0.2))
+axisPhylo(root.time=2000, backward=F)
+nodelabels(pie=fit1$lik.anc,cex=0.7,piecol=c("Red","Blue"))
+tips = to.matrix(loc,seq=c("Norway", "RoW"))
+tiplabels(pie=tips, cex=0.7,piecol=c("Red","Blue"))
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this. You could also
-use GitHub Actions to re-render `README.Rmd` every time you push. An
-example workflow can be found here:
-<https://github.com/r-lib/actions/tree/master/examples>.
+<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
 
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+``` r
+count_import_export_ace(tree_test, ace_nodes=fit1$lik.anc,
+                        ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
+#> $Import_Export
+#> [1] 4 6
+#> 
+#> $Lineage_sizes
+#> [1] 3 2 2 3
+#> 
+#> $Taxa_names
+#> $Taxa_names$`Lineage no: 1`
+#> [1] "t6" "t7" "t1"
+#> 
+#> $Taxa_names$`Lineage no: 2`
+#> [1] "t3" "t5"
+#> 
+#> $Taxa_names$`Lineage no: 3`
+#> [1] "t4" "t2"
+#> 
+#> $Taxa_names$`Lineage no: 4`
+#> [1] "t10" "t8"  "t9" 
+#> 
+#> 
+#> $`MRCA's`
+#> [1] 2000.000 2001.705 2007.369 2001.620
+```

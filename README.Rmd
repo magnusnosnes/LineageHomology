@@ -39,16 +39,31 @@ library(GeoLineages)
 
 What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
 
-```{r cars}
-summary(cars)
+```{r,fig.width=10,fig.height=7}
+set.seed(400)
+library(phytools)
+library(ape)
+library(phangorn)
+library(BactDating)
+
+#Simulate data from Norway and rest of the world
+#set.seed(400)
+tree_test = simdatedtree(nsam=10, dateroot=2000)
+tree_test = ladderize(tree_test)
+Q=matrix(c(0.5,0.5,0.5,0.5), nrow=2,ncol=2, byrow=F)
+loc = c("Norway", "Norway","Norway","RoW", "RoW", "Norway", "Norway", "RoW", "RoW", "RoW")
+names(loc) = tree_test$tip.label
+mapped_Q = sim.history(tree_test, Q,nsim=10)
+colnames(Q)=c("Norway","RoW")
+
+fit1 = ace(x=loc, phy= tree_test, type="discrete", mod="ARD")
+plot.phylo(tree_test,lwd=2,label.offset = 0.15, mar=c(0.2,0.2,0.2,0.2))
+axisPhylo(root.time=2000, backward=F)
+nodelabels(pie=fit1$lik.anc,cex=0.7,piecol=c("Red","Blue"))
+tips = to.matrix(loc,seq=c("Norway", "RoW"))
+tiplabels(pie=tips, cex=0.7,piecol=c("Red","Blue"))
+
+count_import_export_ace(tree_test, ace_nodes=fit1$lik.anc,
+                        ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/master/examples>.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
