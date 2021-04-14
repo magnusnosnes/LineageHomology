@@ -35,6 +35,9 @@ library(ips)
 #' @importFrom ape nodepath
 #' @importFrom ape nodepath
 #' @examples
+#' \dontrun{
+#' #count_import_export_ace(tree_test, ace_nodes=fit1$lik.anc,ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
+#' }
 count_import_export_ace = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) {
 
   #The node number of the tips are
@@ -159,6 +162,9 @@ count_import_export_ace = function(tree,ace_nodes,ace_tips, give_tips=NA,start_t
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' #count_import_export_ace(tree_test, ace_nodes=fit1$lik.anc,ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
+#' }
 count_import_export_ace_uncertainty = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) {
 
   #The node number of the tips are
@@ -271,4 +277,4 @@ count_import_export_ace_uncertainty = function(tree,ace_nodes,ace_tips, give_tip
   return(list("Import_Export"=c(importations, local_transmissions),"Lineage_sizes"=lineage_size,"Taxa_names"=lineage_tips, "MRCA's"=lineage_mrca))
 
 }
-#count_import_export_ace(tree_test, ace_nodes=fit1$lik.anc,ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
+

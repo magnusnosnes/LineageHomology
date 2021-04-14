@@ -29,3 +29,8 @@ count_import_export_ace(
 \description{
 Title
 }
+\examples{
+\dontrun{
+#count_import_export_ace(tree_test, ace_nodes=fit1$lik.anc,ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
+}
+}
