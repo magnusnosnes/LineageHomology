@@ -16,7 +16,8 @@ the other taxa in the tree.
 You can install the latest version of GeoLineages this repository using
 
 ``` r
-devtools::github_install("magnusnosnes/GeoLineages")
+library(devtools)
+devtools::install_github("magnusnosnes/GeoLineages")
 ```
 
 ## Example
@@ -28,7 +29,7 @@ state histories to estimate local transmission lineages.
 library(GeoLineages)
 ## basic example code
 
-set.seed(400)
+#Loading other packages for simulating data. 
 library(ape)
 library(phytools)
 #> Loading required package: maps
@@ -36,7 +37,7 @@ library(phangorn)
 library(BactDating)
 
 #Simulate data from Norway and rest of the world
-#set.seed(400)
+set.seed(400)
 tree_test = simdatedtree(nsam=10, dateroot=2000)
 tree_test = ladderize(tree_test)
 Q=matrix(c(0.5,0.5,0.5,0.5), nrow=2,ncol=2, byrow=F)
