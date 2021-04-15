@@ -25,6 +25,7 @@ Title
 }
 \examples{
 \dontrun{
-#LineageHomology(tree_test, ace_nodes=fit1$lik.anc,ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
+#LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
+ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
 }
 }

@@ -20,4 +20,5 @@ Imports:
     TreeTools,
     BactDating,
     ips,
-    data.table
+    data.table,
+    expm

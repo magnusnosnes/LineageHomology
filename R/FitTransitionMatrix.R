@@ -88,7 +88,7 @@ EXPM<-function(x,...){
 #' @export
 #'
 #' @examples
-fitTransition_10X<-function(tree,x,model=NA){
+FitTransition10x<-function(tree,x,model=NA){
 
   output.liks<-TRUE
   q.init<-length(unique(x))/sum(tree$edge.length)

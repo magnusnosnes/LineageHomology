@@ -31,6 +31,7 @@ Title
 }
 \examples{
 \dontrun{
-#LineageHomology_w_uncertainty(tree_test, ace_nodes=fit1$lik.anc,ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
+#LineageHomology_w_uncertainty(tree_test, ace_nodes=fit1$lik.anc,
+ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
 }
 }
