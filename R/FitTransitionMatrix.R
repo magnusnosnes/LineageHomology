@@ -160,9 +160,13 @@ FitTransition10x<-function(tree,x,model=NA){
   fit<-nlminb(q.init,function(p) lik(makeQ10X(m,p,index.matrix),pi=pi),lower=rep(0,k),upper=rep(1e50,k),hessian = T)
 
   #Print the estimated matrix
-  print("Unconstrained we get: ");  makeQ(m, fit_unconstrained$par, index.matrix)
+  print("Unconstrained we get: ")
+  print(makeQ(m, fit_unconstrained$par,)) index.matrix)
+  print("Constrained to 10X using Nelder Mead")
   print(makeQ10X(m,fit_constrained10X$par,index.matrix))
+  print("Constrained to 10X using BFGS")
   print(makeQ10X(m,fit_constrained10X_2$par,index.matrix))
+  print("Constrained to 10X using nlminb")
   print(makeQ10X(m,fit$par,index.matrix))
 
 
