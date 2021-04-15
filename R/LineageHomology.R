@@ -39,6 +39,7 @@ library(ips)
 #' #LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
 #' ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
 #' }
+
 LineageHomology = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) {
 
   #The node number of the tips are
@@ -167,6 +168,7 @@ LineageHomology = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) 
 #' #LineageHomology_w_uncertainty(tree_test, ace_nodes=fit1$lik.anc,
 #' ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
 #' }
+
 LineageHomology_w_uncertainty = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) {
 
   #The node number of the tips are
@@ -279,4 +281,3 @@ LineageHomology_w_uncertainty = function(tree,ace_nodes,ace_tips, give_tips=NA,s
   return(list("Import_Export"=c(importations, local_transmissions),"Lineage_sizes"=lineage_size,"Taxa_names"=lineage_tips, "MRCA's"=lineage_mrca))
 
 }
-
