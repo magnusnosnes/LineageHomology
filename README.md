@@ -1,23 +1,24 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# GeoLineages
+# LineageHomology
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-GeoLineages provides a set of functions that can analyze the outputs
+LineageHomology provides a set of functions that can analyze the outputs
 from ancestral state reconstruction to estimate if taxa have inhereted
 traits by homology or if their character state represents a novelty wrt.
 the other taxa in the tree.
 
 ## Installation
 
-You can install the latest version of GeoLineages this repository using
+You can install the latest version of LineageHomology this repository
+using
 
 ``` r
 library(devtools)
-devtools::install_github("magnusnosnes/GeoLineages")
+devtools::install_github("magnusnosnes/LineageHomology")
 ```
 
 ## Example
@@ -26,7 +27,7 @@ This is a basic example which shows how used reconstructed ancestral
 state histories to estimate local transmission lineages.
 
 ``` r
-library(GeoLineages)
+library(LineageHomology)
 ## basic example code
 
 #Loading other packages for simulating data. 
@@ -57,7 +58,7 @@ tiplabels(pie=tips, cex=0.7,piecol=c("Red","Blue"))
 <img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
 
 ``` r
-count_import_export_ace(tree_test, ace_nodes=fit1$lik.anc,
+LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
                         ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
 #> $Import_Export
 #> [1] 4 6

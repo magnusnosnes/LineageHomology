@@ -13,21 +13,21 @@ knitr::opts_chunk$set(
 )
 ```
 
-# GeoLineages
+# LineageHomology
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-GeoLineages provides a set of functions that can analyze the outputs from ancestral state reconstruction to estimate if taxa have inhereted traits by homology 
+LineageHomology provides a set of functions that can analyze the outputs from ancestral state reconstruction to estimate if taxa have inhereted traits by homology 
 or if their character state represents a novelty wrt. the other taxa in the tree. 
 
 ## Installation
 
-You can install the latest version of GeoLineages this repository using 
+You can install the latest version of LineageHomology this repository using 
 
 ``` r
 library(devtools)
-devtools::install_github("magnusnosnes/GeoLineages")
+devtools::install_github("magnusnosnes/LineageHomology")
 ```
 
 ## Example
@@ -36,7 +36,7 @@ This is a basic example which shows how used reconstructed ancestral state histo
 
 
 ```{r,fig.width=10,fig.height=7}
-library(GeoLineages)
+library(LineageHomology)
 ## basic example code
 
 #Loading other packages for simulating data. 
@@ -62,7 +62,7 @@ nodelabels(pie=fit1$lik.anc,cex=0.7,piecol=c("Red","Blue"))
 tips = to.matrix(loc,seq=c("Norway", "RoW"))
 tiplabels(pie=tips, cex=0.7,piecol=c("Red","Blue"))
 
-count_import_export_ace(tree_test, ace_nodes=fit1$lik.anc,
+LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
                         ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
 ```
 

@@ -1,4 +1,4 @@
-Package: GeoLineages
+Package: LineageHomology
 Type: Package
 Title: Transmission Lineages From Maximum Likelihood Mappings
 Version: 0.1.0

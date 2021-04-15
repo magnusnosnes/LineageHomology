@@ -36,9 +36,10 @@ library(ips)
 #' @importFrom ape nodepath
 #' @examples
 #' \dontrun{
-#' #count_import_export_ace(tree_test, ace_nodes=fit1$lik.anc,ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
+#' #LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
+#' ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
 #' }
-count_import_export_ace = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) {
+LineageHomology = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) {
 
   #The node number of the tips are
   tip_nodes = sapply(tree$tip.label,function(x,y) which(y==x),y=tree$tip.label)
@@ -163,9 +164,10 @@ count_import_export_ace = function(tree,ace_nodes,ace_tips, give_tips=NA,start_t
 #'
 #' @examples
 #' \dontrun{
-#' #count_import_export_ace(tree_test, ace_nodes=fit1$lik.anc,ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
+#' #LineageHomology_w_uncertainty(tree_test, ace_nodes=fit1$lik.anc,
+#' ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
 #' }
-count_import_export_ace_uncertainty = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) {
+LineageHomology_w_uncertainty = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) {
 
   #The node number of the tips are
   tip_nodes = sapply(tree$tip.label,function(x,y) which(y==x),y=tree$tip.label)
