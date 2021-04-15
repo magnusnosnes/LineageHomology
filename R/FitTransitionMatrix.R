@@ -69,7 +69,7 @@ makeQ10X<-function(m,q,index.matrix){ #For binary optimization for COVID
 #'
 #' @return
 #' @export
-#'
+#' @importFrom expm expm
 #' @examples
 EXPM<-function(x,...){
   e_x<-if(isSymmetric(x)) matexpo(x) else expm(x,...)
