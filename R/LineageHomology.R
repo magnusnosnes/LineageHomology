@@ -150,7 +150,7 @@ LineageHomology = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) 
   if(start_time){
     lineage_mrca =lineage_mrca+start_time
   }
-  return(list("Import_Export"=c(importations, local_transmissions),"Lineage_sizes"=lineage_size,"Taxa_names"=lineage_tips, "MRCA's"=lineage_mrca))
+  return(list("Import_LocalTrans"=c(importations, local_transmissions),"Lineage_sizes"=lineage_size,"Taxa_names"=lineage_tips, "MRCA's"=lineage_mrca))
 
 }
 
@@ -294,7 +294,7 @@ LineageHomology_w_uncertainty = function(tree,ace_nodes,ace_tips, give_tips=NA,s
   if(start_time){
     lineage_mrca =lineage_mrca+start_time
   }
-  return(list("Import_Export"=c(importations, local_transmissions),"Lineage_sizes"=lineage_size,"Taxa_names"=lineage_tips, "MRCA's"=lineage_mrca))
+  return(list("Import_LocalTransmission"=c(importations, local_transmissions),"Lineage_sizes"=lineage_size,"Taxa_names"=lineage_tips, "MRCA's"=lineage_mrca))
 
 }
 
