@@ -3,28 +3,8 @@
 #E.G: If the group size is 2, then it is +0.5 importations, and +0.5 local transmissions.
 #E.G: IF the group size is 30 then it is +1/30 importation and + 29/30 local transmissions
 
-# library(data.table)
-
-#Load metadata Southafrican: Only for testing
-# metadata = fread("~/Dropbox/Covid/Southafrican_03_24/nextstrain_groups_niph_ncov_southafrican-2021-04-07_metadata.tsv")
-# sum(tree$tip.label %in% metadata$Strain)
-# length(tree$tip.label)
-# tip_list = Norwegian_tips
-# dates = decimal_date(metadat$`Collection Data`)
-# names(dates)=metadata$Strain
-
-#Load metadata for the UK-variant.
-
-# metadata = fread("~/Dropbox/Covid/UK_03_24/nextstrain_groups_niph_ncov_UK-centric-2021-04-07_metadata.tsv")
-# sum(tree$tip.label %in% metadata$Strain)
-# length(tree$tip.label)
-# tip_list = Norwegian_tips
-# #Setup dates.
-# dates = decimal_date(metadata$`Collection Data`)
-# names(dates)=metadata$Strain
-
-
 library(phytools)
+
 #' Title
 #'
 #' @param tree Takes the phylogenetic tree used for ancestral state reconstruction.
