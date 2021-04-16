@@ -49,6 +49,7 @@ Relative_load_import_multi = function(tree,multicount, dates,start_time,tip_list
   for(i in 1:ncol(Result_multi)) {
     print(i)/ncol(Result_multi)
     for(j in 1:length(tip_list)){
+      print(j)
       tip = tip_list[j]
       date_new = dates[which(names(dates)==tip)]
       if(length(date_new)==0) next
