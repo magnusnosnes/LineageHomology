@@ -44,7 +44,7 @@ axisPhyloDate <- function(side = 1, root.time = NULL, backward = TRUE, ...)
     lab <- pretty(tscale)
     x <- beta * lab + alpha
     axis(side = side, at = x, labels = FALSE,...)
-    text(x,  par("usr")[3], labels =as.Date(date_decimal(lab)), srt=30,adj=1.1, xpd=TRUE)
+    text(x,  par("usr")[3], labels =as.Date(date_decimal(lab)), srt=60,adj=1.1, xpd=TRUE)
   } else { # type == "fan"
     n <- lastPP$Ntip
     xx <- lastPP$xx[1:n]; yy <- lastPP$yy[1:n]
