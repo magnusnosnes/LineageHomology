@@ -161,7 +161,7 @@ FitTransition10x<-function(tree,x,model=NA){
 
   #Print the estimated matrix
   print("Unconstrained we get: ")
-  print(makeQ(m, fit_unconstrained$par,)) index.matrix)
+  print(makeQ(m, fit_unconstrained$par, index.matrix))
   print("Constrained to 10X using Nelder Mead")
   print(makeQ10X(m,fit_constrained10X$par,index.matrix))
   print("Constrained to 10X using BFGS")
