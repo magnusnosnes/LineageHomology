@@ -14,10 +14,6 @@ library(ips)
 #If any descendant is found this is no longer a singleton, but represents a local tranmission event.
 #If no descendants is found, this is just a singleton with a long branch.
 
-#For testing
-#consensus_mapping = consensus_Q
-
-#For testing
 
 #' Title
 #'
