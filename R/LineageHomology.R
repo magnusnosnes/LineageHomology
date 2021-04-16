@@ -141,8 +141,8 @@ LineageHomology = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) 
     lineage_tips[[counter]]=tip_label_list
     mrca.list[counter] = current_node
     counter = counter+1 #move one up to fill the next index on in the next loop iteration.
-    print(paste0("imports are:",importations))
-    print(paste0("Local transmissions are:",local_transmissions))
+    #print(paste0("imports are:",importations))
+    #print(paste0("Local transmissions are:",local_transmissions))
   }
   #process the mrca nodes to ages.
   names(lineage_tips)=paste0("Lineage no: ", 1:length(lineage_tips))
@@ -238,7 +238,7 @@ LineageHomology_w_uncertainty = function(tree,ace_nodes,ace_tips, give_tips=NA,s
           ancestor_node = parent[which(child==current_node)]
           if((current_node%in%child)==F) { #break loop if we're already at the root node.
             goes_all_the_way_back = T
-            print("Broke")
+            #print("Broke")
             break()
           }
           #Note that current state doesn't need to be updated since we're moving up if it is the same.
@@ -285,8 +285,8 @@ LineageHomology_w_uncertainty = function(tree,ace_nodes,ace_tips, give_tips=NA,s
     lineage_tips[[counter]]=tip_label_list
     mrca.list[counter] = current_node
     counter = counter+1 #move one up to fill the next index on in the next loop iteration.
-    print(paste0("imports are:",importations))
-    print(paste0("Local transmissions are:",local_transmissions))
+    #print(paste0("imports are:",importations))
+    #print(paste0("Local transmissions are:",local_transmissions))
   }
   #process the mrca nodes to ages.
   names(lineage_tips)=paste0("Lineage no: ", 1:length(lineage_tips))
