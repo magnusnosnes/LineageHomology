@@ -60,7 +60,7 @@ tiplabels(pie=tips, cex=0.7,piecol=c("Red","Blue"))
 ``` r
 LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
                         ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
-#> $Import_Export
+#> $Import_LocalTrans
 #> [1] 4 6
 #> 
 #> $Lineage_sizes
