@@ -37,7 +37,7 @@ library(ips)
 #' }
 
 LineageHomology = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) {
-  tree = tree; ace_nodes=castor$ancestral_likelihoods;ace_tips=to.matrix(Locations,seq=c("Norway","RoW")); give_tips=Norwegian_tips;start_time=start_time;
+  # DEBUG tree = tree; ace_nodes=castor$ancestral_likelihoods;ace_tips=to.matrix(Locations,seq=c("Norway","RoW")); give_tips=Norwegian_tips;start_time=start_time;
   #The node number of the tips are
   tip_nodes = sapply(tree$tip.label,function(x,y) which(y==x),y=tree$tip.label)
 
@@ -185,7 +185,7 @@ LineageHomology_w_uncertainty = function(tree,ace_nodes,ace_tips, give_tips=NA,s
   node_states = ace_nodes
   #Sample nodes from the ASR once here, so they don't have to be resampled multiple times.
   node_draws = apply(ace_nodes, 1,FUN=function(x) sample(1:2,1, prob=x))
-  rownames(node_states)=(length(tree$tip.label)+1):(2*length(tree$tip.label)-1)
+  rownames(node_states)=(length(tree$tip.label)+1):((length(tree$tip.label))+nrow(ace_nodes)) #Old specification was buggy due to missing nodes.
   tip_label_list = tree$tip.label
   #Parent and child.
   parent <- tree$edge[, 1]
