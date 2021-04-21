@@ -37,7 +37,7 @@ library(ips)
 #' }
 
 LineageHomology = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) {
-
+  tree = tree; ace_nodes=castor$ancestral_likelihoods;ace_tips=to.matrix(Locations,seq=c("Norway","RoW")); give_tips=Norwegian_tips;start_time=start_time;
   #The node number of the tips are
   tip_nodes = sapply(tree$tip.label,function(x,y) which(y==x),y=tree$tip.label)
 
@@ -48,7 +48,7 @@ LineageHomology = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) 
   tip_states = ace_tips
   node_states = ace_nodes
   node_draws = apply(ace_nodes, 1,FUN=function(x) which.max(x)) #Draw most probable nodes
-  rownames(node_states)=(length(tree$tip.label)+1):(2*length(tree$tip.label)-1)
+  rownames(node_states)=(length(tree$tip.label)+1):((length(tree$tip.label))+nrow(ace_nodes)) #Old specification was buggy due to missing nodes.
   tip_label_list = tree$tip.label
   #Parent and child.
   parent <- tree$edge[, 1]
