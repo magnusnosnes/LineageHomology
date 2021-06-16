@@ -82,4 +82,12 @@ LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
 #> 
 #> $`MRCA's`
 #> [1] 2000.000 2001.705 2007.369 2001.620
+#> 
+#> $lineage_state
+#> Norway    RoW Norway    RoW 
+#>      1      2      1      2
 ```
+
+\#For a more advanced example and illustrations of some of the plotting
+methods see:
+<https://github.com/magnusnosnes/LineageHomology/tree/master/Examples_and_plotting_methods/Simple_example>
