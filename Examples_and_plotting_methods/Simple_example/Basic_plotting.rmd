@@ -22,7 +22,9 @@ This is a basic example which shows how used reconstructed ancestral state histo
 ```{r,fig.width=10,fig.height=7}
 library(LineageHomology)
 ## basic example code
-
+library(ggplot2)
+library(scales)
+library(lubridate)
 #Loading other packages for simulating data. 
 library(ape)
 library(phytools)
@@ -55,9 +57,6 @@ Result$Lineage_sizes
 name_date = data.frame(name = names(trait), dates= BactDating::leafDates(tree_test))
 Result_lineage_info = LineageHomology::lineage_info(Result,name_date)
 LineageHomology::lineage_growth_cumulative(Result_lineage_info = Result_lineage_info, datelims=c("2000-01-01","2025-01-01","3 year"))
-library(lubridate)
-
-LineageHomology::lineage_growth_cumulative(Result_lineage_info = Result_lineage_info, datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = F)
 
 LineageHomology::lineage_growth_cumulative(Result_lineage_info = Result_lineage_info, datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = T)
 ```
