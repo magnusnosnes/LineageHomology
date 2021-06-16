@@ -88,6 +88,6 @@ LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
 #>      1      2      1      2
 ```
 
-\#For a more advanced example and illustrations of some of the plotting
-methods see:
+#### For a more advanced example and illustrations of some of the plotting methods see
+
 <https://github.com/magnusnosnes/LineageHomology/tree/master/Examples_and_plotting_methods/Simple_example>
