@@ -57,6 +57,8 @@ LineageHomology = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) 
 
   #Size of lineage
   lineage_size = c()
+  #Size of lineage
+  lineage_state = c()
   #Tips in lineage
   lineage_tips = list()
   #MRCA node list
@@ -78,6 +80,7 @@ LineageHomology = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) 
     tip_label_list = c(names(current_node)) #Set up a list containing tips for the current tip.
     tip_nodes = tip_nodes[-1] #Remove tip from search space immediately.
     current_state = which(tip_states[current_node,]==1) #If other columns than this has more than 50%, there is a transition.
+    lineage_state = c(lineage_state,current_state)  #Save the state of the lineage.
     goes_all_the_way_back = F
     tips_in_segment = 1 #Count how many tips are considered for each mapping segment.
     ancestor_node = parent[which(child==current_node)]
@@ -133,7 +136,6 @@ LineageHomology = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) 
       importations = importations+1
     }
     lineage_size = c(lineage_size,tips_in_segment)
-
     lineage_tips[[counter]]=tip_label_list
     mrca.list[counter] = current_node
     counter = counter+1 #move one up to fill the next index on in the next loop iteration.
@@ -146,7 +148,7 @@ LineageHomology = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) 
   if(start_time){
     lineage_mrca =lineage_mrca+start_time
   }
-  return(list("Import_LocalTrans"=c(importations, local_transmissions),"Lineage_sizes"=lineage_size,"Taxa_names"=lineage_tips, "MRCA's"=lineage_mrca))
+  return(list("Import_LocalTrans"=c(importations, local_transmissions),"Lineage_sizes"=lineage_size,"Taxa_names"=lineage_tips, "MRCA's"=lineage_mrca,"lineage_state"=lineage_state))
 
 }
 

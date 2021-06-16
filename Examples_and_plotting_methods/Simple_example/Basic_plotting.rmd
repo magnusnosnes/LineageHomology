@@ -1,0 +1,64 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+
+## Example
+
+This is a basic example which shows how used reconstructed ancestral state histories to estimate local transmission lineages.
+
+
+```{r,fig.width=10,fig.height=7}
+library(LineageHomology)
+## basic example code
+
+#Loading other packages for simulating data. 
+library(ape)
+library(phytools)
+library(phangorn)
+library(BactDating)
+
+#Simulate data from Norway and rest of the world
+set.seed(400)
+tree_test = simdatedtree(nsam=300, dateroot=2000)
+tree_test = ladderize(tree_test)
+Q=matrix(c(0.5,0.5,0.5,0.5), nrow=2,ncol=2, byrow=F)
+colnames(Q)=c("Norway","RoW")
+rownames(Q)=c("Norway","RoW")
+trait = phytools::sim.Mk(tree=tree_test,Q=Q,nsim=1)
+
+#Reconstruct ancestral states using ace. 
+fit1 = ace(x=trait, phy= tree_test, type="discrete", mod="ARD")
+plot.phylo(tree_test,lwd=2,label.offset = 0.15, mar=c(0.2,0.2,0.2,0.2),cex=0.3)
+axisPhylo(root.time=2000, backward=F)
+nodelabels(pie=fit1$lik.anc,cex=0.2,piecol=c("Red","Blue"))
+tips = to.matrix(trait,seq=c("Norway", "RoW"))
+tiplabels(pie=tips, cex=0.2,piecol=c("Red","Blue"))
+
+Result = LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
+                        ace_tips = to.matrix(trait, seq=c("Norway", "RoW")), start_time=2000)
+Result$lineage_state
+Result$Lineage_sizes 
+
+#Set up matrix with taxa info
+name_date = data.frame(name = names(trait), dates= BactDating::leafDates(tree_test))
+Result_lineage_info = LineageHomology::lineage_info(Result,name_date)
+LineageHomology::lineage_growth_cumulative(Result_lineage_info = Result_lineage_info, datelims=c("2000-01-01","2025-01-01","3 year"))
+library(lubridate)
+
+LineageHomology::lineage_growth_cumulative(Result_lineage_info = Result_lineage_info, datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = F)
+
+LineageHomology::lineage_growth_cumulative(Result_lineage_info = Result_lineage_info, datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = T)
+```
+

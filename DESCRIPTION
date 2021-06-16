@@ -21,4 +21,10 @@ Imports:
     BactDating,
     ips,
     data.table,
-    expm
+    expm,
+    lubridate,
+    ggridges,
+    forcats,
+    scales,
+    dplyr,
+    ggplot2
