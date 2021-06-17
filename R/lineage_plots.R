@@ -30,9 +30,11 @@ lineage_info = function(Result_Lineage_homology, name_date) {
   colnames(result_matrix)=c("dates", "group_no","group_size","range_group", "lineage_state")
   result_matrix=as.data.frame(result_matrix)
   result_matrix$group_size = as.numeric(result_matrix$group_size)
+  result_matrix$group_no = as.factor(result_matrix$group_no)
   result_matrix$range_group = as.numeric(result_matrix$range_group)
   result_matrix$dates = as.numeric(result_matrix$dates)
   result_matrix$lineage_state = as.factor(result_matrix$lineage_state)
+
   result_matrix
 }
 
@@ -41,20 +43,34 @@ lineage_info = function(Result_Lineage_homology, name_date) {
 #'
 #' @param Result_lineage_info
 #' @param groups_larger_than
+#' @param datelims
 #'
 #' @return
 #' @export
 #'
 #' @examples
-ridgeplot_lineagedensities = function(Result_lineage_info, groups_larger_than=4) {
+ridgeplot_lineagedensities = function(Result_lineage_info, datelims,groups_larger_than=4,color_by_state=FALSE) {
   #Requires dplyr, scales
-  Result_lineage_info= Result_lineage_info %>% dplyr::mutate(group_no=fct_reorder(group_no, group_size)) #Reorder group name factor levels by group size.
-  Result_lineage_info=dummy_matrix[as.numeric(Result_lineage_info$group_size)>groups_larger_than,]
+  dateupplow = as.POSIXct(strptime(c(paste0(datelims[1]," 03:00"),paste0(datelims[2]," 16:00")),format = "%Y-%m-%d %H:%M"))
+  Result_lineage_info= Result_lineage_info %>% dplyr::mutate(group_no=forcats::fct_reorder(group_no, group_size)) #Reorder group name factor levels by group size.
+  Result_lineage_info=Result_lineage_info[as.numeric(Result_lineage_info$group_size)>groups_larger_than,]
   Result_lineage_info$dates=date_decimal(Result_lineage_info$dates)
-  ggplot(Result_lineage_info,aes(x=dates, y=group_no))+
-    geom_density_ridges(scale = 2.5, size = 0.25, rel_min_height = 0.03,point_shape = "|", point_size = 1,jittered_points = TRUE,position = position_points_jitter(height = 0))+
-    theme_ridges(font_size = 10,)+scale_y_discrete(labels=sort(aggregate(group_size~group_no, data=Result_lineage_info, FUN=function(x) c(mean=mean(x), count=length(x)))[[2]][,1]))+
-    scale_x_datetime(date_breaks = "1 month",  labels=date_format("%b %Y"))+ylab("Group size")
+  if(color_by_state == TRUE) {
+    ggplot(Result_lineage_info,aes(x=dates, y=group_no,fill=lineage_state))+
+      ggridges::geom_density_ridges(aes(point_color = lineage_state, point_fill = lineage_state),alpha=0.4,point_alpha=0.4,scale = 2.5, size = 0.25, rel_min_height = 0.03,jittered_points = TRUE)+
+      #ggridges::geom_density_ridges(alpha=0.4,scale = 2.5, size = 0.25, rel_min_height = 0.03,point_shape = "|", point_size = 1,jittered_points = TRUE,position = ggridges::position_points_jitter(height = 0))+
+      ggridges::theme_ridges(font_size = 10)+scale_y_discrete(labels=sort(aggregate(group_size~group_no, data=Result_lineage_info, FUN=function(x) c(mean=mean(x), count=length(x)))[[2]][,1]))+
+      scale_x_datetime(date_breaks = datelims[3],limits =  dateupplow,labels=date_format("%d %b %Y"))+ylab("Group size")+
+      scale_fill_manual(values = c("red","blue"))+theme(legend.position ="none")+
+      ggplot2:::manual_scale("point_color", values=c("red","blue"), guide = "none")
+  }
+  else{
+    ggplot(Result_lineage_info,aes(x=dates, y=group_no))+
+      ggridges::geom_density_ridges(alpha=0.4,point_alpha=0.4,scale = 2.5, size = 0.25, rel_min_height = 0.03,jittered_points = TRUE)+
+      ggridges::theme_ridges(font_size = 10,)+scale_y_discrete(labels=sort(aggregate(group_size~group_no, data=Result_lineage_info, FUN=function(x) c(mean=mean(x), count=length(x)))[[2]][,1]))+
+      scale_x_datetime(date_breaks = datelims[3],limits =  dateupplow,labels=date_format("%d %b %Y"))+ylab("Group size")
+  }
+
 }
 
 

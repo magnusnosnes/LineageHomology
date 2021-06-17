@@ -9,41 +9,51 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "100%", warning=FALSE, message=F
 )
 ```
 
 
-## Example
+## Estimating local transmission linages for phylogeographic data with two categories. 
 
-This is a basic example which shows how used reconstructed ancestral state histories to estimate local transmission lineages.
+
 
 
 ```{r,fig.width=10,fig.height=7}
+#Load needed packages
 library(LineageHomology)
-## basic example code
 library(ggplot2)
 library(scales)
 library(lubridate)
+
 #Loading other packages for simulating data. 
 library(ape)
 library(phytools)
 library(phangorn)
 library(BactDating)
 
-#Simulate data from Norway and rest of the world
+```
+ 
+```{r,fig.width=10,fig.height=7}
+
+#Simulate phylogeographic data with two locations: Norway and rest of the world (RoW)
+
 set.seed(400)
-tree_test = simdatedtree(nsam=300, dateroot=2000)
-tree_test = ladderize(tree_test)
-Q=matrix(c(0.5,0.5,0.5,0.5), nrow=2,ncol=2, byrow=F)
-colnames(Q)=c("Norway","RoW")
-rownames(Q)=c("Norway","RoW")
-trait = phytools::sim.Mk(tree=tree_test,Q=Q,nsim=1)
+tree_test = simdatedtree(nsam=300, dateroot=2000) #300 taxa and date of the root at year 2000-
+tree_test = ladderize(tree_test) #Reorder the tree to make it look nice
+Q=matrix(c(0.5,0.5,0.5,0.5), nrow=2,ncol=2, byrow=F) #Set up a transition matrix for trait simulation
+colnames(Q)=c("Norway","RoW") #From state 1 to state 2. 
+rownames(Q)=c("Norway","RoW") #From state 1 to state 2. 
+
+trait = phytools::sim.Mk(tree=tree_test,Q=Q,nsim=1) #Simulate the traits on the phylogeny
 
 #Reconstruct ancestral states using ace. 
-fit1 = ace(x=trait, phy= tree_test, type="discrete", mod="ARD")
-plot.phylo(tree_test,lwd=2,label.offset = 0.15, mar=c(0.2,0.2,0.2,0.2),cex=0.3)
-axisPhylo(root.time=2000, backward=F)
+fit1 = ace(x=trait, phy= tree_test, type="discrete", mod="ARD") #Estimate the ancestral history
+
+plot.phylo(tree_test,lwd=2,label.offset = 0.15, mar=c(0.2,0.2,0.2,0.2),cex=0.3) #Ploy phylogeny
+
+axisPhylo(root.time=2000, backward=F) #Add time axis
+
 nodelabels(pie=fit1$lik.anc,cex=0.2,piecol=c("Red","Blue"))
 tips = to.matrix(trait,seq=c("Norway", "RoW"))
 tiplabels(pie=tips, cex=0.2,piecol=c("Red","Blue"))
@@ -51,13 +61,45 @@ tiplabels(pie=tips, cex=0.2,piecol=c("Red","Blue"))
 Result = LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
                         ace_tips = to.matrix(trait, seq=c("Norway", "RoW")), start_time=2000)
 Result$lineage_state
-Result$Lineage_sizes 
+Result$Lineage_sizes
 
 #Set up matrix with taxa info
 name_date = data.frame(name = names(trait), dates= BactDating::leafDates(tree_test))
 Result_lineage_info = LineageHomology::lineage_info(Result,name_date)
+
+```
+
+##### Plot lineage densities over time 
+
+```{r,fig.width=10,fig.height=7}
+LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 1,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = F)
+```
+
+##### We can color the groups by the state they are in, and restrict the plotted groups to sizes larger than 1,4, and 10
+
+```{r,fig.width=10,fig.height=7}
+
+LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 1,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = T)
+
+LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 4,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = T)
+
+LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 10,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = T)
+
+
+```
+ 
+##### Plot cumulative lineage size over time. 
+
+```{r,fig.width=10,fig.height=7}
+
 LineageHomology::lineage_growth_cumulative(Result_lineage_info = Result_lineage_info, datelims=c("2000-01-01","2025-01-01","3 year"))
 
+```
+ 
+##### Again we can add color to the groups by specifying it.
+
+```{r,fig.width=10,fig.height=7}
 LineageHomology::lineage_growth_cumulative(Result_lineage_info = Result_lineage_info, datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = T)
+
 ```
 
