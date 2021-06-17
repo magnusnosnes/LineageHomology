@@ -62,7 +62,7 @@ Result = LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
 
 ```
 
-LineageHomolgy outputs a list of lists. 
+LineageHomology outputs a list of lists. 
 
 * Import_LocalTrans
 contains an estimate of the number of taxa that are have changed state wrt. the state of the closest common ancestral node with any other taxa. 
@@ -84,6 +84,14 @@ Result$lineage_state
 
 
 ```
+
+#Make a treemap plot to get a quick overview of the lineages.
+
+```{r,fig.width=10,fig.height=7}
+LineageHomology::treemap_lineagehomology(Result)
+```
+
+
 
 ##### Plot lineage densities over time 
 

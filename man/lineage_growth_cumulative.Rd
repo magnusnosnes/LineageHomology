@@ -4,12 +4,18 @@
 \alias{lineage_growth_cumulative}
 \title{Title}
 \usage{
-lineage_growth_cumulative(Result_lineage_info, datelims)
+lineage_growth_cumulative(
+  Result_lineage_info,
+  datelims,
+  color_by_state = FALSE
+)
 }
 \arguments{
 \item{Result_lineage_info}{The output from lineage info.}
 
 \item{datelims}{Limits of the dates in format c("yyyy-mm-dd","yyyy-mm-dd", ""). The last argument can be e.g. "1 week"/"1 year"/"1 month"}
+
+\item{color_by_state}{Color by the state of the lineage.}
 }
 \value{
 

@@ -4,10 +4,15 @@
 \alias{ridgeplot_lineagedensities}
 \title{Title}
 \usage{
-ridgeplot_lineagedensities(Result_lineage_info, groups_larger_than = 4)
+ridgeplot_lineagedensities(
+  Result_lineage_info,
+  datelims,
+  groups_larger_than = 4,
+  color_by_state = FALSE
+)
 }
 \arguments{
-\item{groups_larger_than}{}
+\item{datelims}{}
 }
 \value{
 

@@ -48,7 +48,7 @@ Result = LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
                         ace_tips = to.matrix(trait, seq=c("Norway", "RoW")), start_time=2000)
 ```
 
-LineageHomolgy outputs a list of lists.
+LineageHomology outputs a list of lists.
 
 -   Import\_LocalTrans contains an estimate of the number of taxa that
     are have changed state wrt. the state of the closest common
@@ -141,6 +141,14 @@ Result$lineage_state
 #>      2      2      2      1      2      1      2      1      2      2      1
 ```
 
+\#Make a treemap plot to get a quick overview of the lineages.
+
+``` r
+LineageHomology::treemap_lineagehomology(Result)
+```
+
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+
 ##### Plot lineage densities over time
 
 ``` r
@@ -150,7 +158,7 @@ Result_lineage_info = LineageHomology::lineage_info(Result,name_date)
 LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 1,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = F)
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
 ##### We can color the groups by the state they are in, and restrict the plotted groups to sizes larger than 1,4, and 10
 
@@ -158,19 +166,19 @@ LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_i
 LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 1,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = T)
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
 ``` r
 LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 4,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = T)
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-2.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-7-2.png" width="100%" />
 
 ``` r
 LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 10,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = T)
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-3.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-7-3.png" width="100%" />
 
 ##### Plot cumulative lineage size over time.
 
@@ -178,7 +186,7 @@ LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_i
 LineageHomology::lineage_growth_cumulative(Result_lineage_info = Result_lineage_info, datelims=c("2000-01-01","2025-01-01","3 year"))
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
 
 ##### Again we can add color to the groups by specifying it.
 
@@ -186,4 +194,4 @@ LineageHomology::lineage_growth_cumulative(Result_lineage_info = Result_lineage_
 LineageHomology::lineage_growth_cumulative(Result_lineage_info = Result_lineage_info, datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = T)
 ```
 
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />

@@ -27,4 +27,5 @@ Imports:
     forcats,
     scales,
     dplyr,
-    ggplot2
+    ggplot2,
+    treemap
