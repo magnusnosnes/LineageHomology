@@ -33,11 +33,10 @@ library(phangorn)
 library(BactDating)
 
 ```
- 
-```{r,fig.width=10,fig.height=7}
 
-#Simulate phylogeographic data with two locations: Norway and rest of the world (RoW)
+##### Simulate phylogeographic data with two locations: Norway and rest of the world (RoW) 
 
+```{r,fig.width=10,fig.height=15}
 set.seed(400)
 tree_test = simdatedtree(nsam=300, dateroot=2000) #300 taxa and date of the root at year 2000-
 tree_test = ladderize(tree_test) #Reorder the tree to make it look nice
@@ -60,18 +59,38 @@ tiplabels(pie=tips, cex=0.2,piecol=c("Red","Blue"))
 
 Result = LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
                         ace_tips = to.matrix(trait, seq=c("Norway", "RoW")), start_time=2000)
+
+```
+
+LineageHomolgy outputs a list of lists. 
+
+* Import_LocalTrans
+contains an estimate of the number of taxa that are have changed state wrt. the state of the closest common ancestral node with any other taxa. 
+* Lineage_sizes contains the number of taxa that belong to the mapped state. This means that for the entire group, all the interal nodes will be mapped to the same state with 50% or higher probability. 
+*Taxa names contains sub lists for each lineage, in the same order as the other lists. 
+   + Each sub list contains the taxa names of all the taxa in the group. 
+* MRCA's contains the time of the most recent common ancestor of the groups. 
+* Lineage_state contains the state the groups are mapped to, the states are treated as numbers in the anlyses, so the relative ordering has to be looked up.
+
+
+```{r,fig.width=10,fig.height=7}
+names(Result)
+Result$Import_LocalTrans
 Result$lineage_state
 Result$Lineage_sizes
+head(Result$Taxa_names)
+Result$`MRCA's`
+Result$lineage_state
 
-#Set up matrix with taxa info
-name_date = data.frame(name = names(trait), dates= BactDating::leafDates(tree_test))
-Result_lineage_info = LineageHomology::lineage_info(Result,name_date)
 
 ```
 
 ##### Plot lineage densities over time 
 
 ```{r,fig.width=10,fig.height=7}
+#Set up matrix with taxa info
+name_date = data.frame(name = names(trait), dates= BactDating::leafDates(tree_test))
+Result_lineage_info = LineageHomology::lineage_info(Result,name_date)
 LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 1,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = F)
 ```
 
