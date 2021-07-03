@@ -19,8 +19,8 @@ novelty wrt. the other taxa in the tree
 
 ## Installation
 
-You can install the latest version of LineageHomology this repository
-using
+You can install the latest version of LineageHomology from this
+repository using
 
 ``` r
 library(devtools)
