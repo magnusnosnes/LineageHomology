@@ -47,7 +47,7 @@ lineage_info = function(Result_Lineage_homology, name_date) {
 #'
 #' @examples
 treemap_lineagehomology = function(Result_LineageHomology) {
-  atreemap = data.frame(group=paste0("G:",1:length(Result$Lineage_sizes)," S: ", Result_LineageHomology$Lineage_sizes, "\n TMRCA: ", round(Result_LineageHomology$`MRCA's`,2)),Value=Result_LineageHomology$Lineage_sizes)
+  atreemap = data.frame(group=paste0("G:",1:length(Result_LineageHomology$Lineage_sizes)," S: ", Result_LineageHomology$Lineage_sizes, "\n TMRCA: ", round(Result_LineageHomology$`MRCA's`,2)),Value=Result_LineageHomology$Lineage_sizes)
   treemap::treemap(atreemap,index=("group"),vSize="Value", type="index", palette="Paired")
 }
 

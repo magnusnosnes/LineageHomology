@@ -3,13 +3,19 @@
 
 # LineageHomology
 
+-   [Installation](#installation)
+-   [Example](#example)
+-   [More advanced example and illustrations of some of the plotting
+    methods](#for-a-more-advanced-example-and-illustrations-of-some-of-the-plotting-methods-see)
+
 <!-- badges: start -->
 <!-- badges: end -->
 
-LineageHomology provides a set of functions that can analyze the outputs
-from ancestral state reconstruction to estimate if taxa have inhereted
-traits by homology or if their character state represents a novelty wrt.
-the other taxa in the tree.
+LineageHomology provides a set of functions that analyzes the outputs
+from an ancestral state reconstruction. Following du Plessis et
+al. (2021). ( 10.1126/science.abf2946 )to estimate if taxa have
+inhereted traits by homology or if their character state represents a
+novelty wrt. the other taxa in the tree
 
 ## Installation
 
@@ -23,8 +29,8 @@ devtools::install_github("magnusnosnes/LineageHomology")
 
 ## Example
 
-This is a basic example which shows how used reconstructed ancestral
-state histories to estimate local transmission lineages.
+This example shows how an reconstructed ancestral state history can be
+used to estimate local transmission lineages.
 
 ``` r
 library(LineageHomology)
@@ -90,4 +96,5 @@ LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
 
 #### For a more advanced example and illustrations of some of the plotting methods see
 
-<https://github.com/magnusnosnes/LineageHomology/blob/master/Examples_and_plotting_methods/Simple_example/Basic_plotting.md>
+[Plotting tutorial
+link](https://github.com/magnusnosnes/LineageHomology/blob/master/Examples_and_plotting_methods/Simple_example/Basic_plotting.md)

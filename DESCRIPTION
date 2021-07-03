@@ -4,7 +4,7 @@ Title: Transmission Lineages From Maximum Likelihood Mappings
 Version: 0.1.0
 Author: Magnus Nygård Osnes
 Maintainer: The package maintainer <magnusnosnes@gmail.com>
-Description: Provides a set of functions that are used to analyse ancestral state outputs.
+Description: Provides a set of functions that are used to analyse ancestral state outputs. The package assumes a bifucating phylogenetic tree.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

@@ -1,7 +1,22 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-## Estimating local transmission linages for phylogeographic data with two categories.
+## Using LineageHomology for a given phylogeny and with tips observed in geographical locations.
+
+#### Table of contents
+
+-   [Estimating local transmission linages for phylogeographic data with
+    two
+    categories.](#estimating-local-transmission-linages-for-phylogeographic-data-with-two-categories)
+-   [Simulate tip data with two
+    locations](#simulate-phylogeographic-data-with-two-locations--norway-and-rest-of-the-world--row-)
+-   [Plotting transmission lineages](#plot-lineage-densities-over-time)
+    -   [Color the lineages after
+        location](#we-can-color-the-groups-by-the-state-they-are-in--and-restrict-the-plotted-groups-to-sizes-larger-than-1-4--and-10)
+-   [Plot cumulative lineage size over
+    time.](#plot-cumulative-lineage-size-over-time)
+    -   [Again we can add color to the groups by specifying
+        it.](#again-we-can-add-color-to-the-groups-by-specifying-it)
 
 ``` r
 #Load needed packages
@@ -17,7 +32,11 @@ library(phangorn)
 library(BactDating)
 ```
 
-##### Simulate phylogeographic data with two locations: Norway and rest of the world (RoW)
+##### Simulate tip data with two different state.
+
+For the purpose of this example we let the geographical states represent
+Norway and the rest of the World (RoW). The package was originally
+developed for data such as this.
 
 ``` r
 set.seed(400)
@@ -43,6 +62,14 @@ tiplabels(pie=tips, cex=0.2,piecol=c("Red","Blue"))
 
 <img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
 
+The nodes on the phylogeny are piecharts that represents the probability
+of either geographical state, where red represents Norway and blue
+represents RoW. LineageHomology uses the probabilities to count
+connected groups of taxa, where all the nodes on the paths between them
+have a probability that &gt; 50% for the same geographical state. It
+also returns the number of singletons, dates and has a number of
+different plotting methods to display the results.
+
 ``` r
 Result = LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
                         ace_tips = to.matrix(trait, seq=c("Norway", "RoW")), start_time=2000)
@@ -52,7 +79,7 @@ LineageHomology outputs a list of lists.
 
 -   Import\_LocalTrans contains an estimate of the number of taxa that
     are have changed state wrt. the state of the closest common
-    ancestral node with any other taxa.
+    ancestral node shared with any other taxa.
 -   Lineage\_sizes contains the number of taxa that belong to the mapped
     state. This means that for the entire group, all the interal nodes
     will be mapped to the same state with 50% or higher probability.
@@ -147,7 +174,7 @@ Result$lineage_state
 LineageHomology::treemap_lineagehomology(Result)
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
 ##### Plot lineage densities over time
 
@@ -158,7 +185,7 @@ Result_lineage_info = LineageHomology::lineage_info(Result,name_date)
 LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 1,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = F)
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
 ##### We can color the groups by the state they are in, and restrict the plotted groups to sizes larger than 1,4, and 10
 
@@ -166,19 +193,19 @@ LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_i
 LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 1,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = T)
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
 
 ``` r
 LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 4,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = T)
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-2.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-8-2.png" width="100%" />
 
 ``` r
 LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 10,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = T)
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-3.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-8-3.png" width="100%" />
 
 ##### Plot cumulative lineage size over time.
 
@@ -186,7 +213,7 @@ LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_i
 LineageHomology::lineage_growth_cumulative(Result_lineage_info = Result_lineage_info, datelims=c("2000-01-01","2025-01-01","3 year"))
 ```
 
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
 
 ##### Again we can add color to the groups by specifying it.
 
@@ -194,4 +221,4 @@ LineageHomology::lineage_growth_cumulative(Result_lineage_info = Result_lineage_
 LineageHomology::lineage_growth_cumulative(Result_lineage_info = Result_lineage_info, datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = T)
 ```
 
-<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />

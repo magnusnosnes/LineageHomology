@@ -14,7 +14,15 @@ knitr::opts_chunk$set(
 ```
 
 
-## Estimating local transmission linages for phylogeographic data with two categories. 
+## Using LineageHomology for a given phylogeny and with tips observed in geographical locations.
+
+#### Table of contents 
+* [Estimating local transmission linages for phylogeographic data with two categories.](#estimating-local-transmission-linages-for-phylogeographic-data-with-two-categories)
+* [Simulate tip data with two locations](#simulate-phylogeographic-data-with-two-locations--norway-and-rest-of-the-world--row-)
+* [Plotting transmission lineages](#plot-lineage-densities-over-time)
+    - [Color the lineages after location](#we-can-color-the-groups-by-the-state-they-are-in--and-restrict-the-plotted-groups-to-sizes-larger-than-1-4--and-10)
+* [Plot cumulative lineage size over time.](#plot-cumulative-lineage-size-over-time)
+    - [Again we can add color to the groups by specifying it.](#again-we-can-add-color-to-the-groups-by-specifying-it)
 
 
 
@@ -34,7 +42,8 @@ library(BactDating)
 
 ```
 
-##### Simulate phylogeographic data with two locations: Norway and rest of the world (RoW) 
+##### Simulate tip data with two different state.
+For the purpose of this example we let the geographical states represent Norway and the rest of the World (RoW). The package was originally developed for data such as this.
 
 ```{r,fig.width=10,fig.height=15}
 set.seed(400)
@@ -57,6 +66,12 @@ nodelabels(pie=fit1$lik.anc,cex=0.2,piecol=c("Red","Blue"))
 tips = to.matrix(trait,seq=c("Norway", "RoW"))
 tiplabels(pie=tips, cex=0.2,piecol=c("Red","Blue"))
 
+```
+ 
+The nodes on the phylogeny are piecharts that represents the probability of either geographical state, where red represents Norway and blue represents RoW. LineageHomology uses the probabilities to count connected groups of taxa, where all the nodes on the paths between them have a probability that > 50% for the same geographical state. It also returns the number of singletons, dates and has a number of different plotting methods to display the results. 
+
+ 
+```{r,fig.width=10,fig.height=15}
 Result = LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
                         ace_tips = to.matrix(trait, seq=c("Norway", "RoW")), start_time=2000)
 
@@ -65,7 +80,7 @@ Result = LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
 LineageHomology outputs a list of lists. 
 
 * Import_LocalTrans
-contains an estimate of the number of taxa that are have changed state wrt. the state of the closest common ancestral node with any other taxa. 
+contains an estimate of the number of taxa that are have changed state wrt. the state of the closest common ancestral node shared with any other taxa. 
 * Lineage_sizes contains the number of taxa that belong to the mapped state. This means that for the entire group, all the interal nodes will be mapped to the same state with 50% or higher probability. 
 *Taxa names contains sub lists for each lineage, in the same order as the other lists. 
    + Each sub list contains the taxa names of all the taxa in the group. 
