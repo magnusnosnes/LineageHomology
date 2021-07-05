@@ -54,8 +54,8 @@ names(loc) = tree_test$tip.label
 
 #Reconstruct ancestral states using ace. 
 fit1 = ace(x=loc, phy= tree_test, type="discrete", mod="ARD")
-plot.phylo(tree_test,lwd=2,label.offset = 0.15, mar=c(0.2,0.2,0.2,0.2))
-axisPhylo(root.time=2000, backward=F)
+plot.phylo(tree_test,edge.width = 2,label.offset = 0.15, mar=c(0.2,0.2,0.2,0.2))
+axisPhylo(root.time=2000, backward=F,lwd=2)
 nodelabels(pie=fit1$lik.anc,cex=0.7,piecol=c("Red","Blue"))
 tips = to.matrix(loc,seq=c("Norway", "RoW"))
 tiplabels(pie=tips, cex=0.7,piecol=c("Red","Blue"))
