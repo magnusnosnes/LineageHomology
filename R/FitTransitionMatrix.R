@@ -314,11 +314,11 @@ FitTransitionFreeX<-function(tree,x,model=NA, scaling_factor = 10){
   print("Unconstrained we get: ")
   print(makeQ(m, fit_unconstrained$par, index.matrix))
   print(paste0("Constrained to ", scaling_factor,"X using Nelder Mead"))
-  print(makeQ10X(m,fit_constrainedFreeX$par,index.matrix))
+  print(makeQfreeX(m,fit_constrainedFreeX$par,index.matrix,scaling_factor))
   print(paste0("Constrained to ", scaling_factor,"X using BFGS"))
-  print(makeQ10X(m,fit_constrainedFreeX_2$par,index.matrix))
+  print(makeQfreeX(m,fit_constrainedFreeX_2$par,index.matrix,scaling_factor))
   print(paste0("Constrained to ", scaling_factor,"X using nlminb"))
-  print(makeQ10X(m,fit$par,index.matrix))
+  print(makeQfreeX(m,fit$par,index.matrix,scaling_factor))
 
 
   #   ____________________________________________________________________________

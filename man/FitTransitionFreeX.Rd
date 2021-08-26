@@ -13,7 +13,7 @@ FitTransitionFreeX(tree, x, model = NA, scaling_factor = 10)
 
 \item{model}{Model matrix ordered where unique numbers indicate individual parameters.}
 
-\item{scaling_factor}{Relative scaling factor of the transition rate between the locations.}
+\item{scaling_factor}{Relative scaling factor of the transition rates between the locations.}
 }
 \value{
 
