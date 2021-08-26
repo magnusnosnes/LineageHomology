@@ -233,7 +233,7 @@ FitTransition10x<-function(tree,x,model=NA){
 #' @param tree Phylogenetic tree
 #' @param x Tip character states that are used to inform the transition matrix
 #' @param model Model matrix ordered where unique numbers indicate individual parameters.
-#' @param scaling_factor Relative scaling factor between the locations.
+#' @param scaling_factor Relative scaling factor of the transition rates between the locations.
 #'
 #' @return
 #' @export

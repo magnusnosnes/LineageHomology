@@ -12,6 +12,8 @@ FitTransitionFreeX(tree, x, model = NA, scaling_factor = 10)
 \item{x}{Tip character states that are used to inform the transition matrix}
 
 \item{model}{Model matrix ordered where unique numbers indicate individual parameters.}
+
+\item{scaling_factor}{Relative scaling factor of the transition rate between the locations.}
 }
 \value{
 
