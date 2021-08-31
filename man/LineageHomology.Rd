@@ -7,25 +7,35 @@
 LineageHomology(tree, ace_nodes, ace_tips, give_tips = NA, start_time = NA)
 }
 \arguments{
-\item{tree}{#Phylogenetic tree}
+\item{tree}{Phylogenetic tree}
 
-\item{ace_nodes}{#Node probabilities in ace format}
+\item{ace_nodes}{Node probabilities in ace format.}
 
-\item{ace_tips}{#Tip probabilities in ace format}
+\item{ace_tips}{Tip probabilities in ace format}
 
-\item{give_tips}{#Taxa to do the computations for}
+\item{give_tips}{Taxa to do the computations for}
 
 \item{start_time}{Date of root in the phylogeny.}
 }
 \value{
+Import_LocalTrans contains an estimate of the number of taxa that are have changed state wrt. the state of the closest common ancestral node shared with any other taxa.
 
+Lineage_sizes contains the number of taxa that belong to a group defined by the mapped state. This means that for the entire group, all the interal nodes will be mapped to the same state with 50% or higher probability. *Taxa names contains sub lists for each lineage, in the same order as the other lists.
+
+MRCA’s contains the time of the most recent common ancestor of the groups.
+
+Lineage_state the state the groups are mapped to, the states are treated as numbers in the anlyses, so the relative ordering has to be looked up.
 }
 \description{
 Title
 }
 \examples{
 \dontrun{
-#LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
+set.seed(400)
+tree_test = simdatedtree(nsam=300, dateroot=2000) #300 taxa and date of the root at year 2000.
+tree_test = ladderize(tree_test) #Reorder the tree to make it look nice
+fit1 = ace(x=trait, phy= tree_test, type="discrete", mod="ARD") #Estimate the ancestral history
+LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
 ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
 }
 }
