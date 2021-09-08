@@ -4,22 +4,21 @@
 # LineageHomology
 
 -   [Installation](##installation)
--   [Example](##Introduction)
--   [Tutorial and gallery of plotting methods](##Tutorial)
+-   [Introduction](##introduction)
+-   [Tutorial and gallery of plotting methods](##tutorial)
 
 <!-- badges: start -->
 <!-- badges: end -->
 
 LineageHomology provides a set of functions that analyzes the outputs
-from an ancestral state reconstruction. LineageHomology counts
+from ancestral state reconstructions. LineageHomology counts
 transmission lineages according to state transitions between ancestral
 and descendant nodes that have a probability higher than 50 percent. The
 method is analogous to that introduced by du Plessis et al. (2021) (DOI:
-10.1126/science.abf2946). LineageHomology takes the output of an
-ancestral state reconstruction method and returns descriptions of
-Transmission Lineages. The outputs contain descriptions of Transmission
-lineages, tips where traits are inferred to be locally inherited
-(homologous traits or local transmissions depending on the context)
+10.1126/science.abf2946). The outputs contain descriptions of
+transmission lineages, tips where traits are inferred to be locally
+inherited (homologous traits or local transmissions depending on the
+context), and other useful summaries.
 
 ## Installation
 
@@ -27,14 +26,19 @@ You can install the latest version of LineageHomology from this
 repository using
 
 ``` r
-#library(devtools)
-#devtools::install_github("magnusnosnes/LineageHomology")
+library(devtools)
+devtools::install_github("magnusnosnes/LineageHomology")
 ```
 
 ## Introduction
 
-This example shows how an reconstructed ancestral state history can be
-used to estimate local transmission lineages.
+This introduction provides a simple example of applying ancestral state
+reconstruction to simulated geographical data for two locations and
+using LineageHomology to analyse the outputs. Here, LineageHomology
+provides descriptions of transmission lineages other useful summaries
+from the reconstructed states.
+
+First, we simulate data and estimate the ancestral geographical states:
 
 ``` r
 library(LineageHomology)
@@ -61,12 +65,18 @@ tips = to.matrix(loc,seq=c("Norway", "RoW"))
 tiplabels(pie=tips, cex=0.7,piecol=c("Red","Blue"))
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" /> The
+tree shows the reconstructed states using the ace function in the ape
+package. Each node is coloured according to the probability of the
+location. Here red represents Norway, and blue represents the rest of
+the world (RoW).
+
+Next we run lineageHomology on the output from ace.
 
 ``` r
-
-LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
+Return = LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
                         ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
+Return
 #> $Import_LocalTrans
 #> [1] 4 6
 #> 
@@ -97,6 +107,18 @@ LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
 #> $Halfedge_over_tmrca
 #> [1] 2000.000 2001.242 2004.675 2000.810
 ```
+
+The results can be visualized by e.g. using a treemap plot.
+
+``` r
+LineageHomology::treemap_lineagehomology(Return)
+```
+
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+
+The figure shows squares with areas representing the transmission
+lineages’ sizes. The text inside the squares gives the estimated time of
+the MRCA and the number of tips in the transmission lineages.
 
 ## Tutorial
 

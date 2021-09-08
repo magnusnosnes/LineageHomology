@@ -19,7 +19,7 @@ LineageHomology_w_uncertainty(
 
 \item{ace_tips}{Tip probabilities in ace format}
 
-\item{give_tips}{Taxa to do the computations for}
+\item{give_tips}{Constrain the computations to a set of tips, e.g. all the names of the tips in a certain state (e.g. one specific geographical location).}
 
 \item{start_time}{Date of root in the phylogeny.}
 }
