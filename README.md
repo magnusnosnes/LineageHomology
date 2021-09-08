@@ -3,9 +3,9 @@
 
 # LineageHomology
 
--   [Installation](##installation)
--   [Introduction](##introduction)
--   [Tutorial and gallery of plotting methods](##tutorial)
+-   [Installation](#installation)
+-   [Introduction](#introduction)
+-   [Tutorial and gallery of plotting methods](#tutorial)
 
 <!-- badges: start -->
 <!-- badges: end -->
