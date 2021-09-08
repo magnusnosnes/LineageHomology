@@ -6,99 +6,55 @@ library(BactDating)
 library(ips)
 
 
-#Algorithm:
+#Pseudocode:
 #Fint the parent nodes of all tips.
 #For each tip; check for transition to its parent node
 #If transition, the algorithm has found a singleton.
-#If not, move on branch up, and check any new descendant emerging from the parent node.
-#If any descendant is found this is no longer a singleton, but represents a local tranmission event.
-#If no descendants is found, this is just a singleton with a long branch.
+#If not, move on a branch up and check any new descendant emerging from the parent node.
+#If any descendant is found, this is no longer a singleton but represents a local transmission event.
+#If no descendants are found, this is just a singleton with a long branch.
 
 
-#Removes half of the edge above
-#' Title
-#'
-#' @param tree
-#' @param node
-#'
-#' @return
-#' @export
-#'
-#' @examples
-find_midedge_ancestral = function(tree, node) {
-
-  ind = which(tree$edge[,2]==node)
-  if(length(ind)==0) { #Check if node is root.
-    #It is the root and we can't shift it back more.
-    minus = 0
-  }
-  else {
-    minus = tree$edge.length[ind]/2 #Remove half of the edge.
-  }
-  minus
-}
-
-nodepath_quick_w_mrca = function(tree,taxa,mrca) {
-
-  bifurcations = c()
-  mrca_node = mrca
-  bifurcations = c(mrca_node)
-
-  tip_nodes = sapply(taxa,function(x,y) which(y==x),y=tree$tip.label)
-  new_nodes = tree$edge[,1][which(tree$edge[,2]%in%tip_nodes)]
-  bifurcations = unique(c(new_nodes,bifurcations))
-  new_nodes = new_nodes[new_nodes!=mrca_node]
-  #If any is mrca, remove them from loop.
-  while(length(new_nodes)>0) {
-    new_nodes = tree$edge[,1][which(tree$edge[,2]%in%new_nodes)]
-    new_nodes = new_nodes[new_nodes!=mrca_node]
-    bifurcations = unique(c(new_nodes,bifurcations))
-  }
-  bifurcations #Return all the bifurcation nodes.
-}
-
-nodepath_quick_w_mrca_nodenumber = function(tree,taxa,mrca) {
-
-  bifurcations = c()
-  mrca_node = mrca
-  bifurcations = c(mrca_node)
-
-  tip_nodes = taxa
-  new_nodes = tree$edge[,1][which(tree$edge[,2]%in%tip_nodes)]
-  bifurcations = unique(c(new_nodes,bifurcations))
-  new_nodes = new_nodes[new_nodes!=mrca_node]
-  #If any is mrca, remove them from loop.
-  while(length(new_nodes)>0) {
-    new_nodes = tree$edge[,1][which(tree$edge[,2]%in%new_nodes)]
-    new_nodes = new_nodes[new_nodes!=mrca_node]
-    bifurcations = unique(c(new_nodes,bifurcations))
-  }
-  bifurcations #Return all the bifurcation nodes.
-}
+#   ____________________________________________________________________________
+#   Main functions                                                          ####
 
 
-
-#' Title
+#' LineageHomology
+#' @description
+#' LineageHomology counts transmission lineages according to state transitions between ancestral and descendant nodes that have a probability higher than 50 percent.
+#' The method is analogous to that introduced by du Plessis et al. (2021) (DOI: 10.1126/science.abf2946).
+#' LineageHomology takes the output of an ancestral state reconstruction method with included state probabilities at each node.
+#' The input format should match the return format from the ape::ace function (see the help files at ?ape::ace).
+#' The outputs contain descriptions of Transmission lineages, tips where traits are inferred to be locally inherited (homologous traits or local transmissions depending on the context).
+#' See the full tutorial including visualization methods at: \url{https://github.com/magnusnosnes/LineageHomology}.
 #'
 #' @param tree Phylogenetic tree
 #' @param ace_nodes Node probabilities in ace format.
 #' @param ace_tips Tip probabilities in ace format
-#' @param give_tips Taxa to do the computations for
+#' @param give_tips Constrain the computations to a set of tips, e.g. all the names of the tips in a certain state (e.g. one specific geographical location).
 #' @param start_time Date of root in the phylogeny.
 #'
-#' @return Import_LocalTrans contains an estimate of the number of taxa that are have changed state wrt. the state of the closest common ancestral node shared with any other taxa.
-#' @return Lineage_sizes contains the number of taxa that belong to a group defined by the mapped state. This means that for the entire group, all the interal nodes will be mapped to the same state with 50% or higher probability. *Taxa names contains sub lists for each lineage, in the same order as the other lists.
-#' @return MRCA’s contains the time of the most recent common ancestor of the groups.
-#' @return Lineage_state the state the groups are mapped to, the states are treated as numbers in the anlyses, so the relative ordering has to be looked up.
+#' @return
+#' @return Import_LocalTrans
+#'  contains an estimate of the number of taxa that are have changed state wrt.
+#'  the state of the closest common ancestral node shared with any other taxa.
+#' @return Lineage_sizes
+#'  contains the number of taxa that belong to a group defined by the mapped state.
+#'  This means that all the internal nodes will be mapped to the same state with 50 percent or higher probability for the entire transmission lineage.
+#'  Taxa names contain sub-lists with the names of the tips in each transmission lineage.
+#'  The order of the lists is the same as that of the transmission lineages.
+#' @return MRCA’s
+#' contains the time of the most recent common ancestor of the groups.
+#' @return Lineage_state
+#' contains the state the transmission lineages belong to, the states are treated as numbers in the analyses, so the relative ordering has to be looked up.
 #' @export
 #'
-#' @importFrom phytools nodeHeights nodeheight
-#' @importFrom ips descendants
 #' @importFrom ape nodepath
 #' @importFrom ape nodepath
 #' @examples
 #' \dontrun{
 #' set.seed(400)
+#' library(BactDating)
 #' tree_test = simdatedtree(nsam=300, dateroot=2000) #300 taxa and date of the root at year 2000.
 #' tree_test = ladderize(tree_test) #Reorder the tree to make it look nice
 #' fit1 = ace(x=trait, phy= tree_test, type="discrete", mod="ARD") #Estimate the ancestral history
@@ -107,7 +63,6 @@ nodepath_quick_w_mrca_nodenumber = function(tree,taxa,mrca) {
 #' }
 
 LineageHomology = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) {
-  # DEBUG tree = tree; ace_nodes=castor$ancestral_likelihoods;ace_tips=to.matrix(Locations,seq=c("Norway","RoW")); give_tips=Norwegian_tips;start_time=start_time;
   #The node number of the tips are
   tip_nodes = sapply(tree$tip.label,function(x,y) which(y==x),y=tree$tip.label)
 
@@ -179,8 +134,6 @@ LineageHomology = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) 
       }
       tip_search_subspace = ips::descendants(tree, current_node)
       subspace=tip_search_subspace[tip_search_subspace%in%tip_nodes] #Find all possible tips in searchspace descending from the current node.
-      #Should add a check that the tip has the same state. Otherwise a transition can occur on the final edge.
-      #This will not cause an error if tips are
 
       if(length(subspace)!=0) {
         for(i in 1:length(subspace)) { #Check for transitions on nodepath to each tip.
@@ -211,8 +164,8 @@ LineageHomology = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) 
     lineage_tips[[counter]]=tip_label_list
     mrca.list[counter] = current_node
     counter = counter+1 #move one up to fill the next index on in the next loop iteration.
-    #print(paste0("imports are:",importations))
-    #print(paste0("Local transmissions are:",local_transmissions))
+    #Debug: print(paste0("imports are:",importations))
+    #Debug: print(paste0("Local transmissions are:",local_transmissions))
   }
   #process the mrca nodes to ages.
   names(lineage_tips)=paste0("Lineage no: ", 1:length(lineage_tips))
@@ -230,29 +183,37 @@ LineageHomology = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) 
 }
 
 
-#' Title
-#'
-#' @param tree #Phylogenetic tree
-#' @param ace_nodes #Node probabilities in ace format
-#' @param ace_tips #Tip probabilities in ace format
-#' @param give_tips #Taxa to do the computations for
+#' LineageHomology_w_uncertainty
+#' @description
+#'  LineageHomology_w_uncertainty returns the same outputs as LineageHomology.
+#'  LineageHomology counts transmission lineages according to state transitions between ancestral and descendant nodes that have a probability higher than 50 percent.
+#'  LineageHomolog_w_uncertainty instead samples states from the posterior probability of states for each node.
+#'  Thus, the transmission lineage division is probabilistic and retains the uncertainty in the posterior distribution if one runs multiple times,
+#'   e.g., using base::replicate() (see examples).
+#' @param tree Phylogenetic tree
+#' @param ace_nodes Node probabilities in ace format
+#' @param ace_tips Tip probabilities in ace format
+#' @param give_tips Constrain the computations to a set of tips, e.g. all the names of the tips in a certain state (e.g. one specific geographical location).
 #' @param start_time Date of root in the phylogeny.
 #'
-#' @return
+#' @return See LineageHomology for descriptions of the returns.
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' #LineageHomology_w_uncertainty(tree_test, ace_nodes=fit1$lik.anc,
-#' ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
+#' multi_counts = pbreplicate(
+#'   100,
+#'   LineageHomology::LineageHomology_w_uncertainty(
+#'     tree,
+#'     ace_nodes = test$lik.anc,
+#'     give_tips = Norwegian_tips,
+#'     ace_tips = to.matrix(Locations, seq = c("Norway", "RoW")),
+#'     start_time = start_date
+#'   )
+#' )
 #' }
 
 LineageHomology_w_uncertainty = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) {
-
-  #NB. There is some bug in here. Must be fixed before the Uk report can be updated.
-  #Line for debugging using the UK script
-  #tree = tree; ace_nodes = castor$ancestral_likelihoods; give_tips = Norwegian_tips; ace_tips = to.matrix(Locations,seq=c("Norway","RoW"));start_time = start_date
-
   #The node number of the tips are
   tip_nodes = sapply(tree$tip.label,function(x,y) which(y==x),y=tree$tip.label)
 
@@ -329,10 +290,6 @@ LineageHomology_w_uncertainty = function(tree,ace_nodes,ace_tips, give_tips=NA,s
       tip_search_subspace = ips::descendants(tree, current_node)
       subspace=tip_search_subspace[tip_search_subspace%in%tip_nodes] #Find all from the set that can be included.
 
-      ####  Must add one section for the nodepath we just went through sampling up to the ancestor.###
-      # Nodepath from current_node to tip node - all the internal will be the same state since we were allowed to move.
-      # Add a starting node in the script, then find the nodepath to this one. Setup a list with these nodes, and replace the
-      # whichmax nodes - soon to be sampled nodes, with these.
 
       if(length(subspace)!=0) {
         for(i in 1:length(subspace)) { #Check for transitions on nodepath to each tip this - should become buggy with sampling.
@@ -365,8 +322,8 @@ LineageHomology_w_uncertainty = function(tree,ace_nodes,ace_tips, give_tips=NA,s
     lineage_tips[[counter]]=tip_label_list
     mrca.list[counter] = current_node
     counter = counter+1 #move one up to fill the next index on in the next loop iteration.
-    #print(paste0("imports are:",importations))
-    #print(paste0("Local transmissions are:",local_transmissions))
+    #deubg: print(paste0("imports are:",importations))
+    #debug: print(paste0("Local transmissions are:",local_transmissions))
   }
   #process the mrca nodes to ages.
   names(lineage_tips)=paste0("Lineage no: ", 1:length(lineage_tips))
@@ -384,30 +341,41 @@ LineageHomology_w_uncertainty = function(tree,ace_nodes,ace_tips, give_tips=NA,s
 }
 
 
-##Test
-# tree;
-# ace_nodes = test$lik.anc;
-# give_tips = Norwegian_tips;
-# ace_tips = to.matrix(Locations, seq = c("Norway", "RoW"));
-# start_time = start_date
-#' Title
+#' LineageHomology_w_uncertainty_v2
+#' @description
+#'  LineageHomology_w_uncertainty_v2 returns the same outputs as LineageHomology.
+#'  This is the same function as LineageHomology_w_uncertainty but faster.
+#'  LineageHomology counts transmission lineages according to state transitions between ancestral and descendant nodes that have a probability higher than 50 percent.
+#'  LineageHomolog_w_uncertainty instead samples states from the posterior probability of states (that is usually included in a phylogeographical consensus tree) for each node. Thus, the transmission lineage division is probabilistic and retains the uncertainty in the posterior distribution if the function is run multiple times, e.g., using base::replicate().
 #'
-#' @param tree
-#' @param ace_nodes
-#' @param ace_tips
-#' @param give_tips
-#' @param start_time
+#' @param tree Phylogenetic tree
+#' @param ace_nodes Node probabilities in ace format
+#' @param ace_tips Tip probabilities in ace format
+#' @param give_tips Constrain the computations to a set of tips, e.g. all the names of the tips in a certain state (e.g. one specific geographical location).
+#' @param start_time Date of root in the phylogeny.
 #'
 #' @return
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' multi_counts = pbreplicate(
+#'   100,
+#'   LineageHomology::LineageHomology_w_uncertainty_v2(
+#'     tree,
+#'     ace_nodes = test$lik.anc,
+#'     give_tips = Norwegian_tips,
+#'     ace_tips = to.matrix(Locations, seq = c("Norway", "RoW")),
+#'     start_time = start_date
+#'   )
+#' )
+#' }
 #'
-LineageHomology_w_uncertainty_test = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) {
+LineageHomology_w_uncertainty_v2 = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) {
 
   #NB. There is some bug in here. Must be fixed before the Uk report can be updated.
   #Line for debugging using the UK script
-  #tree = tree; ace_nodes = castor$ancestral_likelihoods; give_tips = Norwegian_tips; ace_tips = to.matrix(Locations,seq=c("Norway","RoW"));start_time = start_date
+  #Debug: tree = tree; ace_nodes = castor$ancestral_likelihoods; give_tips = Norwegian_tips; ace_tips = to.matrix(Locations,seq=c("Norway","RoW"));start_time = start_date
 
   #The node number of the tips are
   tip_nodes = sapply(tree$tip.label,function(x,y) which(y==x),y=tree$tip.label)
@@ -519,8 +487,8 @@ LineageHomology_w_uncertainty_test = function(tree,ace_nodes,ace_tips, give_tips
     lineage_tips[[counter]]=tip_label_list
     mrca.list[counter] = current_node
     counter = counter+1 #move one up to fill the next index on in the next loop iteration.
-    #print(paste0("imports are:",importations))
-    #print(paste0("Local transmissions are:",local_transmissions))
+    #debug: print(paste0("imports are:",importations))
+    #debug: print(paste0("Local transmissions are:",local_transmissions))
   }
   #process the mrca nodes to ages.
   names(lineage_tips)=paste0("Lineage no: ", 1:length(lineage_tips))

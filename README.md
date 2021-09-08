@@ -3,19 +3,23 @@
 
 # LineageHomology
 
--   [Installation](#installation)
--   [Example](#example)
--   [Tutorial and gallery of plotting
-    methods](#for-a-more-advanced-example-and-illustrations-of-some-of-the-plotting-methods-see)
+-   [Installation](##installation)
+-   [Example](##Introduction)
+-   [Tutorial and gallery of plotting methods](##Tutorial)
 
 <!-- badges: start -->
 <!-- badges: end -->
 
 LineageHomology provides a set of functions that analyzes the outputs
-from an ancestral state reconstruction. Following du Plessis et
-al. (2021) (10.1126/science.abf2946) to estimate if taxa have inhereted
-traits by homology or if their character state represents a novelty wrt.
-the other taxa in the tree.
+from an ancestral state reconstruction. LineageHomology counts
+transmission lineages according to state transitions between ancestral
+and descendant nodes that have a probability higher than 50 percent. The
+method is analogous to that introduced by du Plessis et al. (2021) (DOI:
+10.1126/science.abf2946). LineageHomology takes the output of an
+ancestral state reconstruction method and returns descriptions of
+Transmission Lineages. The outputs contain descriptions of Transmission
+lineages, tips where traits are inferred to be locally inherited
+(homologous traits or local transmissions depending on the context)
 
 ## Installation
 
@@ -23,30 +27,26 @@ You can install the latest version of LineageHomology from this
 repository using
 
 ``` r
-library(devtools)
-devtools::install_github("magnusnosnes/LineageHomology")
+#library(devtools)
+#devtools::install_github("magnusnosnes/LineageHomology")
 ```
 
-## Demonstration
+## Introduction
 
 This example shows how an reconstructed ancestral state history can be
 used to estimate local transmission lineages.
 
 ``` r
 library(LineageHomology)
-## basic example code
-
-#Loading other packages for simulating data. 
+#Loading required packages.
 library(ape)
-library(phytools)
-#> Loading required package: maps
-library(phangorn)
+#Loading other packages for simulating data. 
 library(BactDating)
 
 #Simulate data from Norway and rest of the world
 set.seed(400)
 tree_test = simdatedtree(nsam=10, dateroot=2000)
-tree_test = ladderize(tree_test)
+tree_test = ape::ladderize(tree_test)
 Q=matrix(c(0.5,0.5,0.5,0.5), nrow=2,ncol=2, byrow=F)
 colnames(Q)=c("Norway","RoW")
 loc = c("Norway", "Norway","Norway","RoW", "RoW", "Norway", "Norway", "RoW", "RoW", "RoW")
@@ -64,6 +64,7 @@ tiplabels(pie=tips, cex=0.7,piecol=c("Red","Blue"))
 <img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
 
 ``` r
+
 LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
                         ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
 #> $Import_LocalTrans
@@ -97,7 +98,7 @@ LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
 #> [1] 2000.000 2001.242 2004.675 2000.810
 ```
 
-### Tutorial
+## Tutorial
 
 [Tutorial and plotting
 methods](https://github.com/magnusnosnes/LineageHomology/blob/master/Examples_and_plotting_methods/Simple_example/Basic_plotting.md)

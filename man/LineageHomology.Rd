@@ -2,7 +2,7 @@
 % Please edit documentation in R/LineageHomology.R
 \name{LineageHomology}
 \alias{LineageHomology}
-\title{Title}
+\title{LineageHomology}
 \usage{
 LineageHomology(tree, ace_nodes, ace_tips, give_tips = NA, start_time = NA)
 }
@@ -13,25 +13,41 @@ LineageHomology(tree, ace_nodes, ace_tips, give_tips = NA, start_time = NA)
 
 \item{ace_tips}{Tip probabilities in ace format}
 
-\item{give_tips}{Taxa to do the computations for}
+\item{give_tips}{Constrain the computations to a set of tips, e.g. all the names of the tips in a certain state (e.g. one specific geographical location).}
 
 \item{start_time}{Date of root in the phylogeny.}
 }
 \value{
-Import_LocalTrans contains an estimate of the number of taxa that are have changed state wrt. the state of the closest common ancestral node shared with any other taxa.
 
-Lineage_sizes contains the number of taxa that belong to a group defined by the mapped state. This means that for the entire group, all the interal nodes will be mapped to the same state with 50% or higher probability. *Taxa names contains sub lists for each lineage, in the same order as the other lists.
 
-MRCA’s contains the time of the most recent common ancestor of the groups.
+Import_LocalTrans
+ contains an estimate of the number of taxa that are have changed state wrt.
+ the state of the closest common ancestral node shared with any other taxa.
 
-Lineage_state the state the groups are mapped to, the states are treated as numbers in the anlyses, so the relative ordering has to be looked up.
+Lineage_sizes
+ contains the number of taxa that belong to a group defined by the mapped state.
+ This means that all the internal nodes will be mapped to the same state with 50 percent or higher probability for the entire transmission lineage.
+ Taxa names contain sub-lists with the names of the tips in each transmission lineage.
+ The order of the lists is the same as that of the transmission lineages.
+
+MRCA’s
+contains the time of the most recent common ancestor of the groups.
+
+Lineage_state
+contains the state the transmission lineages belong to, the states are treated as numbers in the analyses, so the relative ordering has to be looked up.
 }
 \description{
-Title
+LineageHomology counts transmission lineages according to state transitions between ancestral and descendant nodes that have a probability higher than 50 percent.
+The method is analogous to that introduced by du Plessis et al. (2021) (DOI: 10.1126/science.abf2946).
+LineageHomology takes the output of an ancestral state reconstruction method with included state probabilities at each node.
+The input format should match the return format from the ape::ace function (see the help files at ?ape::ace).
+The outputs contain descriptions of Transmission lineages, tips where traits are inferred to be locally inherited (homologous traits or local transmissions depending on the context).
+See the full tutorial including visualization methods at: \url{https://github.com/magnusnosnes/LineageHomology}.
 }
 \examples{
 \dontrun{
 set.seed(400)
+library(BactDating)
 tree_test = simdatedtree(nsam=300, dateroot=2000) #300 taxa and date of the root at year 2000.
 tree_test = ladderize(tree_test) #Reorder the tree to make it look nice
 fit1 = ace(x=trait, phy= tree_test, type="discrete", mod="ARD") #Estimate the ancestral history
