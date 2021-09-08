@@ -19,11 +19,13 @@ knitr::opts_chunk$set(
 #### Table of contents 
 * [Estimating local transmission linages for phylogeographic data with two categories.](#estimating-local-transmission-linages-for-phylogeographic-data-with-two-categories)
 * [Simulate tip data with two locations](#simulate-phylogeographic-data-with-two-locations--norway-and-rest-of-the-world--row-)
+* [Running LineageHomology](#running-lineagehomology)
 * [Plotting transmission lineages](#plot-lineage-densities-over-time)
     - [Color the lineages after location](#we-can-color-the-groups-by-the-state-they-are-in--and-restrict-the-plotted-groups-to-sizes-larger-than-1-4--and-10)
 * [Plot cumulative lineage size over time.](#plot-cumulative-lineage-size-over-time)
-    - [Again we can add color to the groups by specifying it.](#again-we-can-add-color-to-the-groups-by-specifying-it)
-
+    - [Color the lineages after location](#again-we-can-add-color-to-the-groups-by-specifying-it)
+* [Sample transmission lineages probabilistically](#probabilistic-counting-of-transmission-lineages)
+* [Produce confidence interval on the largest transmission lineage](#estimate-size-of-largest-transmission-lineage)
 
 
 
@@ -70,7 +72,18 @@ tiplabels(pie=tips, cex=0.2,piecol=c("Red","Blue"))
  
 The nodes on the phylogeny are piecharts that represents the probability of either geographical state, where red represents Norway and blue represents RoW. LineageHomology uses the probabilities to count connected groups of taxa, where all the nodes on the paths between them have a probability that > 50% for the same geographical state. It also returns the number of singletons, dates and has a number of different plotting methods to display the results. 
 
- 
+#### Running LineageHomology
+
+Next we run LineageHomology. The inputs should take this format.
+```{r,fig.width=10,fig.height=15}
+tree_test
+head(fit1$lik.anc)
+head( to.matrix(trait, seq=c("Norway", "RoW")))
+
+```
+
+Note that the node probabilities of the tips must have rownames that match the tips of of the phylogeny.
+
 ```{r,fig.width=10,fig.height=15}
 Result = LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
                         ace_tips = to.matrix(trait, seq=c("Norway", "RoW")), start_time=2000)
@@ -145,3 +158,42 @@ LineageHomology::lineage_growth_cumulative(Result_lineage_info = Result_lineage_
 
 ```
 
+### Probabilistic counting of transmission lineages
+
+For all the figures shown above, the transmission lineage division was done by division of lineages at points where a transition is estimated with more than 50 percent probability. If one wishes to rather count transmission lineages by sampling from the observed probabilities, one can use the function LineageHomology_w_uncertainty.
+
+```{r,fig.width=10,fig.height=7}
+Result1 = LineageHomology_w_uncertainty_v2(tree_test, ace_nodes=fit1$lik.anc,
+                        ace_tips = to.matrix(trait, seq=c("Norway", "RoW")), start_time=2000)
+LineageHomology::treemap_lineagehomology(Result1)
+Result2 =  LineageHomology_w_uncertainty_v2(tree_test, ace_nodes=fit1$lik.anc,
+                        ace_tips = to.matrix(trait, seq=c("Norway", "RoW")), start_time=2000)
+LineageHomology::treemap_lineagehomology(Result2)
+```
+
+As this figures show, the division of lineages will vary according to the sampled states of some of the nodes. This can be useful for producing confidence limits on e.g. the size of the largest lineage.
+
+#### Estimate size of largest transmission lineage
+
+We can use pbreplicate to counts transmission lineages probabilistically many times to obtain confidence intervals (or, in this case, a distribution) for the size of the largest transmission lineage.
+
+```{r,fig.width=10,fig.height=7}
+library(pbapply)
+multi_counts = pbreplicate(
+  1000,
+  LineageHomology::LineageHomology_w_uncertainty_v2(
+    tree=tree_test,
+    ace_nodes=fit1$lik.anc,
+    ace_tips = to.matrix(trait, seq=c("Norway", "RoW")),
+    start_time = 2000
+  )
+)
+
+largest_lineage = c()
+for(i in 1:1000) {
+  largest_lineage = c(largest_lineage, max(multi_counts[,i]$Lineage_sizes))
+}
+
+hist(largest_lineage, breaks=100, xlim=c(0,40), probability = F, main="Size of largest transmission lineage",xlab="Size", ylab="Probability")
+
+```
