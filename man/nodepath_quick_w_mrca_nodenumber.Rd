@@ -2,7 +2,8 @@
 % Please edit documentation in R/Utility.R
 \name{nodepath_quick_w_mrca_nodenumber}
 \alias{nodepath_quick_w_mrca_nodenumber}
-\title{Title}
+\title{nodepath quick
+Written by Magnus Nygaard Osnes 2021.}
 \usage{
 nodepath_quick_w_mrca_nodenumber(tree, taxa, mrca)
 }
@@ -13,5 +14,6 @@ nodepath_quick_w_mrca_nodenumber(tree, taxa, mrca)
 
 }
 \description{
-Title
+nodepath quick
+Written by Magnus Nygaard Osnes 2021.
 }

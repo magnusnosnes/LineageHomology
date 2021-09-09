@@ -3,7 +3,6 @@
 #E.G: If the group size is 2, then it is +0.5 importations, and +0.5 local transmissions.
 #E.G: IF the group size is 30 then it is +1/30 importation and + 29/30 local transmissions
 
-library(phytools)
 
 #' Title
 #'
@@ -15,7 +14,6 @@ library(phytools)
 #'
 #' @return
 #' @export
-#' @importFrom phytools nodeHeights
 #' @examples
 Relative_load_import_multi = function(tree,multicount, dates,start_time,tip_list) {
   Result_multi = multicount

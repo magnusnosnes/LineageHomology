@@ -14,12 +14,7 @@ Suggests:
     rmarkdown
 VignetteBuilder: knitr
 Imports: 
-    phangorn,
     ape,
-    phytools,
-    TreeTools,
-    BactDating,
-    ips,
     data.table,
     expm,
     lubridate,

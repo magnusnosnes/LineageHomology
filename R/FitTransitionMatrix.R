@@ -1,4 +1,3 @@
-library(phytools)
 library(ape)
 library(expm)
 

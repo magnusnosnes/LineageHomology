@@ -1,9 +1,5 @@
-library(phytools)
 library(ape)
-library(phangorn)
-library(TreeTools)
-library(BactDating)
-library(ips)
+library(lubridate)
 
 
 #Pseudocode:
@@ -132,7 +128,7 @@ LineageHomology = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=NA) 
         }
 
       }
-      tip_search_subspace = ips::descendants(tree, current_node)
+      tip_search_subspace = descendants(tree, current_node)
       subspace=tip_search_subspace[tip_search_subspace%in%tip_nodes] #Find all possible tips in searchspace descending from the current node.
 
       if(length(subspace)!=0) {
@@ -287,7 +283,7 @@ LineageHomology_w_uncertainty = function(tree,ace_nodes,ace_tips, give_tips=NA,s
         }
 
       }
-      tip_search_subspace = ips::descendants(tree, current_node)
+      tip_search_subspace = descendants(tree, current_node)
       subspace=tip_search_subspace[tip_search_subspace%in%tip_nodes] #Find all from the set that can be included.
 
 
@@ -450,7 +446,7 @@ LineageHomology_w_uncertainty_v2 = function(tree,ace_nodes,ace_tips, give_tips=N
         }
 
       }
-      tip_search_subspace = ips::descendants(tree, current_node)
+      tip_search_subspace = descendants(tree, current_node)
       subspace=tip_search_subspace[tip_search_subspace%in%tip_nodes] #Find all from the set that can be included.
 
       ####  Must add one section for the nodepath we just went through sampling up to the ancestor.###

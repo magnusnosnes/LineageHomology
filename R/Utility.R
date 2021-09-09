@@ -1,4 +1,5 @@
-
+#   ____________________________________________________________________________
+#   Internal functions: nodeheight from phytools and descendants from ips   ####
 
 # convert vector of x to binary matrix
 # written by Liam J. Revell 2012
@@ -19,8 +20,6 @@ to.matrix<-function(x,seq){
 
 
 
-#   ____________________________________________________________________________
-#   Internal functions: nodeheight from phytools and descendants from ips   ####
 
 #' Title
 #'
@@ -44,7 +43,7 @@ find_midedge_ancestral = function(tree, node) {
   minus
 }
 
-#' Title
+#' Written by Magnus Nygaard Osnes 2021.
 #'
 #' @param tree
 #' @param taxa
@@ -73,7 +72,8 @@ nodepath_quick_w_mrca = function(tree,taxa,mrca) {
   bifurcations #Return all the bifurcation nodes.
 }
 
-#' Title
+#' nodepath quick
+#' Written by Magnus Nygaard Osnes 2021.
 #'
 #' @param tree
 #' @param taxa
@@ -194,6 +194,35 @@ nodeheight<-function(tree,node,...){
   h+ROOT
 }
 
+
+# returns the heights of each node
+# written by Liam J. Revell 2011, 2012, 2013, 2015, 2016
+# modified by Klaus Schliep 2017
+#' Title
+#'
+#' @param tree
+#' @param ...
+#'
+#' @return
+#' @export
+#'
+#' @examples
+nodeHeights<-function(tree,...){
+  if(hasArg(root.edge)) root.edge<-list(...)$root.edge
+  else root.edge<-FALSE
+  if(root.edge) ROOT<-if(!is.null(tree$root.edge)) tree$root.edge else 0
+  else ROOT<-0
+  nHeight <- function(tree){
+    tree <- reorder(tree)
+    edge <- tree$edge
+    el <- tree$edge.length
+    res <- numeric(max(tree$edge))
+    for(i in seq_len(nrow(edge))) res[edge[i,2]] <- res[edge[i,1]] + el[i]
+    res
+  }
+  nh <- nHeight(tree)
+  return(matrix(nh[tree$edge], ncol=2L)+ROOT)
+}
 
 ## function gets ancestor node numbers, to be used internally by
 ## written by Liam J. Revell 2014
