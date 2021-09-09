@@ -22,6 +22,8 @@
     probabilistically](#probabilistic-counting-of-transmission-lineages)
 -   [Produce confidence interval on the largest transmission
     lineage](#estimate-size-of-largest-transmission-lineage)
+-   [Estimate importation and local transmission from phylogeographic
+    results](estimating-importation-versus-local-transmission)
 
 ``` r
 #Load needed packages
@@ -369,3 +371,54 @@ hist(largest_lineage, breaks=100, xlim=c(0,40), probability = F, main="Size of l
 ```
 
 <img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" />
+
+#### Estimating importation versus local transmission
+
+Here we focus on Norway and run LineageHomology on the observed tips in
+Norway before the contribution of importation and local transmission
+events over time.
+
+``` r
+library(pbapply)
+
+Norwegian_tips = names(trait[trait=="Norway"])
+head(Norwegian_tips)
+#> [1] "t214" "t40"  "t173" "t237" "t90"  "t298"
+
+multi_counts = pbreplicate(
+  1000,
+  LineageHomology::LineageHomology_w_uncertainty_v2(
+    tree=tree_test,
+    give_tips = Norwegian_tips,
+    ace_nodes=fit1$lik.anc,
+    ace_tips = to.matrix(trait, seq=c("Norway", "RoW")),
+    start_time = 2000
+  )
+)
+
+
+ #Count number of local transmission and importations in half year (0.5) intervals.
+result_import_local_transmission = import_local_transmission(tree = tree_test,LineageHomology_replicates = multi_counts, start_time = 2000,time_interval_size = 0.5)
+```
+
+We can summarise the number of tips estimated to be a result of
+importation events and local transmission events.
+
+``` r
+Summarize_import_local_transmission(LineageHomology_replicates = multi_counts)
+#>                          2.5%       50%      97.5%
+#> Import             77.9750000 86.000000 94.0000000
+#> Local transmission 53.0000000 61.000000 69.0250000
+#> Import / Total      0.5304422  0.585034  0.6394558
+```
+
+Lastly, we can plot the relative contribution of importation and local
+transmission over time in time intervals spanning half a year.
+
+``` r
+plot_importation_local_transmission(tree = tree_test, result_import_local_transmission = result_import_local_transmission,start_time=2000, time_interval_size = 0.5, date_breaks = "2 years",importation_or_local = "both") #Use importation_or_local = "importation" or "local" if you do not have the grid package installed. 
+```
+
+<img src="man/figures/README-unnamed-chunk-17-1.png" width="100%" />
+
+#### Questions regarding the package can be directed to <magnusnosnes@gmail.com>

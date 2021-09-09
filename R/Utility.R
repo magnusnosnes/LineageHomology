@@ -254,3 +254,32 @@ getAncestors<-function(tree,node,type=c("all","parent")){
   } else stop("do not recognize type")
 }
 
+#Written by Magnus Nygaard Osnes 2021.
+
+#' nodepath_quick
+#'
+#' @param tree
+#' @param taxa
+#'
+#' @return
+#' @export
+#'
+#' @examples
+nodepath_quick = function(tree,taxa) {
+
+  bifurcations = c()
+  mrca_node = getMRCA(tree,tip = taxa)
+  bifurcations = c(mrca_node)
+
+  tip_nodes = sapply(taxa,function(x,y) which(y==x),y=tree$tip.label)
+  new_nodes = tree$edge[,1][which(tree$edge[,2]%in%tip_nodes)]
+  bifurcations = unique(c(new_nodes,bifurcations))
+  new_nodes = new_nodes[new_nodes!=mrca_node]
+  #If any is mrca, remove them from loop.
+  while(length(new_nodes)>0) {
+    new_nodes = tree$edge[,1][which(tree$edge[,2]%in%new_nodes)]
+    new_nodes = new_nodes[new_nodes!=mrca_node]
+    bifurcations = unique(c(new_nodes,bifurcations))
+  }
+  bifurcations #Return all the bifurcation nodes.
+}
