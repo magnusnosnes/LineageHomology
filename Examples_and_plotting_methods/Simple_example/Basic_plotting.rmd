@@ -26,7 +26,7 @@ knitr::opts_chunk$set(
     - [Color the lineages after location](#again-we-can-add-color-to-the-groups-by-specifying-it)
 * [Sample transmission lineages probabilistically](#probabilistic-counting-of-transmission-lineages)
 * [Produce confidence interval on the largest transmission lineage](#estimate-size-of-largest-transmission-lineage)
-* [Estimate importation and local transmission from phylogeographic results](#estimating-importation-versus-local-transmission)
+* [Estimate importation and local transmission from phylogeographic results](#estimating-importation-and-local-transmission)
 
 
 
@@ -45,8 +45,8 @@ library(BactDating)
 
 ```
 
-##### Simulate tip data with two different state.
-For the purpose of this example we let the geographical states represent Norway and the rest of the World (RoW). The package was originally developed geographical data with two locations.
+##### Simulate tip data with two different states.
+For the purpose of this example, we let the geographical states represent Norway and the rest of the World (RoW). The package was originally developed geographical data with two locations.
 
 ```{r,fig.width=10,fig.height=15}
 set.seed(400)
@@ -71,7 +71,7 @@ tiplabels(pie=tips, cex=0.2,piecol=c("Red","Blue"))
 
 ```
  
-The piecharts on the nodes of the phylogeny represents the probability of the node being in the different geographical locations, where red represents Norway and blue represents RoW. LineageHomology uses these probabilities to count connected groups of tips, where all the nodes on the paths between them have a probability that > 50% for the same geographical state. LineageHomology also returns the number of tips that are not connected to any other tips in this way.  Following du Plessis et al. (2021) (DOI: 10.1126/science.abf2946) we refer to the groups as transmission lineages (TLs) and isolated tips as singletons. LineageHomology also returns other useful summaries
+The pie charts on the nodes of the phylogeny represent the probability of the node being in the different geographical locations, where red represents Norway, and blue represents RoW. LineageHomology uses these probabilities to count connected groups of tips, where all the nodes on the paths between them have a probability that > 50% for the same geographical state. LineageHomology also returns the number of tips that are not connected to any other tips in this way.  Following du Plessis et al. (2021) (DOI: 10.1126/science.abf2946) we refer to the groups as transmission lineages (TLs) and isolated tips as singletons. LineageHomology also returns other useful summaries.
 
 #### Running LineageHomology
 
@@ -83,7 +83,7 @@ head( to.matrix(trait, seq=c("Norway", "RoW")))
 
 ```
 
-Note that the node probabilities of the tips must have rownames that match the tips of of the phylogeny.
+Note that the node probabilities of the tips must have row names that match the tips of the phylogeny.
 
 ```{r,fig.width=10,fig.height=15}
 Result = LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
@@ -94,12 +94,12 @@ Result = LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
 LineageHomology outputs a list of lists. 
 
 * Import_LocalTrans
-contains an estimate of the number of taxa that are have changed state wrt. the state of the closest common ancestral node shared with any other taxa. 
-* Lineage_sizes contains the number of taxa that belong to the mapped state. This means that for the entire group, all the interal nodes will be mapped to the same state with 50% or higher probability. 
-*Taxa names contains sub lists for each lineage, in the same order as the other lists. 
-   + Each sub list contains the taxa names of all the taxa in the group. 
+contains an estimate of the number of taxa that are have changed state wrt. The state of the closest common ancestral node is shared with any other taxa. 
+* Lineage_sizes contains the number of taxa that belong to the mapped state. This means that for the entire group, all the internal nodes will be mapped to the same state with a 50% or higher probability. 
+*Taxa names contain sub-lists for each lineage, in the same order as the other lists. 
+   + Each sublist contains the taxa names of all the taxa in the group. 
 * MRCA's contains the time of the most recent common ancestor of the groups. 
-* Lineage_state contains the state the groups are mapped to, the states are treated as numbers in the anlyses, so the relative ordering has to be looked up.
+* Lineage_state contains the state the groups are mapped to. The states are treated as numbers in the analyses, so the relative ordering has to be looked up.
 
 
 ```{r,fig.width=10,fig.height=7}
@@ -131,13 +131,13 @@ head(name_date)
 Result_lineage_info = LineageHomology::lineage_info(Result,name_date)
 ```
 
-Another plotting method is density plots of the transmission lineages. Ridgeplot_lineagedensities takes the input from the function lineage_info and produces density plots using for each TL over time. The density plots are made using the ggridges R-package. The TLs are sorted from largest to smallest, and can be colored according to the state that defines the TL. 
+Another plotting method is density plots of the transmission lineages. Ridgeplot_lineagedensities takes the input from the function lineage_info and produces density plots using for each TL over time. The density plots are made using the ggridges R-package. The TLs are sorted from largest to smallest and can be coloured according to the state that defines the TL. 
 
 ```{r,fig.width=10,fig.height=7}
 LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 1,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = F)
 ```
 
-##### We can color the groups by the state they are in, and restrict the plotted groups to sizes larger than 1,4, and 10
+##### We can colour the groups by the state they are in, and restrict the plotted groups to sizes larger than 1,4, and 10
 
 ```{r,fig.width=10,fig.height=7}
 
@@ -158,7 +158,7 @@ LineageHomology::lineage_growth_cumulative(Result_lineage_info = Result_lineage_
 
 ```
  
-##### Again we can add color to the groups by specifying it.
+##### Again, we can add colour to the groups by specifying it.
 
 ```{r,fig.width=10,fig.height=7}
 LineageHomology::lineage_growth_cumulative(Result_lineage_info = Result_lineage_info, datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = T)
@@ -178,7 +178,7 @@ Result2 =  LineageHomology_w_uncertainty_v2(tree_test, ace_nodes=fit1$lik.anc,
 LineageHomology::treemap_lineagehomology(Result2)
 ```
 
-As this figures show, the division of lineages will vary according to the sampled states of some of the nodes. This can be useful for producing confidence limits on e.g. the size of the largest lineage.
+As these figures show, the division of lineages will vary according to the sampled states of some of the nodes. This can be useful for producing confidence limits on, e.g. the size of the largest lineage.
 
 ### Estimate size of largest transmission lineage
 
@@ -206,7 +206,7 @@ hist(largest_lineage, breaks=100, xlim=c(0,40), probability = F, main="Size of l
 ```
 
 
-#### Estimating importation versus local transmission
+#### Estimating importation and local transmission
 
 Here we focus on Norway and run LineageHomology on the observed tips in Norway before the contribution of importation and local transmission events over time.
 
@@ -228,7 +228,7 @@ multi_counts = pbreplicate(
 )
 
 
- #Count number of local transmission and importations in half year (0.5) intervals.
+ #Count number of local transmission and importations in half-year (0.5) intervals.
 result_import_local_transmission = import_local_transmission(tree = tree_test,LineageHomology_replicates = multi_counts, start_time = 2000,time_interval_size = 0.5)
 
 ```
@@ -239,7 +239,7 @@ We can summarise the number of tips estimated to be a result of importation even
 Summarize_import_local_transmission(LineageHomology_replicates = multi_counts)
 ```
 
-Lastly, we can plot the relative contribution of importation and local transmission over time in time intervals spanning half a year. 
+Lastly, we can plot the relative contribution of importation and local transmission in time intervals spanning half a year. 
 
 ```{r,fig.width=10,fig.height=7}
 plot_importation_local_transmission(tree = tree_test, result_import_local_transmission = result_import_local_transmission,start_time=2000, time_interval_size = 0.5, date_breaks = "2 years",importation_or_local = "both") #Use importation_or_local = "importation" or "local" if you do not have the grid package installed. 

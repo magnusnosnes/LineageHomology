@@ -25,11 +25,11 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-LineageHomology provides a set of functions that analyzes the outputs from ancestral state reconstructions. LineageHomology takes the output of an ancestral state reconstruction method with included state probabilities at each node and counts transmission lineages (TLs). A TL is defined as a connected group of tips where state transitions between ancestral and descendant nodes that have a probability lower than 50 percent. The function also counts the number of tips that are not connected to any other tips in this way (singletons). The method is analogous to that introduced by du Plessis et al. (2021) (DOI: 10.1126/science.abf2946). The outputs contain descriptions of the size of TLs, singletons, and other useful summaries. 
+LineageHomology provides a set of functions that analyses the outputs from ancestral state reconstructions. LineageHomology takes the output of an ancestral state reconstruction method with included state probabilities at each node and counts transmission lineages (TLs). A TL is defined as a connected group of tips where state transitions between ancestral and descendant nodes that have a probability lower than 50 percent. The function also counts the number of tips that are not connected to any other tips in this way (singletons). The method is analogous to that introduced by du Plessis et al. (2021) (DOI: 10.1126/science.abf2946). The outputs contain descriptions of the size of TLs, singletons, and other useful summaries. 
 
 ## Installation
 
-You can install the latest version of LineageHomology from this repository using 
+You can install the latest version of LineageHomology from this repository using. 
 
 ```{r, eval=FALSE,echo=T}
 library(devtools)
@@ -76,7 +76,7 @@ Return = LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
 Return
 ```
 
-The results can be visualized by e.g. using a treemap plot. 
+The results can be visualised by, e.g. using a treemap plot. 
 
 ```{r,fig.width=10,fig.height=7}
 LineageHomology::treemap_lineagehomology(Return)

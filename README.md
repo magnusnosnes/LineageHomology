@@ -10,7 +10,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-LineageHomology provides a set of functions that analyzes the outputs
+LineageHomology provides a set of functions that analyses the outputs
 from ancestral state reconstructions. LineageHomology takes the output
 of an ancestral state reconstruction method with included state
 probabilities at each node and counts transmission lineages (TLs). A TL
@@ -25,7 +25,7 @@ of TLs, singletons, and other useful summaries.
 ## Installation
 
 You can install the latest version of LineageHomology from this
-repository using
+repository using.
 
 ``` r
 library(devtools)
@@ -110,7 +110,7 @@ Return
 #> [1] 2000.000 2001.242 2004.675 2000.810
 ```
 
-The results can be visualized by e.g. using a treemap plot.
+The results can be visualised by, e.g. using a treemap plot.
 
 ``` r
 LineageHomology::treemap_lineagehomology(Return)
