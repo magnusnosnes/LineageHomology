@@ -41,7 +41,7 @@ library(BactDating)
 
 For the purpose of this example we let the geographical states represent
 Norway and the rest of the World (RoW). The package was originally
-developed for data such as this.
+developed geographical data with two locations.
 
 ``` r
 set.seed(400)
@@ -67,13 +67,16 @@ tiplabels(pie=tips, cex=0.2,piecol=c("Red","Blue"))
 
 <img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
 
-The nodes on the phylogeny are piecharts that represents the probability
-of either geographical state, where red represents Norway and blue
-represents RoW. LineageHomology uses the probabilities to count
-connected groups of taxa, where all the nodes on the paths between them
-have a probability that &gt; 50% for the same geographical state. It
-also returns the number of singletons, dates and has a number of
-different plotting methods to display the results.
+The piecharts on the nodes of the phylogeny represents the probability
+of the node being in the different geographical locations, where red
+represents Norway and blue represents RoW. LineageHomology uses these
+probabilities to count connected groups of tips, where all the nodes on
+the paths between them have a probability that &gt; 50% for the same
+geographical state. LineageHomology also returns the number of tips that
+are not connected to any other tips in this way. Following du Plessis et
+al. (2021) (DOI: 10.1126/science.abf2946) we refer to the groups as
+transmission lineages (TLs) and isolated tips as singletons.
+LineageHomology also returns other useful summaries
 
 #### Running LineageHomology
 
@@ -228,6 +231,13 @@ Result$lineage_state
 
 \#Make a treemap plot to get a quick overview of the lineages.
 
+Treemap\_lineagehomology uses the treemap package to visualize
+transmission lineages as rectangles with areas that reflect their
+relative sizes. Additionally, the text on each square gives the name of
+group number of the transmission lineage, the estimated time of the mrca
+(TMRCA) of the transmission lineage and the number of tips in the group
+(S)
+
 ``` r
 LineageHomology::treemap_lineagehomology(Result)
 ```
@@ -236,14 +246,37 @@ LineageHomology::treemap_lineagehomology(Result)
 
 ##### Plot lineage densities over time
 
+Before plotting, we process the results using the function
+lineage\_info. lineage\_info takes the results from LineageHomology and
+names and dates observed dates of the tips in the tree. The formats are
+shown below.
+
 ``` r
 #Set up matrix with taxa info
 name_date = data.frame(name = names(trait), dates= BactDating::leafDates(tree_test))
+head(name_date)
+#>   name    dates
+#> 1 t214 2007.930
+#> 2 t151 2005.666
+#> 3 t158 2008.698
+#> 4  t56 2008.041
+#> 5  t40 2008.290
+#> 6  t13 2006.730
 Result_lineage_info = LineageHomology::lineage_info(Result,name_date)
+```
+
+Another plotting method is density plots of the transmission lineages.
+Ridgeplot\_lineagedensities takes the input from the function
+lineage\_info and produces density plots using for each TL over time.
+The density plots are made using the ggridges R-package. The TLs are
+sorted from largest to smallest, and can be colored according to the
+state that defines the TL.
+
+``` r
 LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 1,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = F)
 ```
 
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
 
 ##### We can color the groups by the state they are in, and restrict the plotted groups to sizes larger than 1,4, and 10
 
@@ -251,19 +284,19 @@ LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_i
 LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 1,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = T)
 ```
 
-<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
 
 ``` r
 LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 4,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = T)
 ```
 
-<img src="man/figures/README-unnamed-chunk-9-2.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-10-2.png" width="100%" />
 
 ``` r
 LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 10,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = T)
 ```
 
-<img src="man/figures/README-unnamed-chunk-9-3.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-10-3.png" width="100%" />
 
 ##### Plot cumulative lineage size over time.
 
@@ -271,7 +304,7 @@ LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_i
 LineageHomology::lineage_growth_cumulative(Result_lineage_info = Result_lineage_info, datelims=c("2000-01-01","2025-01-01","3 year"))
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
 
 ##### Again we can add color to the groups by specifying it.
 
@@ -279,7 +312,7 @@ LineageHomology::lineage_growth_cumulative(Result_lineage_info = Result_lineage_
 LineageHomology::lineage_growth_cumulative(Result_lineage_info = Result_lineage_info, datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = T)
 ```
 
-<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
 
 ### Probabilistic counting of transmission lineages
 
@@ -295,7 +328,7 @@ Result1 = LineageHomology_w_uncertainty_v2(tree_test, ace_nodes=fit1$lik.anc,
 LineageHomology::treemap_lineagehomology(Result1)
 ```
 
-<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-13-1.png" width="100%" />
 
 ``` r
 Result2 =  LineageHomology_w_uncertainty_v2(tree_test, ace_nodes=fit1$lik.anc,
@@ -303,7 +336,7 @@ Result2 =  LineageHomology_w_uncertainty_v2(tree_test, ace_nodes=fit1$lik.anc,
 LineageHomology::treemap_lineagehomology(Result2)
 ```
 
-<img src="man/figures/README-unnamed-chunk-12-2.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-13-2.png" width="100%" />
 
 As this figures show, the division of lineages will vary according to
 the sampled states of some of the nodes. This can be useful for
@@ -335,4 +368,4 @@ for(i in 1:1000) {
 hist(largest_lineage, breaks=100, xlim=c(0,40), probability = F, main="Size of largest transmission lineage",xlab="Size", ylab="Probability")
 ```
 
-<img src="man/figures/README-unnamed-chunk-13-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" />

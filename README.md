@@ -11,14 +11,16 @@
 <!-- badges: end -->
 
 LineageHomology provides a set of functions that analyzes the outputs
-from ancestral state reconstructions. LineageHomology counts
-transmission lineages according to state transitions between ancestral
-and descendant nodes that have a probability higher than 50 percent. The
-method is analogous to that introduced by du Plessis et al. (2021) (DOI:
-10.1126/science.abf2946). The outputs contain descriptions of
-transmission lineages, tips where traits are inferred to be locally
-inherited (homologous traits or local transmissions depending on the
-context), and other useful summaries.
+from ancestral state reconstructions. LineageHomology takes the output
+of an ancestral state reconstruction method with included state
+probabilities at each node and counts transmission lineages (TLs). A TL
+is defined as a connected group of tips where state transitions between
+ancestral and descendant nodes that have a probability lower than 50
+percent. The function also counts the number of tips that are not
+connected to any other tips in this way (singletons). The method is
+analogous to that introduced by du Plessis et al. (2021) (DOI:
+10.1126/science.abf2946). The outputs contain descriptions of the size
+of TLs, singletons, and other useful summaries.
 
 ## Installation
 
