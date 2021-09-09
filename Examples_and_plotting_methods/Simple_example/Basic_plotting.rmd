@@ -45,7 +45,7 @@ library(BactDating)
 ```
 
 ##### Simulate tip data with two different state.
-For the purpose of this example we let the geographical states represent Norway and the rest of the World (RoW). The package was originally developed for data such as this.
+For the purpose of this example we let the geographical states represent Norway and the rest of the World (RoW). The package was originally developed geographical data with two locations.
 
 ```{r,fig.width=10,fig.height=15}
 set.seed(400)
@@ -70,7 +70,7 @@ tiplabels(pie=tips, cex=0.2,piecol=c("Red","Blue"))
 
 ```
  
-The nodes on the phylogeny are piecharts that represents the probability of either geographical state, where red represents Norway and blue represents RoW. LineageHomology uses the probabilities to count connected groups of taxa, where all the nodes on the paths between them have a probability that > 50% for the same geographical state. It also returns the number of singletons, dates and has a number of different plotting methods to display the results. 
+The piecharts on the nodes of the phylogeny represents the probability of the node being in the different geographical locations, where red represents Norway and blue represents RoW. LineageHomology uses these probabilities to count connected groups of tips, where all the nodes on the paths between them have a probability that > 50% for the same geographical state. LineageHomology also returns the number of tips that are not connected to any other tips in this way.  Following du Plessis et al. (2021) (DOI: 10.1126/science.abf2946) we refer to the groups as transmission lineages (TLs) and isolated tips as singletons. LineageHomology also returns other useful summaries
 
 #### Running LineageHomology
 
@@ -115,18 +115,24 @@ Result$lineage_state
 
 #Make a treemap plot to get a quick overview of the lineages.
 
+Treemap_lineagehomology uses the treemap package to visualize transmission lineages as rectangles with areas that reflect their relative sizes. Additionally, the text on each square gives the name of group number of the transmission lineage, the estimated time of the mrca (TMRCA) of the transmission lineage and the number of tips in the group (S)
+
 ```{r,fig.width=10,fig.height=7}
 LineageHomology::treemap_lineagehomology(Result)
 ```
 
-
-
 ##### Plot lineage densities over time 
-
+Before plotting, we process the results using the function lineage_info. lineage_info takes the results from LineageHomology and names and dates observed dates of the tips in the tree. The formats are shown below.  
 ```{r,fig.width=10,fig.height=7}
 #Set up matrix with taxa info
 name_date = data.frame(name = names(trait), dates= BactDating::leafDates(tree_test))
+head(name_date)
 Result_lineage_info = LineageHomology::lineage_info(Result,name_date)
+```
+
+Another plotting method is density plots of the transmission lineages. Ridgeplot_lineagedensities takes the input from the function lineage_info and produces density plots using for each TL over time. The density plots are made using the ggridges R-package. The TLs are sorted from largest to smallest, and can be colored according to the state that defines the TL. 
+
+```{r,fig.width=10,fig.height=7}
 LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 1,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = F)
 ```
 

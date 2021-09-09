@@ -3,9 +3,12 @@ library(ggridges)
 library(forcats)
 library(scales)
 
-#' Title
-#'
-#' @param Result_Lineage_homology The output from linege homology.
+#' lineage_info
+#' @description
+#'  lineage_info formats the outputs from LineageHomology to be plotted easily.
+#'  ridgeplot_lineagedensities and lineage_growth_cumulative both require this function to process the results from Lineagehomology first.
+#'  See the full tutorial at \url{https://github.com/magnusnosnes/LineageHomology/blob/master/Examples_and_plotting_methods/Simple_example/Basic_plotting.md}
+#' @param Result_Lineage_homology The output from LineageHomology.
 #' @param name_date #Data frame with taxa names in one column and numeric dates of sampling in another. The column names should be c("name", "date")
 #'
 #' @return
@@ -38,8 +41,12 @@ lineage_info = function(Result_Lineage_homology, name_date) {
   result_matrix
 }
 
-#' Title
-#'
+#' treemap_lineagehomology
+#' @description
+#' Treemap_lineagehomology uses the treemap package to visualize transmission lineages (TL) as rectangles with areas that reflect their relative sizes.
+#'  Additionally, the text on each square gives the group number of the TL,
+#'  the estimated time of the most recent common ancestor (TMRCA) and the number of tips (S) in the TL. See the full tutorial at
+#'  \url{https://github.com/magnusnosnes/LineageHomology/blob/master/Examples_and_plotting_methods/Simple_example/Basic_plotting.md}
 #' @param Result_LineageHomology Result from the function LineageHomology
 #'
 #' @return
@@ -52,8 +59,11 @@ treemap_lineagehomology = function(Result_LineageHomology) {
 }
 
 
-#' Title
-#'
+#' Ridgeplot Lineagedensities
+#' @description
+#'  Ridgeplot_lineagedensities takes the input from the function lineage_info and produces density plots using for each transmission lineage (TL) over time. The density plots are made using the ggridges R-package.
+#'  The TLs are sorted from largest to smallest, and can be colored according to the state that defines the TL.
+#'  See the full tutorial at \url{https://github.com/magnusnosnes/LineageHomology/blob/master/Examples_and_plotting_methods/Simple_example/Basic_plotting.md}
 #' @param Result_lineage_info
 #' @param groups_larger_than
 #' @param datelims
@@ -63,7 +73,7 @@ treemap_lineagehomology = function(Result_LineageHomology) {
 #'
 #' @examples
 ridgeplot_lineagedensities = function(Result_lineage_info, datelims,groups_larger_than=4,color_by_state=FALSE) {
-  #Requires dplyr, scales
+  #Requires dplyr, scales, ggridges
   dateupplow = as.POSIXct(strptime(c(paste0(datelims[1]," 03:00"),paste0(datelims[2]," 16:00")),format = "%Y-%m-%d %H:%M"))
   Result_lineage_info= Result_lineage_info %>% dplyr::mutate(group_no=forcats::fct_reorder(group_no, group_size)) #Reorder group name factor levels by group size.
   Result_lineage_info=Result_lineage_info[as.numeric(Result_lineage_info$group_size)>groups_larger_than,]
@@ -88,11 +98,15 @@ ridgeplot_lineagedensities = function(Result_lineage_info, datelims,groups_large
 
 
 
-#' Title
-#'
-#' @param Result_lineage_info The output from lineage info.
-#' @param datelims Limits of the dates in format c("yyyy-mm-dd","yyyy-mm-dd", ""). The last argument can be e.g. "1 week"/"1 year"/"1 month"
-#' @param color_by_state Color by the state of the lineage.
+#' Lineage growth cumulative
+#' @description
+#'lineage_growth_cumulative plots the cumulative number of observed tips that belong to each transmission lineage (TL).
+#'  Each line thus corresponds to a different TL,
+#'  and the function can be used to visualize the difference in growth rates and size reached over time.
+#'  See the full tutorial at \url{https://github.com/magnusnosnes/LineageHomology/blob/master/Examples_and_plotting_methods/Simple_example/Basic_plotting.md}
+#' @param Result_lineage_info The output from the function lineage_info. Typical workflows run the functions in the order LineageHomology -> lineage_info -> lineage_growth_cumulative.
+#' @param datelims Limits of the dates in format c("yyyy-mm-dd","yyyy-mm-dd", ""). The last argument can be e.g. "1 week"/"1 year"/"1 month".
+#' @param color_by_state Color by the state of the TL.
 #'
 #' @return
 #' @export
@@ -113,12 +127,3 @@ lineage_growth_cumulative = function(Result_lineage_info,datelims,color_by_state
     }
   g1
 }
-
-
-
-#Example of usage:
-# name_date_category = data.frame(metadat$Strain, decimal_date(metadat$`Collection Data`),metadat$`Pangolin clade`)
-# colnames(name_date_category)=c("name", "date", "category")
-# Result_Lineage_Homology = Result
-# dummy_matrix = lineage_densities_B117(Result, name_date_category)
-# ridgeplot_lineagedensities(dummy_matrix,4)

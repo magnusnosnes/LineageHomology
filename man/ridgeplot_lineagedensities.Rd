@@ -2,7 +2,7 @@
 % Please edit documentation in R/lineage_plots.R
 \name{ridgeplot_lineagedensities}
 \alias{ridgeplot_lineagedensities}
-\title{Title}
+\title{Ridgeplot Lineagedensities}
 \usage{
 ridgeplot_lineagedensities(
   Result_lineage_info,
@@ -18,5 +18,7 @@ ridgeplot_lineagedensities(
 
 }
 \description{
-Title
+Ridgeplot_lineagedensities takes the input from the function lineage_info and produces density plots using for each transmission lineage (TL) over time. The density plots are made using the ggridges R-package.
+ The TLs are sorted from largest to smallest, and can be colored according to the state that defines the TL.
+ See the full tutorial at \url{https://github.com/magnusnosnes/LineageHomology/blob/master/Examples_and_plotting_methods/Simple_example/Basic_plotting.md}
 }

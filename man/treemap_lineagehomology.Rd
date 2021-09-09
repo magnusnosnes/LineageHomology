@@ -2,7 +2,7 @@
 % Please edit documentation in R/lineage_plots.R
 \name{treemap_lineagehomology}
 \alias{treemap_lineagehomology}
-\title{Title}
+\title{treemap_lineagehomology}
 \usage{
 treemap_lineagehomology(Result_LineageHomology)
 }
@@ -13,5 +13,8 @@ treemap_lineagehomology(Result_LineageHomology)
 
 }
 \description{
-Title
+Treemap_lineagehomology uses the treemap package to visualize transmission lineages (TL) as rectangles with areas that reflect their relative sizes.
+ Additionally, the text on each square gives the group number of the TL,
+ the estimated time of the most recent common ancestor (TMRCA) and the number of tips (S) in the TL. See the full tutorial at
+ \url{https://github.com/magnusnosnes/LineageHomology/blob/master/Examples_and_plotting_methods/Simple_example/Basic_plotting.md}
 }

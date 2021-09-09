@@ -2,7 +2,7 @@
 % Please edit documentation in R/lineage_plots.R
 \name{lineage_growth_cumulative}
 \alias{lineage_growth_cumulative}
-\title{Title}
+\title{Lineage growth cumulative}
 \usage{
 lineage_growth_cumulative(
   Result_lineage_info,
@@ -11,15 +11,18 @@ lineage_growth_cumulative(
 )
 }
 \arguments{
-\item{Result_lineage_info}{The output from lineage info.}
+\item{Result_lineage_info}{The output from the function lineage_info. Typical workflows run the functions in the order LineageHomology -> lineage_info -> lineage_growth_cumulative.}
 
-\item{datelims}{Limits of the dates in format c("yyyy-mm-dd","yyyy-mm-dd", ""). The last argument can be e.g. "1 week"/"1 year"/"1 month"}
+\item{datelims}{Limits of the dates in format c("yyyy-mm-dd","yyyy-mm-dd", ""). The last argument can be e.g. "1 week"/"1 year"/"1 month".}
 
-\item{color_by_state}{Color by the state of the lineage.}
+\item{color_by_state}{Color by the state of the TL.}
 }
 \value{
 
 }
 \description{
-Title
+lineage_growth_cumulative plots the cumulative number of observed tips that belong to each transmission lineage (TL).
+ Each line thus corresponds to a different TL,
+ and the function can be used to visualize the difference in growth rates and size reached over time.
+ See the full tutorial at \url{https://github.com/magnusnosnes/LineageHomology/blob/master/Examples_and_plotting_methods/Simple_example/Basic_plotting.md}
 }

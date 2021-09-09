@@ -21,27 +21,39 @@ LineageHomology(tree, ace_nodes, ace_tips, give_tips = NA, start_time = NA)
 
 
 Import_LocalTrans
- contains an estimate of the number of taxa that are have changed state wrt.
- the state of the closest common ancestral node shared with any other taxa.
+ The first entry can be
+ thought of as an estimate of the number of tips that have acquired their state through novel acquisition (a transition in the phylogeny).
+ Similarly, the second number describes the number of tips that have inherited their state by inheritance (homology).
+ Since each transmission lineage started is defined by a state transition,
+ each transmission lineage of size n is composed of 1 novel acquisition and n-1 homologous acquisitions.
+ Singletons are directly translated to novel acquisitions.
 
 Lineage_sizes
- contains the number of taxa that belong to a group defined by the mapped state.
- This means that all the internal nodes will be mapped to the same state with 50 percent or higher probability for the entire transmission lineage.
- Taxa names contain sub-lists with the names of the tips in each transmission lineage.
- The order of the lists is the same as that of the transmission lineages.
+ contains the number of tips that belong to each TL.
+ This means that all the internal nodes will be mapped to the same state with 50 percent or higher probability for the entire TL.
+
+Taxa_names is a list of lists where each sub list contains the names of the tips in each transmission lineage.
+The order is the same as the listed order of the Lineage_sizes.
 
 MRCA’s
 contains the time of the most recent common ancestor of the groups.
 
+Halfedge_over_tmrca
+is the time point on the middle of the edge that is ancestral to each TL's mrca.
+This is used in analyses of importation and local transmission.
+
 Lineage_state
-contains the state the transmission lineages belong to, the states are treated as numbers in the analyses, so the relative ordering has to be looked up.
+contains the state the transmission lineages belong to,
+the states are treated as numbers in the analyses, so the relative ordering has to be looked up.
 }
 \description{
-LineageHomology counts transmission lineages according to state transitions between ancestral and descendant nodes that have a probability higher than 50 percent.
+LineageHomology takes the output of an ancestral state reconstruction method with included state probabilities at
+ each node and counts transmission lineages (TLs). A transmission lineage is defined as a connected group of tips where state transitions between ancestral and descendant nodes
+ that have a probability lower than 50 percent.
+The function also counts the number of tips that are not connected to any other tips in this way (singletons).
 The method is analogous to that introduced by du Plessis et al. (2021) (DOI: 10.1126/science.abf2946).
-LineageHomology takes the output of an ancestral state reconstruction method with included state probabilities at each node.
 The input format should match the return format from the ape::ace function (see the help files at ?ape::ace).
-The outputs contain descriptions of Transmission lineages, tips where traits are inferred to be locally inherited (homologous traits or local transmissions depending on the context).
+The outputs contain descriptions of the size of TLs, singletons, and other useful summaries.
 See the full tutorial including visualization methods at: \url{https://github.com/magnusnosnes/LineageHomology}.
 }
 \examples{

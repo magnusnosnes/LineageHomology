@@ -2,12 +2,12 @@
 % Please edit documentation in R/lineage_plots.R
 \name{lineage_info}
 \alias{lineage_info}
-\title{Title}
+\title{lineage_info}
 \usage{
 lineage_info(Result_Lineage_homology, name_date)
 }
 \arguments{
-\item{Result_Lineage_homology}{The output from linege homology.}
+\item{Result_Lineage_homology}{The output from LineageHomology.}
 
 \item{name_date}{#Data frame with taxa names in one column and numeric dates of sampling in another. The column names should be c("name", "date")}
 }
@@ -15,5 +15,7 @@ lineage_info(Result_Lineage_homology, name_date)
 
 }
 \description{
-Title
+lineage_info formats the outputs from LineageHomology to be plotted easily.
+ ridgeplot_lineagedensities and lineage_growth_cumulative both require this function to process the results from Lineagehomology first.
+ See the full tutorial at \url{https://github.com/magnusnosnes/LineageHomology/blob/master/Examples_and_plotting_methods/Simple_example/Basic_plotting.md}
 }
