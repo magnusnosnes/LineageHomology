@@ -344,7 +344,7 @@ As this figures show, the division of lineages will vary according to
 the sampled states of some of the nodes. This can be useful for
 producing confidence limits on e.g. the size of the largest lineage.
 
-#### Estimate size of largest transmission lineage
+### Estimate size of largest transmission lineage
 
 We can use pbreplicate to counts transmission lineages probabilistically
 many times to obtain confidence intervals (or, in this case, a
