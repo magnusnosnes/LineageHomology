@@ -1,12 +1,23 @@
 #' import_local_transmission
 #' @description
-#'
+#' import_local_transmission takes the output of LineageHomology_w_uncertainty_v2 and produces estimates of
+#' the number of importation and local transmission events.
 #' @param tree
 #' @param LineageHomology_replicates
-#' @param start_time
-#' @param time_interval_size
-#'
+#' @param start_time The numeric date of the root of the tree.
+#' @param time_interval_size The length of the time intervals to aggregate, e.g. 1/52 corresponds to 1 week.
+#' @details
+#' Singletons are translated directly to importation events.
+#' The time of the importation for singletons is set to the midpoint of the edge downstream of the
+#' geographical transition leading to the singleton. For transmission lineages (TLs),
+#' the function assumes that a TL starts with an importation event.
+#' The timing of this importation event is set to the midpoint of the
+#' edge on the ancestral branch of the most recent common ancestor of the TL.
+#' In each TL, the function assumes that the branching points (nodes) define local transmission events.
+#' Thus the procedure does not consider within-host diversity,
+#' and the timing of events should be interpreted with caution.
 #' @return
+#' The function returns matrices with counts of local transmission ("LC") and importation events ("Import") on the time intervals, where each row contains the results from one replicate. The function also returns the times of the midpoints of the time intervals ("week_time")
 #' @export
 
 import_local_transmission = function(tree,LineageHomology_replicates,start_time,time_interval_size=1/52) {
@@ -117,11 +128,14 @@ import_local_transmission = function(tree,LineageHomology_replicates,start_time,
 #   Plotting methods and summary functions                                  ####
 
 
-#' Title
-#'
-#' @param LineageHomology_replicates
+#' Summarize_import_local_transmission
+#' @description
+#' This function summarizes the estimates of importation and local transmission events from
+#' replicated runs of LineageHomology (e.g. by using LineageHomoolog_w_uncertainty_v2).
+#' @param LineageHomology_replicates Results from running LineageHomology_w_uncertainty_v2
 #'
 #' @return
+#' The function returns quantiles of the 2.5, 50, and 97.5 percent quantiles of the observed number of importations and local transmissions in the replicated runs.
 #' @export
 #'
 #' @examples
@@ -137,16 +151,21 @@ Summarize_import_local_transmission = function(LineageHomology_replicates){
   imp_loc
 }
 
-#' Title
-#'
-#' @param tree
-#' @param result_import_local_transmission
-#' @param time_interval_size
-#' @param start_time
-#' @param date_breaks
+#' plot_importation_local_transmission
+#' @description
+#' plot_importation_local_transmission plots the estimates of importation and local
+#' transmission events that are obtained from running the import_local_transmission function.
+#' @param tree tree for which the geographical estimation has been done.
+#' @param result_import_local_transmission results from running import_local_transmission
+#' @param time_interval_size size of the time intervals used in import_local_transmission
+#' @param start_time date of the root of the phylogeny
+#' @param date_breaks The interval between dates plotted on the x-axis. Takes arguments such as "1 week", "2 months","1 year" etc..
 #' @param importation_or_local
+#' Whether to plot importation, local transmission or both. The variable takes the arguments: "importation","local" or "both".
+#' For plotting both the function requires the grid r-package.
 #'
 #' @return
+
 #' @export
 #'
 #' @examples
@@ -212,4 +231,3 @@ plot_importation_local_transmission = function(tree,result_import_local_transmis
   }
 
   }
-

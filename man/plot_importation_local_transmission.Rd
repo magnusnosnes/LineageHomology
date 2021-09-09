@@ -2,7 +2,7 @@
 % Please edit documentation in R/Importation_local_transmission.R
 \name{plot_importation_local_transmission}
 \alias{plot_importation_local_transmission}
-\title{Title}
+\title{plot_importation_local_transmission}
 \usage{
 plot_importation_local_transmission(
   tree,
@@ -14,11 +14,23 @@ plot_importation_local_transmission(
 )
 }
 \arguments{
-\item{importation_or_local}{}
+\item{tree}{tree for which the geographical estimation has been done.}
+
+\item{result_import_local_transmission}{results from running import_local_transmission}
+
+\item{time_interval_size}{size of the time intervals used in import_local_transmission}
+
+\item{start_time}{date of the root of the phylogeny}
+
+\item{date_breaks}{The interval between dates plotted on the x-axis. Takes arguments such as "1 week", "2 months","1 year" etc..}
+
+\item{importation_or_local}{Whether to plot importation, local transmission or both. The variable takes the arguments: "importation","local" or "both".
+For plotting both the function requires the grid r-package.}
 }
 \value{
 
 }
 \description{
-Title
+plot_importation_local_transmission plots the estimates of importation and local
+transmission events that are obtained from running the import_local_transmission function.
 }

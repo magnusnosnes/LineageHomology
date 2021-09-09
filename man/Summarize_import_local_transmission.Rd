@@ -2,16 +2,17 @@
 % Please edit documentation in R/Importation_local_transmission.R
 \name{Summarize_import_local_transmission}
 \alias{Summarize_import_local_transmission}
-\title{Title}
+\title{Summarize_import_local_transmission}
 \usage{
 Summarize_import_local_transmission(LineageHomology_replicates)
 }
 \arguments{
-\item{LineageHomology_replicates}{}
+\item{LineageHomology_replicates}{Results from running LineageHomology_w_uncertainty_v2}
 }
 \value{
-
+The function returns quantiles of the 2.5, 50, and 97.5 percent quantiles of the observed number of importations and local transmissions in the replicated runs.
 }
 \description{
-Title
+This function summarizes the estimates of importation and local transmission events from
+replicated runs of LineageHomology (e.g. by using LineageHomoolog_w_uncertainty_v2).
 }
