@@ -8,7 +8,10 @@
 -   [Simulate tip data with two
     locations](#simulate-phylogeographic-data-with-two-locations--norway-and-rest-of-the-world--row-)
 -   [Running LineageHomology](#running-lineagehomology)
--   [Plotting transmission lineages](#plot-lineage-densities-over-time)
+-   [Treemap plots of transmission
+    lineages](#make-a-treemap-plot-to-get-a-quick-overview-of-the-lineages)
+-   [Ridgeline plots of transmission
+    lineages](#plot-lineage-densities-over-time)
     -   [Color the lineages after
         location](#we-can-color-the-groups-by-the-state-they-are-in--and-restrict-the-plotted-groups-to-sizes-larger-than-1-4--and-10)
 -   [Plot cumulative lineage size over
@@ -233,7 +236,7 @@ Result$lineage_state
 #>      2      2      1      2      1      2      2      1      1      2
 ```
 
-#### Make a treemap plot to get a quick overview of the lineages.
+## Make a treemap plot to get a quick overview of the lineages
 
 The simplest method to visualize the results from LineageHomology is to
 use a treemap plot. Treemap\_lineagehomology uses the treemap package to
@@ -284,7 +287,7 @@ LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_i
 
 <img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
 
-## We can colour the groups by the state they are in, and restrict the plotted groups to e.g. sizes larger e.g.than 1,4, and 10:
+#### We can colour the groups by the state they are in, and restrict the plotted groups to e.g. sizes larger e.g.than 1,4, and 10:
 
 ``` r
 LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 1,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = T)

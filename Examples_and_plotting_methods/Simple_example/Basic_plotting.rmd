@@ -19,7 +19,8 @@ knitr::opts_chunk$set(
 #### Table of contents 
 * [Simulate tip data with two locations](#simulate-phylogeographic-data-with-two-locations--norway-and-rest-of-the-world--row-)
 * [Running LineageHomology](#running-lineagehomology)
-* [Plotting transmission lineages](#plot-lineage-densities-over-time)
+* [Treemap plots of transmission lineages](#make-a-treemap-plot-to-get-a-quick-overview-of-the-lineages)
+* [Ridgeline plots of transmission lineages](#plot-lineage-densities-over-time)
     - [Color the lineages after location](#we-can-color-the-groups-by-the-state-they-are-in--and-restrict-the-plotted-groups-to-sizes-larger-than-1-4--and-10)
 * [Plot cumulative lineage size over time.](#plot-cumulative-lineage-size-over-time)
     - [Color the lineages after location](#again-we-can-add-color-to-the-groups-by-specifying-it)
@@ -112,7 +113,7 @@ Result$lineage_state
 
 ```
 
-#### Make a treemap plot to get a quick overview of the lineages.
+## Make a treemap plot to get a quick overview of the lineages
 
 The simplest method to visualize the results from LineageHomology is to use a treemap plot. Treemap_lineagehomology uses the treemap package to visualize transmission lineages as rectangles with areas that reflect their relative sizes. Additionally, the text on each square gives the name of group number of the transmission lineage, the estimated time of the mrca (TMRCA) of the transmission lineage and the number of tips in the group (S)
 
@@ -137,7 +138,7 @@ Ridgeplot_lineagedensities takes the input from the function lineage_info and pr
 LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 1,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = F)
 ```
 
-## We can colour the groups by the state they are in, and restrict the plotted groups to e.g. sizes larger e.g.than 1,4, and 10:
+#### We can colour the groups by the state they are in, and restrict the plotted groups to e.g. sizes larger e.g.than 1,4, and 10:
 
 ```{r,fig.width=10,fig.height=7}
 
