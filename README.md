@@ -17,8 +17,8 @@ probabilities at each node and defines transmission lineages (TLs) and
 singletons based on this. A TL is defined as a connected group of tips
 where state transitions between ancestral and descendant nodes have a
 probability lower than 50 percent. Singletons are defined as tips that
-are not connected to any other tips in this way (singletons). The method
-is analogous to that introduced by du Plessis et al. (2021) (DOI:
+are not connected to any other tips in this way. The method is analogous
+to that introduced by du Plessis et al. (2021) (DOI:
 10.1126/science.abf2946). LineageHomology also provides descriptions of
 the sizes of TLs, the number of singletons, functions to derive
 estimates of importation and local transmission based on this and other
