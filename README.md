@@ -13,19 +13,22 @@
 LineageHomology provides a set of functions that analyses the outputs
 from ancestral state reconstructions. LineageHomology takes the output
 of an ancestral state reconstruction method with included state
-probabilities at each node and counts transmission lineages (TLs). A TL
-is defined as a connected group of tips where state transitions between
-ancestral and descendant nodes that have a probability lower than 50
-percent. The function also counts the number of tips that are not
-connected to any other tips in this way (singletons). The method is
-analogous to that introduced by du Plessis et al. (2021) (DOI:
-10.1126/science.abf2946). The outputs contain descriptions of the size
-of TLs, singletons, and other useful summaries.
+probabilities at each node and defines transmission lineages (TLs) and
+singletons based on this. A TL is defined as a connected group of tips
+where state transitions between ancestral and descendant nodes have a
+probability lower than 50 percent. Singletons are defined as tips that
+are not connected to any other tips in this way (singletons). The method
+is analogous to that introduced by du Plessis et al. (2021) (DOI:
+10.1126/science.abf2946). LineageHomology also provides descriptions of
+the sizes of TLs, the number of singletons, functions to derive
+estimates of importation and local transmission based on this and other
+useful summaries. The package also includes a variety of functions to
+plot the results.
 
 ## Installation
 
 You can install the latest version of LineageHomology from this
-repository using.
+repository by using devtools:
 
 ``` r
 library(devtools)
@@ -37,8 +40,8 @@ devtools::install_github("magnusnosnes/LineageHomology")
 This introduction provides a simple example of applying ancestral state
 reconstruction to simulated geographical data for two locations and
 using LineageHomology to analyse the outputs. Here, LineageHomology
-provides descriptions of transmission lineages other useful summaries
-from the reconstructed states.
+provides descriptions of transmission lineages other plots the sizes and
+estimated time of the most recent common ancestor for each TL.
 
 First, we simulate data and estimate the ancestral geographical states:
 
@@ -110,7 +113,10 @@ Return
 #> [1] 2000.000 2001.242 2004.675 2000.810
 ```
 
-The results can be visualised by, e.g. using a treemap plot.
+In this example LineageHomology returned four transmission lineages. The
+taxa names of the tips included in each lineage is printed above under
+$Taxa\_names. The size distributions can be visualised by, e.g. using a
+treemap plot:
 
 ``` r
 LineageHomology::treemap_lineagehomology(Return)
@@ -124,5 +130,6 @@ the MRCA and the number of tips in the transmission lineages.
 
 ## Tutorial
 
-[Tutorial and plotting
+See the full tutorial below for a full introduction to the package and
+more methods for visualizing the results. [Tutorial and plotting
 methods](https://github.com/magnusnosnes/LineageHomology/blob/master/Examples_and_plotting_methods/Simple_example/Basic_plotting.md)
