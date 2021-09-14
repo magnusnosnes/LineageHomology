@@ -4,7 +4,7 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, include = FALSE}
+```{r, include = FALSE,cache=TRUE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -42,7 +42,7 @@ This introduction provides a simple example of applying ancestral state reconstr
 
 First, we simulate data and estimate the ancestral geographical states:
 
-```{r,fig.width=10,fig.height=7}
+```{r,fig.width=11,fig.height=10}
 library(LineageHomology)
 #Loading required packages.
 library(ape)
@@ -50,33 +50,40 @@ library(ape)
 library(BactDating)
 
 #Simulate data from Norway and rest of the world
-set.seed(400)
+set.seed(11,sample.kind = "Rounding") #11 is good
 tree_test = simdatedtree(nsam=10, dateroot=2000)
-tree_test = ape::ladderize(tree_test)
-Q=matrix(c(0.5,0.5,0.5,0.5), nrow=2,ncol=2, byrow=F)
-colnames(Q)=c("Norway","RoW")
-loc = c("Norway", "Norway","Norway","RoW", "RoW", "Norway", "Norway", "RoW", "RoW", "RoW")
+tree_test = ladderize(tree_test)
+load(file="/Users/magnusnygardosnes/Dropbox/Rfunctions/Rpackages/LineageHomology/Examples_and_plotting_methods/Tree.Rdata") #Overwrite tree because of an issue with the RNG in rmarkdown.
+tiplabels=c("Sequence 7","Sequence 1","Sequence 5","Sequence 6","Sequence 4","Sequence 3","Sequence 2","Sequence 9","Sequence 8","Sequence 10")
+tree_test$tip.label=tiplabels
+loc = c("Norway", "Norway","RoW","RoW", "RoW", "Norway", "Norway", "Norway", "RoW", "RoW")
 names(loc) = tree_test$tip.label
 
 #Reconstruct ancestral states using ace. 
 fit1 = ace(x=loc, phy= tree_test, type="discrete", mod="ARD")
-plot.phylo(tree_test,edge.width = 2,label.offset = 0.15, mar=c(0.2,0.2,0.2,0.2))
+plot.phylo(tree_test,edge.width = 3,label.offset = 0.15, mar=c(0.2,0.2,0.2,0.2))
 axisPhylo(root.time=2000, backward=F,lwd=2)
 nodelabels(pie=fit1$lik.anc,cex=0.7,piecol=c("Red","Blue"))
 tips = to.matrix(loc,seq=c("Norway", "RoW"))
 tiplabels(pie=tips, cex=0.7,piecol=c("Red","Blue"))
-
 ```
 The tree shows the reconstructed states using the ace function in the ape package. Each node is coloured according to the probability of the location. Here red represents Norway, and blue represents the rest of the world (RoW). 
 
-Next we run lineageHomology on the output from ace. 
+
+
+![LineageHomology_procedure](/Users/magnusnygardosnes/Dropbox/Rfunctions/Rpackages/LineageHomology/Examples_and_plotting_methods/Fig4_local_imp.png)
+This figure shows how LineageHomology estimates transmission lineages (TLs), singletons, importation and local transmission events. A blue-shaded background indicates transmission lineages and covers the tips that are included in the group. The transmission lineages are defined based on a 50 percent probability of the same state on every node in the TL. The red shaded background shows singletons, which are unconnected to any other tips based on the rule that defines TLs. The areas that describe TLs and singletons stretch back to the date that LineageHomology uses as the importation date, which is on the midpoint of the edge ancestral to the MRCA for the TLs, and on the midpoint on the ancestral edge leading to the first geographical transitions for singletons. The importation dates are also indicated by blue stippled lines, ending in blue dots on the time axis. Branching events are used as estimates of local transmission inside of transmission lineages. This is also indicated by the red stippled lines ending in red dots on the time axis.
+
+Next we run lineageHomology on the output from ace according to the approach outlined above. 
 ```{r,fig.width=10,fig.height=7}
 Return = LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
                         ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
 Return
 ```
 
-In this example LineageHomology returned four transmission lineages. The taxa names of the tips included in each lineage is printed above under $Taxa_names. 
+In this example LineageHomology returned four 3 transmission lineages. The taxa names of the tips included in each lineage is printed above under $Taxa_names. Lineages that  only contain one tip are singletons.
+
+
 The size distributions can be visualised by, e.g. using a treemap plot:
 
 ```{r,fig.width=10,fig.height=7}

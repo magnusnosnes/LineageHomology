@@ -53,76 +53,110 @@ library(ape)
 library(BactDating)
 
 #Simulate data from Norway and rest of the world
-set.seed(400)
+set.seed(11,sample.kind = "Rounding") #11 is good
+```
+
+    ## Warning in set.seed(11, sample.kind = "Rounding"): non-uniform 'Rounding'
+    ## sampler used
+
+``` r
 tree_test = simdatedtree(nsam=10, dateroot=2000)
-tree_test = ape::ladderize(tree_test)
-Q=matrix(c(0.5,0.5,0.5,0.5), nrow=2,ncol=2, byrow=F)
-colnames(Q)=c("Norway","RoW")
-loc = c("Norway", "Norway","Norway","RoW", "RoW", "Norway", "Norway", "RoW", "RoW", "RoW")
+tree_test = ladderize(tree_test)
+load(file="/Users/magnusnygardosnes/Dropbox/Rfunctions/Rpackages/LineageHomology/Examples_and_plotting_methods/Tree.Rdata") #Overwrite tree because of an issue with the RNG in rmarkdown.
+tiplabels=c("Sequence 7","Sequence 1","Sequence 5","Sequence 6","Sequence 4","Sequence 3","Sequence 2","Sequence 9","Sequence 8","Sequence 10")
+tree_test$tip.label=tiplabels
+loc = c("Norway", "Norway","RoW","RoW", "RoW", "Norway", "Norway", "Norway", "RoW", "RoW")
 names(loc) = tree_test$tip.label
 
 #Reconstruct ancestral states using ace. 
 fit1 = ace(x=loc, phy= tree_test, type="discrete", mod="ARD")
-plot.phylo(tree_test,edge.width = 2,label.offset = 0.15, mar=c(0.2,0.2,0.2,0.2))
+plot.phylo(tree_test,edge.width = 3,label.offset = 0.15, mar=c(0.2,0.2,0.2,0.2))
 axisPhylo(root.time=2000, backward=F,lwd=2)
 nodelabels(pie=fit1$lik.anc,cex=0.7,piecol=c("Red","Blue"))
 tips = to.matrix(loc,seq=c("Norway", "RoW"))
 tiplabels(pie=tips, cex=0.7,piecol=c("Red","Blue"))
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" /> The
-tree shows the reconstructed states using the ace function in the ape
+![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- --> The tree
+shows the reconstructed states using the ace function in the ape
 package. Each node is coloured according to the probability of the
 location. Here red represents Norway, and blue represents the rest of
 the world (RoW).
 
-Next we run lineageHomology on the output from ace.
+![LineageHomology\_procedure](/Users/magnusnygardosnes/Dropbox/Rfunctions/Rpackages/LineageHomology/Examples_and_plotting_methods/Fig4_local_imp.png)
+This figure shows how LineageHomology estimates transmission lineages
+(TLs), singletons, importation and local transmission events. A
+blue-shaded background indicates transmission lineages and covers the
+tips that are included in the group. The transmission lineages are
+defined based on a 50 percent probability of the same state on every
+node in the TL. The red shaded background shows singletons, which are
+unconnected to any other tips based on the rule that defines TLs. The
+areas that describe TLs and singletons stretch back to the date that
+LineageHomology uses as the importation date, which is on the midpoint
+of the edge ancestral to the MRCA for the TLs, and on the midpoint on
+the ancestral edge leading to the first geographical transitions for
+singletons. The importation dates are also indicated by blue stippled
+lines, ending in blue dots on the time axis. Branching events are used
+as estimates of local transmission inside of transmission lineages. This
+is also indicated by the red stippled lines ending in red dots on the
+time axis.
+
+Next we run lineageHomology on the output from ace according to the
+approach outlined above.
 
 ``` r
 Return = LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
                         ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
 Return
-#> $Import_LocalTrans
-#> [1] 4 6
-#> 
-#> $Lineage_sizes
-#> [1] 3 2 2 3
-#> 
-#> $Taxa_names
-#> $Taxa_names$`Lineage no: 1`
-#> [1] "t6" "t7" "t1"
-#> 
-#> $Taxa_names$`Lineage no: 2`
-#> [1] "t3" "t5"
-#> 
-#> $Taxa_names$`Lineage no: 3`
-#> [1] "t4" "t2"
-#> 
-#> $Taxa_names$`Lineage no: 4`
-#> [1] "t10" "t8"  "t9" 
-#> 
-#> 
-#> $`MRCA's`
-#> [1] 2000.000 2001.705 2007.369 2001.620
-#> 
-#> $lineage_state
-#> Norway    RoW Norway    RoW 
-#>      1      2      1      2 
-#> 
-#> $Halfedge_over_tmrca
-#> [1] 2000.000 2001.242 2004.675 2000.810
 ```
 
-In this example LineageHomology returned four transmission lineages. The
-taxa names of the tips included in each lineage is printed above under
-$Taxa\_names. The size distributions can be visualised by, e.g. using a
-treemap plot:
+    ## $Import_LocalTrans
+    ## [1] 6 4
+    ## 
+    ## $Lineage_sizes
+    ## [1] 2 1 3 2 1 1
+    ## 
+    ## $Taxa_names
+    ## $Taxa_names$`Lineage no: 1`
+    ## [1] "Sequence 7" "Sequence 1"
+    ## 
+    ## $Taxa_names$`Lineage no: 2`
+    ## [1] "Sequence 5"
+    ## 
+    ## $Taxa_names$`Lineage no: 3`
+    ## [1] "Sequence 6"  "Sequence 4"  "Sequence 10"
+    ## 
+    ## $Taxa_names$`Lineage no: 4`
+    ## [1] "Sequence 3" "Sequence 2"
+    ## 
+    ## $Taxa_names$`Lineage no: 5`
+    ## [1] "Sequence 9"
+    ## 
+    ## $Taxa_names$`Lineage no: 6`
+    ## [1] "Sequence 8"
+    ## 
+    ## 
+    ## $`MRCA's`
+    ## [1] 2000.000 2004.735 2001.387 2005.682 2004.924 2007.846
+    ## 
+    ## $lineage_state
+    ## Norway    RoW    RoW Norway Norway    RoW 
+    ##      1      2      2      1      1      2 
+    ## 
+    ## $Halfedge_over_tmrca
+    ## [1] 2000.000 2003.343 2000.693 2004.679 2003.556 2006.385
+
+In this example LineageHomology returned four 3 transmission lineages.
+The taxa names of the tips included in each lineage is printed above
+under $Taxa\_names. Lineages that only contain one tip are singletons.
+
+The size distributions can be visualised by, e.g. using a treemap plot:
 
 ``` r
 LineageHomology::treemap_lineagehomology(Return)
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 The figure shows squares with areas representing the transmission
 lineages’ sizes. The text inside the squares gives the estimated time of
