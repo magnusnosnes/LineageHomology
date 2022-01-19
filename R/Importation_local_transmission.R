@@ -29,7 +29,8 @@ import_local_transmission = function(tree,LineageHomology_replicates,start_time,
   size = 2*length(tree$tip.label)
   LC = matrix(0,nrow=ncol(Result_multi),ncol=size)
   Import = matrix(0,nrow=ncol(Result_multi), ncol=size)
-  date_matrix = matrix(2020,nrow=ncol(Result_multi), ncol=size)  ## NB. Must be generalized to take any other dataset.
+  time_end = start_time+max(nodeHeights(tree))
+  date_matrix = matrix(time_end+1,nrow=ncol(Result_multi), ncol=size)  ## NB. Must be generalized to take any other dataset.
 
 
   #pb <- txtProgressBar(min = 0, max =ncol(Result_multi), style = 3)
@@ -76,8 +77,7 @@ import_local_transmission = function(tree,LineageHomology_replicates,start_time,
 
   #A: Should add an extra loop to add the halfedge_above_groups larger than 1.
   #Set windows for counting importations and local transmission in.
-  start_time
-  time_end = start_time+max(nodeHeights(tree))
+
   weeks = seq(start_time, time_end, by = time_interval_size)
   week_time=weeks[1:(length(weeks)-1)]+time_interval_size/2 #This is only for returning results at midpoint of weeks.
 
