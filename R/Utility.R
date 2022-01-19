@@ -283,3 +283,24 @@ nodepath_quick = function(tree,taxa) {
   }
   bifurcations #Return all the bifurcation nodes.
 }
+
+
+#Written by Magnus Nygård Osnes
+#' reorder_LH
+#' @description
+#' Takes the output of LineageHomology and reorders the transmission lineages so that the largest comes first 1, second largest comes 2 etc.
+#' @param result_LH #Return from LineageHomology.
+#'
+#' @return
+#' @export
+#'
+#' @examples
+reorder_LH =  function(result_LH) {
+    inds = sort.int(result_LH$Lineage_sizes,index.return =T)
+    result_LH$Lineage_sizes=result_LH$Lineage_sizes[rev(inds$ix)]
+    result_LH$Taxa_names=result_LH$Taxa_names[rev(inds$ix)]
+    result_LH$`MRCA's`=result_LH$`MRCA's`[rev(inds$ix)]
+    result_LH$lineage_state=result_LH$lineage_state[rev(inds$ix)]
+    result_LH$Halfedge_over_tmrca=result_LH$Halfedge_over_tmrca[rev(inds$ix)]
+    result_LH
+  }

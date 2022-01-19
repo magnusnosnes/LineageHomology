@@ -83,7 +83,7 @@ package. Each node is coloured according to the probability of the
 location. Here red represents Norway, and blue represents the rest of
 the world (RoW).
 
-![LineageHomology\_procedure](/Users/magnusnygardosnes/Dropbox/Rfunctions/Rpackages/LineageHomology/Examples_and_plotting_methods/Fig4_local_imp.png)
+![LineageHomology\_procedure](/Examples_and_plotting_methods/Fig4_local_imp.png)
 This figure shows how LineageHomology estimates transmission lineages,
 singletons, importation and local transmission events. A blue-shaded
 background indicates transmission lineages and covers the tips that are
