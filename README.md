@@ -145,7 +145,7 @@ Return
     ## $Halfedge_over_tmrca
     ## [1] 2000.000 2003.343 2000.693 2004.679 2003.556 2006.385
 
-In this example LineageHomology returned four 3 transmission lineages.
+In this example LineageHomology returned 3 transmission lineages.
 The taxa names of the tips included in each lineage is printed above
 under $Taxa\_names. Lineages that only contain one tip are singletons.
 
