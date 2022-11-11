@@ -54,12 +54,6 @@ library(BactDating)
 
 #Simulate data from Norway and rest of the world
 set.seed(11,sample.kind = "Rounding") #11 is good
-```
-
-    ## Warning in set.seed(11, sample.kind = "Rounding"): non-uniform 'Rounding'
-    ## sampler used
-
-``` r
 tree_test = simdatedtree(nsam=10, dateroot=2000)
 tree_test = ladderize(tree_test)
 load(file="/Users/magnusnygardosnes/Dropbox/Rfunctions/Rpackages/LineageHomology/Examples_and_plotting_methods/Tree.Rdata") #Overwrite tree because of an issue with the RNG in rmarkdown.
@@ -77,13 +71,14 @@ tips = to.matrix(loc,seq=c("Norway", "RoW"))
 tiplabels(pie=tips, cex=0.7,piecol=c("Red","Blue"))
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- --> The tree
-shows the reconstructed states using the ace function in the ape
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" /> The
+tree shows the reconstructed states using the ace function in the ape
 package. Each node is coloured according to the probability of the
 location. Here red represents Norway, and blue represents the rest of
 the world (RoW).
 
-![LineageHomology\_procedure](/Examples_and_plotting_methods/Fig4_local_imp.png)
+\#This must be changed on the github frontpage.
+![LineageHomology_procedure](/Users/magnusnygardosnes/Dropbox/Rfunctions/Rpackages/LineageHomology/Examples_and_plotting_methods/Fig4_local_imp.png)
 This figure shows how LineageHomology estimates transmission lineages,
 singletons, importation and local transmission events. A blue-shaded
 background indicates transmission lineages and covers the tips that are
@@ -107,47 +102,46 @@ approach outlined above.
 Return = LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
                         ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
 Return
+#> $Import_LocalTrans
+#> [1] 6 4
+#> 
+#> $Lineage_sizes
+#> [1] 2 1 3 2 1 1
+#> 
+#> $Taxa_names
+#> $Taxa_names$`Lineage no: 1`
+#> [1] "Sequence 7" "Sequence 1"
+#> 
+#> $Taxa_names$`Lineage no: 2`
+#> [1] "Sequence 5"
+#> 
+#> $Taxa_names$`Lineage no: 3`
+#> [1] "Sequence 6"  "Sequence 4"  "Sequence 10"
+#> 
+#> $Taxa_names$`Lineage no: 4`
+#> [1] "Sequence 3" "Sequence 2"
+#> 
+#> $Taxa_names$`Lineage no: 5`
+#> [1] "Sequence 9"
+#> 
+#> $Taxa_names$`Lineage no: 6`
+#> [1] "Sequence 8"
+#> 
+#> 
+#> $`MRCA's`
+#> [1] 2000.000 2004.735 2001.387 2005.682 2004.924 2007.846
+#> 
+#> $lineage_state
+#> Norway    RoW    RoW Norway Norway    RoW 
+#>      1      2      2      1      1      2 
+#> 
+#> $Halfedge_over_tmrca
+#> [1] 2000.000 2003.343 2000.693 2004.679 2003.556 2006.385
 ```
 
-    ## $Import_LocalTrans
-    ## [1] 6 4
-    ## 
-    ## $Lineage_sizes
-    ## [1] 2 1 3 2 1 1
-    ## 
-    ## $Taxa_names
-    ## $Taxa_names$`Lineage no: 1`
-    ## [1] "Sequence 7" "Sequence 1"
-    ## 
-    ## $Taxa_names$`Lineage no: 2`
-    ## [1] "Sequence 5"
-    ## 
-    ## $Taxa_names$`Lineage no: 3`
-    ## [1] "Sequence 6"  "Sequence 4"  "Sequence 10"
-    ## 
-    ## $Taxa_names$`Lineage no: 4`
-    ## [1] "Sequence 3" "Sequence 2"
-    ## 
-    ## $Taxa_names$`Lineage no: 5`
-    ## [1] "Sequence 9"
-    ## 
-    ## $Taxa_names$`Lineage no: 6`
-    ## [1] "Sequence 8"
-    ## 
-    ## 
-    ## $`MRCA's`
-    ## [1] 2000.000 2004.735 2001.387 2005.682 2004.924 2007.846
-    ## 
-    ## $lineage_state
-    ## Norway    RoW    RoW Norway Norway    RoW 
-    ##      1      2      2      1      1      2 
-    ## 
-    ## $Halfedge_over_tmrca
-    ## [1] 2000.000 2003.343 2000.693 2004.679 2003.556 2006.385
-
-In this example LineageHomology returned 3 transmission lineages.
+In this example LineageHomology returned four 3 transmission lineages.
 The taxa names of the tips included in each lineage is printed above
-under $Taxa\_names. Lineages that only contain one tip are singletons.
+under \$Taxa_names. Lineages that only contain one tip are singletons.
 
 The size distributions can be visualised by, e.g. using a treemap plot:
 
@@ -155,7 +149,7 @@ The size distributions can be visualised by, e.g. using a treemap plot:
 LineageHomology::treemap_lineagehomology(Return)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
 The figure shows squares with areas representing the transmission
 lineages’ sizes. The text inside the squares gives the estimated time of

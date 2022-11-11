@@ -275,6 +275,7 @@ nodepath_quick = function(tree,taxa) {
   new_nodes = tree$edge[,1][which(tree$edge[,2]%in%tip_nodes)]
   bifurcations = unique(c(new_nodes,bifurcations))
   new_nodes = new_nodes[new_nodes!=mrca_node]
+
   #If any is mrca, remove them from loop.
   while(length(new_nodes)>0) {
     new_nodes = tree$edge[,1][which(tree$edge[,2]%in%new_nodes)]

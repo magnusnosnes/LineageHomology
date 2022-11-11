@@ -37,6 +37,9 @@ library(ape)
 library(phytools)
 library(phangorn)
 library(BactDating)
+
+#Pipe operator
+library(dplyr)
 ```
 
 ## Simulate tip data with two different states.
@@ -74,7 +77,7 @@ The pie charts on the nodes of the phylogeny represent the probability
 of the node being in the different geographical locations, where red
 represents Norway, and blue represents RoW. LineageHomology uses these
 probabilities to count connected groups of tips, where all the nodes on
-the paths between them have a probability that &gt; 50% for the same
+the paths between them have a probability that \> 50% for the same
 geographical state. LineageHomology also returns the number of tips that
 are not connected to any other tips in this way. Following du Plessis et
 al. (2021) (DOI: 10.1126/science.abf2946) we refer to the groups as
@@ -94,13 +97,13 @@ tree_test
 #> 
 #> Rooted; includes branch lengths.
 head(fit1$lik.anc)
-#>          Norway       RoW
-#> [1,] 0.19739205 0.8026080
-#> [2,] 0.09659401 0.9034060
-#> [3,] 0.09487369 0.9051263
-#> [4,] 0.69688117 0.3031188
-#> [5,] 0.43888708 0.5611129
-#> [6,] 0.42001122 0.5799888
+#>         Norway       RoW
+#> 301 0.19739205 0.8026080
+#> 302 0.09659401 0.9034060
+#> 303 0.09487369 0.9051263
+#> 304 0.69688117 0.3031188
+#> 305 0.43888708 0.5611129
+#> 306 0.42001122 0.5799888
 head( to.matrix(trait, seq=c("Norway", "RoW")))
 #>      Norway RoW
 #> t214      1   0
@@ -121,7 +124,7 @@ Result = LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
 
 LineageHomology returns multiple values
 
--   Import\_LocalTrans The first entry can be thought of as an estimate
+-   Import_LocalTrans The first entry can be thought of as an estimate
     of the number of tips that have acquired their state through novel
     acquisition (a transition in the phylogeny). Similarly, the second
     number describes the number of tips that have inherited their state
@@ -130,16 +133,16 @@ LineageHomology returns multiple values
     n is composed of 1 novel acquisition and n-1 homologous
     acquisitions. Singletons are directly translated to novel
     acquisitions.
--   Lineage\_sizes contains the number of tips that belong to each TL.
+-   Lineage_sizes contains the number of tips that belong to each TL.
     This means that all the internal nodes will be mapped to the same
     state with a 50 percent or higher probability for the entire TL.
-    \*Taxa\_names is a list of lists where each sublist contains the
+    \*Taxa_names is a list of lists where each sublist contains the
     names of the tips in each transmission lineage. The order is the
-    same as the listed order of the Lineage\_sizes.
--   Halfedge\_over\_tmrca is the time point on the middle of the edge
-    that is ancestral to each TL’s mrca. This is used in analyses of
+    same as the listed order of the Lineage_sizes.
+-   Halfedge_over_tmrca is the time point on the middle of the edge that
+    is ancestral to each TL’s mrca. This is used in analyses of
     importation and local transmission.
--   Lineage\_state contains the state the transmission lineages are
+-   Lineage_state contains the state the transmission lineages are
     mapped to.
 
 ``` r
@@ -239,7 +242,7 @@ Result$lineage_state
 ## Make a treemap plot to get a quick overview of the lineages
 
 The simplest method to visualize the results from LineageHomology is to
-use a treemap plot. Treemap\_lineagehomology uses the treemap package to
+use a treemap plot. Treemap_lineagehomology uses the treemap package to
 visualize transmission lineages as rectangles with areas that reflect
 their relative sizes. Additionally, the text on each square gives the
 name of group number of the transmission lineage, the estimated time of
@@ -256,10 +259,9 @@ LineageHomology::treemap_lineagehomology(Result)
 
 The accumulation of tips in a lineage over time can be visualized by
 using density plots. Before using the plotting methods below, we need to
-run the processing function lineage\_info. lineage\_info takes the
-results from LineageHomology and names and dates observed dates of the
-tips in the tree. The formats of these should match the ones shown
-below.
+run the processing function lineage_info. lineage_info takes the results
+from LineageHomology and names and dates observed dates of the tips in
+the tree. The formats of these should match the ones shown below.
 
 ``` r
 #Set up matrix with taxa info
@@ -275,11 +277,11 @@ head(name_date)
 Result_lineage_info = LineageHomology::lineage_info(Result,name_date)
 ```
 
-Ridgeplot\_lineagedensities takes the input from the function
-lineage\_info and produces density plots using for each TL over time.
-The density plots are made using the ggridges R-package. The TLs are
-sorted from largest to smallest and can be coloured according to the
-state that defines the TL.
+Ridgeplot_lineagedensities takes the input from the function
+lineage_info and produces density plots using for each TL over time. The
+density plots are made using the ggridges R-package. The TLs are sorted
+from largest to smallest and can be coloured according to the state that
+defines the TL.
 
 ``` r
 LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 1,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = F)
@@ -290,18 +292,21 @@ LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_i
 #### We can colour the groups by the state they are in, and restrict the plotted groups to e.g. sizes larger e.g.than 1,4, and 10:
 
 ``` r
+
 LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 1,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = T)
 ```
 
 <img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
 
 ``` r
+
 LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 4,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = T)
 ```
 
 <img src="man/figures/README-unnamed-chunk-10-2.png" width="100%" />
 
 ``` r
+
 LineageHomology::ridgeplot_lineagedensities(Result_lineage_info=Result_lineage_info,groups_larger_than = 10,datelims=c("2000-01-01","2025-01-01","3 year"),color_by_state = T)
 ```
 
@@ -314,6 +319,7 @@ function for plotting the cumulative number of observations in each TL
 separately.
 
 ``` r
+
 LineageHomology::lineage_growth_cumulative(Result_lineage_info = Result_lineage_info, datelims=c("2000-01-01","2025-01-01","3 year"))
 ```
 
@@ -333,7 +339,7 @@ In all the figures above, the transmission lineage division was done by
 dividing lineages at points where a transition is estimated with more
 than 50 percent probability. If one wishes to divide the transmission
 lineages by sampling from the observed probabilities, one can use the
-function LineageHomology\_w\_uncertainty (or v2, which is faster). This
+function LineageHomology_w\_uncertainty (or v2, which is faster). This
 retains the uncertainty in the phylogeographical mapping. Here we
 visualize the difference in the assignment of TLs in two runs on the
 same mapping by using treemap plots.

@@ -114,7 +114,7 @@ ridgeplot_lineagedensities = function(Result_lineage_info, datelims,groups_large
 #' @examples
 lineage_growth_cumulative = function(Result_lineage_info,datelims,color_by_state=FALSE) {
   dateupplow = as.POSIXct(strptime(c(paste0(datelims[1]," 03:00"),paste0(datelims[2]," 16:00")),format = "%Y-%m-%d %H:%M"))
-  Result_lineage_info$group_cumsum = ave(Result_lineage_info$dates,Result_lineage_info$group_no, FUN=function(x) rank(x,ties.method = "first"))-1 #Use the rank function to obtain cumulative counts. The -1 removes the count of the mrca.
+  Result_lineage_info$group_cumsum = ave(Result_lineage_info$dates,as.factor(Result_lineage_info$group_no), FUN=function(x) rank(x,ties.method = "first"))-1 #Use the rank function to obtain cumulative counts. The -1 removes the count of the mrca.
 
   if(color_by_state == TRUE) {
     g1 = ggplot(Result_lineage_info,aes(x=date_decimal(dates), y=group_cumsum, group=group_no,color=lineage_state))+geom_line(alpha=0.4)+theme_bw()+
