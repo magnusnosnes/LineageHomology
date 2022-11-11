@@ -1,29 +1,37 @@
+How to apply LineageHomology on a phylogeny with tips observed in two
+geographical locations.
+================
+
+-   <a href="#simulate-tip-data-with-two-different-states"
+    id="toc-simulate-tip-data-with-two-different-states">Simulate tip data
+    with two different states.</a>
+-   <a href="#running-lineagehomology"
+    id="toc-running-lineagehomology">Running LineageHomology</a>
+-   <a href="#make-a-treemap-plot-to-get-a-quick-overview-of-the-lineages"
+    id="toc-make-a-treemap-plot-to-get-a-quick-overview-of-the-lineages">Make
+    a treemap plot to get a quick overview of the lineages</a>
+-   <a href="#plot-lineage-densities-over-time"
+    id="toc-plot-lineage-densities-over-time">Plot lineage densities over
+    time</a>
+-   <a href="#plot-cumulative-lineage-size-over-time"
+    id="toc-plot-cumulative-lineage-size-over-time">Plot cumulative lineage
+    size over time.</a>
+-   <a href="#probabilistic-counting-of-transmission-lineages"
+    id="toc-probabilistic-counting-of-transmission-lineages">Probabilistic
+    counting of transmission lineages</a>
+-   <a href="#estimate-size-of-largest-transmission-lineage"
+    id="toc-estimate-size-of-largest-transmission-lineage">Estimate size of
+    largest transmission lineage</a>
+-   <a href="#estimating-importation-and-local-transmission"
+    id="toc-estimating-importation-and-local-transmission">Estimating
+    importation and local transmission</a>
+    -   <a
+        href="#questions-regarding-the-package-can-be-directed-to-magnusnosnesgmailcom"
+        id="toc-questions-regarding-the-package-can-be-directed-to-magnusnosnesgmailcom">Questions
+        regarding the package can be directed to
+        <span>magnusnosnes@gmail.com</span></a>
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-## How to apply LineageHomology on a phylogeny with tips observed in two geographical locations.
-
-#### Table of contents
-
--   [Simulate tip data with two
-    locations](#simulate-phylogeographic-data-with-two-locations--norway-and-rest-of-the-world--row-)
--   [Running LineageHomology](#running-lineagehomology)
--   [Treemap plots of transmission
-    lineages](#make-a-treemap-plot-to-get-a-quick-overview-of-the-lineages)
--   [Ridgeline plots of transmission
-    lineages](#plot-lineage-densities-over-time)
-    -   [Color the lineages after
-        location](#we-can-color-the-groups-by-the-state-they-are-in--and-restrict-the-plotted-groups-to-sizes-larger-than-1-4--and-10)
--   [Plot cumulative lineage size over
-    time.](#plot-cumulative-lineage-size-over-time)
-    -   [Color the lineages after
-        location](#again-we-can-add-color-to-the-groups-by-specifying-it)
--   [Sample transmission lineages
-    probabilistically](#probabilistic-counting-of-transmission-lineages)
--   [Produce confidence interval on the largest transmission
-    lineage](#estimate-size-of-largest-transmission-lineage)
--   [Estimate importation and local transmission from phylogeographic
-    results](#estimating-importation-and-local-transmission)
 
 ``` r
 #Load needed packages

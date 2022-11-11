@@ -1,5 +1,9 @@
 ---
-output: github_document
+#output: github_document
+title: How to apply LineageHomology on a phylogeny with tips observed in two geographical locations.
+output:
+    github_document:
+        toc: true
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -15,23 +19,6 @@ knitr::opts_chunk$set(
   cache=T
 )
 ```
-
-
-## How to apply LineageHomology on a phylogeny with tips observed in two geographical locations.
-
-#### Table of contents 
-* [Simulate tip data with two locations](#simulate-phylogeographic-data-with-two-locations--norway-and-rest-of-the-world--row-)
-* [Running LineageHomology](#running-lineagehomology)
-* [Treemap plots of transmission lineages](#make-a-treemap-plot-to-get-a-quick-overview-of-the-lineages)
-* [Ridgeline plots of transmission lineages](#plot-lineage-densities-over-time)
-    - [Color the lineages after location](#we-can-color-the-groups-by-the-state-they-are-in--and-restrict-the-plotted-groups-to-sizes-larger-than-1-4--and-10)
-* [Plot cumulative lineage size over time.](#plot-cumulative-lineage-size-over-time)
-    - [Color the lineages after location](#again-we-can-add-color-to-the-groups-by-specifying-it)
-* [Sample transmission lineages probabilistically](#probabilistic-counting-of-transmission-lineages)
-* [Produce confidence interval on the largest transmission lineage](#estimate-size-of-largest-transmission-lineage)
-* [Estimate importation and local transmission from phylogeographic results](#estimating-importation-and-local-transmission)
-
-
 
 ```{r,fig.width=10,fig.height=7}
 #Load needed packages
