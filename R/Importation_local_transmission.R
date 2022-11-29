@@ -506,11 +506,11 @@ Summarize_import_export_local_transmission = function(result_import_export_local
 
   #
   imp_divided_imploc = imp/(imp+loc-exp)
-  exp_divided_exploc = exp/(loc+exp-imp)
+  exp_divided_exploc = exp/(imp+loc-exp)
 
   imp_loc_exp = rbind(imp,loc, exp, imp_divided_imploc,exp_divided_exploc)
 
-  rownames(imp_loc_exp)=c("Import", "Local transmission", "Export", "Import / ( I + LT - E)", "Export / (- I + LT + E)")
+  rownames(imp_loc_exp)=c("Import", "Local transmission", "Export", "Import / ( I + LT - E)", "Export / ( I + LT - E)")
   imp_loc_exp
 
 }
