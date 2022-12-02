@@ -475,9 +475,14 @@ import_export_local_transmission = function(tree,LineageHomology_replicates,star
       j = j+n
     }
   }
-
-
-  list("Import"=weekly_importations,"Export"=weekly_export,"LC"=weekly_LC, "Week_time"=week_time)
+  #Number of unobserved TLs across the mappings - needed to summarize the fraction of cases that are imports in other functions.
+  n_unobserved_tls = c()
+  n_unobserved_export_events=c()
+  for(i in 1:ncol(LineageHomology_replicates)){
+    n_unobserved_tls = c(n_unobserved_tls,length(LineageHomology_replicates[,i]$unobserved_tl_halfedge_above_mrca))
+    n_unobserved_export_events = c(n_unobserved_export_events,sum(unlist(lapply(LineageHomology_replicates[,i]$unobserved_tl_nodes, length))+1))
+  }
+  list("Import"=weekly_importations,"Export"=weekly_export,"LC"=weekly_LC, "Week_time"=week_time, "n_unobserved_TLs"=n_unobserved_tls,"n_unobserved_exports"=n_unobserved_export_events)
 
 }
 
@@ -504,9 +509,13 @@ Summarize_import_export_local_transmission = function(result_import_export_local
   #Sum export
   exp = time_aggregated_resuls$Export %>% apply(1,sum) %>% quantile(c(0.025,0.5,0.975))
 
-  #
-  imp_divided_imploc = imp/(imp+loc-exp)
-  exp_divided_exploc = exp/(imp+loc-exp)
+  #Must subtract the number of unobserved TLs to get the fraction explained by imports correctly.
+  unobserved_TLs = time_aggregated_resuls$n_unobserved_TLs
+  n_unobserved_export_events = time_aggregated_resuls$n_unobserved_exports
+
+  imp_divided_imploc = (imp-unobserved_TLs)/(imp+loc-exp)
+  # May need to extract export events / the number of unobserved TL nodes
+  exp_divided_exploc = (exp-n_unobserved_export_events)/(imp+loc-exp)
 
   imp_loc_exp = rbind(imp,loc, exp, imp_divided_imploc,exp_divided_exploc)
 
