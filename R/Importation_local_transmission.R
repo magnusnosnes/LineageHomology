@@ -503,23 +503,27 @@ Summarize_import_export_local_transmission = function(result_import_export_local
   time_aggregated_resuls = result_import_export_local_transmission
   library("dplyr") #Imports the pipe operator
   #Sum imports
+  #Must subtract the number of unobserved TLs to get the fraction explained by imports correctly.
+  unobserved_TLs = time_aggregated_resuls$n_unobserved_TLs
+  n_unobserved_export_events = time_aggregated_resuls$n_unobserved_exports
+
   imp = time_aggregated_resuls$Import %>% apply(1,sum) %>% quantile(c(0.025,0.5,0.975))
+  imp_attributed_loc = time_aggregated_resuls$Import %>% apply(1,sum) %>% -unobserved_TLs %>%  quantile(c(0.025,0.5,0.975))
+  exp_attributed_loc = time_aggregated_resuls$Export %>% apply(1,sum) %>% -n_unobserved_export_events %>% quantile(c(0.025,0.5,0.975))
   #Sum local tranmission
   loc = time_aggregated_resuls$LC %>% apply(1,sum) %>% quantile(c(0.025,0.5,0.975))
   #Sum export
   exp = time_aggregated_resuls$Export %>% apply(1,sum) %>% quantile(c(0.025,0.5,0.975))
 
-  #Must subtract the number of unobserved TLs to get the fraction explained by imports correctly.
-  unobserved_TLs = time_aggregated_resuls$n_unobserved_TLs
-  n_unobserved_export_events = time_aggregated_resuls$n_unobserved_exports
 
-  imp_divided_imploc = (imp-unobserved_TLs)/(imp+loc-exp)
+
+  imp_divided_imploc = (imp_attributed_loc)/(imp+loc-exp) #Take quantiles here aswell.
   # May need to extract export events / the number of unobserved TL nodes
-  exp_divided_exploc = (exp-n_unobserved_export_events)/(imp+loc-exp)
+  exp_divided_exploc = (exp_attributed_loc)/(imp+loc-exp)
 
   imp_loc_exp = rbind(imp,loc, exp, imp_divided_imploc,exp_divided_exploc)
 
-  rownames(imp_loc_exp)=c("Import", "Local transmission", "Export", "Import / ( I + LT - E)", "Export / ( I + LT - E)")
+  rownames(imp_loc_exp)=c("Import", "Local transmission", "Export", "Local explained by import", "Exports per local case")
   imp_loc_exp
 
 }
