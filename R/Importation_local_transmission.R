@@ -338,7 +338,7 @@ import_export_local_transmission = function(tree,LineageHomology_replicates,star
         #   Export                                                                  ####
 
 
-        #Set up conditions for defining a export given TL results.
+        #Set up conditions for defining a export given TL results..
         condition1 = (tree$edge[,1] %in% group_nodes) #Parent node is in TL
         condition2 = (tree$edge[,2] %in% c(group_nodes,group_tip_nodes))==F #Child node is not in TL group nodes, Child node is not among TL taxa.
         exportation_edges = which(condition1 & condition2) # Potential bug here with the array notation
