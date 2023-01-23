@@ -143,7 +143,7 @@ Return
 
 In this example LineageHomology returned four 3 transmission lineages.
 The taxa names of the tips included in each lineage is printed above
-under \$Taxa_names. Lineages that only contain one tip are singletons.
+under “\$Taxa_names”. Lineages that only contain one tip are singletons.
 
 The size distributions can be visualised by, e.g. using a treemap plot:
 
@@ -154,8 +154,8 @@ LineageHomology::treemap_lineagehomology(Return)
 <img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
 
 The figure shows squares with areas representing the transmission
-lineages’ sizes. The text inside the squares gives the estimated time of
-the MRCA and the number of tips in the transmission lineages.
+lineages’ sizes. The text on the squares gives the estimated time of the
+MRCA and the number of tips in the transmission lineages.
 
 ## Tutorial
 
