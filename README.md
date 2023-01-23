@@ -3,32 +3,31 @@
 
 # LineageHomology
 
--   [Installation](#installation)
--   [Introduction](#introduction)
--   [Tutorial and gallery of plotting methods](#tutorial)
+- [Installation](#installation)
+- [Introduction](#introduction)
+- [Tutorial and gallery of plotting methods](#tutorial)
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-LineageHomology provides a set of functions that analyses the outputs
-from ancestral state reconstructions. LineageHomology takes the output
-of an ancestral state reconstruction method with included state
-probabilities at each node and defines transmission lineages (TLs) and
-singletons based on this. A TL is defined as a connected group of tips
-where state transitions between ancestral and descendant nodes have a
-probability lower than 50 percent. Singletons are defined as tips that
-are not connected to any other tips in this way. The method is analogous
-to that introduced by du Plessis et al. (2021) (DOI:
-10.1126/science.abf2946). LineageHomology also provides descriptions of
-the sizes of TLs, the number of singletons, functions to derive
-estimates of importation and local transmission based on this and other
-useful summaries. The package also includes a variety of functions to
-plot the results.
+LineageHomology is an R-package that offers a set of functions for
+analyzing the outputs of ancestral state reconstructions. The package
+defines transmission lineages (TLs) and singletons based on state
+probabilities at each node in the reconstruction. TLs are defined as
+connected groups of tips where state transitions between ancestral and
+descendant nodes have a probability lower than 50 percent, while
+singletons are tips not connected to any other tips in this way. The
+method used in LineageHomology is similar to that introduced by [du
+Plessis et
+al. (2021)](https://www.science.org/doi/10.1126/science.abf2946) (DOI:
+10.1126/science.abf2946). The package also provides functions to
+calculate the sizes of TLs, the number of singletons, estimates of
+importation and local transmission, and other useful summaries, as well
+as various plotting functions to visualize the results.
 
 ## Installation
 
-You can install the latest version of LineageHomology from this
-repository by using devtools:
+You can install the latest version of LineageHomology by using devtools:
 
 ``` r
 library(devtools)
@@ -37,11 +36,11 @@ devtools::install_github("magnusnosnes/LineageHomology")
 
 ## Introduction
 
-This introduction provides a simple example of applying ancestral state
-reconstruction to simulated geographical data for two locations and
-using LineageHomology to analyse the outputs. Here, LineageHomology
-provides descriptions of transmission lineages other plots the sizes and
-estimated time of the most recent common ancestor for each TL.
+This introduction provides a simple demonstration of how to apply
+LineageHomology to analyze outputs of an ancestral state reconstruction
+of simulated geographical data for two locations. We use LineageHomology
+to describe transmission lineages and plot the sizes and estimated time
+of the most recent common ancestor for each TL.
 
 First, we simulate data and estimate the ancestral geographical states:
 
@@ -74,28 +73,29 @@ tips = to.matrix(loc,seq=c("Norway", "RoW"))
 tiplabels(pie=tips, cex=0.7,piecol=c("Red","Blue"))
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" /> The
-tree shows the reconstructed states using the ace function in the ape
-package. Each node is coloured according to the probability of the
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+
+The tree shows the reconstructed states using the ace function in the
+ape package. Each node is coloured according to the probability of the
 location. Here red represents Norway, and blue represents the rest of
 the world (RoW).
 
-![LineageHomology_procedure](./Examples_and_plotting_methods/Fig4_local_imp.png)
-This figure shows how LineageHomology estimates transmission lineages,
-singletons, importation and local transmission events. A blue-shaded
-background indicates transmission lineages and covers the tips that are
-included in the group. The transmission lineages are defined based on a
-50 percent probability of the same state on every node in the TL. The
-red shaded background shows singletons, which are unconnected to any
-other tips based on the rule that defines TLs. The areas that describe
-TLs and singletons stretch back to the date that LineageHomology uses as
-the importation date, which is on the midpoint of the edge ancestral to
-the MRCA for the TLs, and on the midpoint on the ancestral edge leading
-to the first geographical transitions for singletons. The importation
-dates are also indicated by blue stippled lines, ending in blue dots on
-the time axis. Branching events are used as estimates of local
-transmission inside of transmission lineages. This is also indicated by
-the red stippled lines ending in red dots on the time axis.
+![LineageHomology_procedure](./Examples_and_plotting_methods/Fig4_local_imp.png)This
+figure shows how LineageHomology estimates transmission lineages,
+singletons, importation and local transmission events. The blue-shaded
+background represents transmission lineages and encompasses the tips
+that are included in the group. The transmission lineages are defined
+based on a 50 percent probability of the same state on every node within
+the TL. The red-shaded background denotes singletons, which are
+unconnected to any other tips as per the rule that defines TLs. The
+areas showing TLs and singletons extend back to the importation date,
+which is the midpoint of the edge ancestral to the most recent common
+ancestor (MRCA) for the TLs and the midpoint on the ancestral edge
+leading to the first geographical transitions for singletons.
+Importation dates are also indicated by blue stippled lines ending in
+blue dots on the time axis. Branching events are used as estimates of
+local transmission within transmission lineages, which is represented by
+red stippled lines ending in red dots on the time axis.
 
 Next we run lineageHomology on the output from ace according to the
 approach outlined above.
