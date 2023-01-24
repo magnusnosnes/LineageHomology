@@ -1,14 +1,9 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 # LineageHomology
 
 - [Installation](#installation)
 - [Introduction](#introduction)
 - [Tutorial and gallery of plotting methods](#tutorial)
-
-<!-- badges: start -->
-<!-- badges: end -->
 
 LineageHomology is an R-package that offers a set of functions for
 analyzing the outputs of ancestral state reconstructions. The package
@@ -73,15 +68,16 @@ tips = to.matrix(loc,seq=c("Norway", "RoW"))
 tiplabels(pie=tips, cex=0.7,piecol=c("Red","Blue"))
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" alt="Test" width="100%" />
 
 The tree shows the reconstructed states using the ace function in the
 ape package. Each node is coloured according as a piechart with the
 probability of the location (red vs blue). For this example red
 represents Norway, and blue represents the rest of the world (RoW).
 
-![LineageHomology_procedure](./Examples_and_plotting_methods/How_it_works.png)This
-figure shows how LineageHomology estimates transmission lineages,
+![LineageHomology_procedure](./Examples_and_plotting_methods/How_it_works.png)
+
+This figure shows how LineageHomology estimates transmission lineages,
 singletons, importation, exportation and local transmission events. The
 green-shaded background represents transmission lineages and encompasses
 the tips that are included in the group. The transmission lineages are
@@ -92,13 +88,11 @@ areas showing TLs and singletons extend back to the importation date,
 which is the midpoint of the edge ancestral to the most recent common
 ancestor (MRCA) for the TLs and the midpoint on the ancestral edge
 leading to the first geographical transitions for singletons. Exports
-are set to the times of the midpoint of the branches that leads to a
-different geographical location. Importation dates are also indicated by
-blue stippled lines ending in blue dots on the time axis. Branching
-events within TLs are used as estimates of local transmission. All types
-of events are projected down as black points to individual axes to show
-the events with respect to the focal location (red or blue / Norway or
-RoW).
+are set to the estimated time at the midpoint of the branch that leads
+to a different geographical location. Branching events within TLs are
+used as estimates of local transmission. All types of events are
+projected down as black points to individual axes to show the events
+with respect to the focal location (red or blue / Norway or RoW).
 
 Next we run LineageHomology on the output from ace according to the
 approach outlined above.
