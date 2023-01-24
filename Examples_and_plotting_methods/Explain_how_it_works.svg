@@ -42,9 +42,9 @@
      inkscape:window-height="1440"
      id="namedview1011"
      showgrid="false"
-     inkscape:zoom="1.0824912"
-     inkscape:cx="538.11061"
-     inkscape:cy="530.25835"
+     inkscape:zoom="2.1649824"
+     inkscape:cx="552.66038"
+     inkscape:cy="333.49001"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="0"
@@ -651,24 +651,6 @@
      clip-path="url(#clipPath3315)"
      transform="translate(0,-6)" />
   <line
-     x1="85.07"
-     y1="574.56"
-     x2="85.07"
-     y2="581.76001"
-     style="fill:#030101;fill-opacity:0.972549;stroke-width:1.5"
-     id="line929"
-     clip-path="url(#clipPath3309)"
-     transform="translate(0,-6)" />
-  <line
-     x1="233.24001"
-     y1="574.56"
-     x2="233.24001"
-     y2="581.76001"
-     style="fill:#030101;fill-opacity:0.972549;stroke-width:1.5"
-     id="line931"
-     clip-path="url(#clipPath3303)"
-     transform="translate(0,-6)" />
-  <line
      x1="677.76001"
      y1="574.56"
      x2="677.76001"
@@ -684,7 +666,7 @@
      style="font-size:16px;white-space:pre;shape-inside:url(#rect2736-3);display:inline;fill:#000000"><tspan
        x="139.49219"
        y="931.00158"
-       id="tspan26537">Imports (to red)</tspan></text>
+       id="tspan32444">Imports (to red)</tspan></text>
   <text
      xml:space="preserve"
      style="font-size:9px;fill:#000000;stroke-width:0.75"
@@ -890,7 +872,7 @@
      style="font-size:16px;white-space:pre;shape-inside:url(#rect2736);display:inline;fill:#000000"><tspan
        x="139.49219"
        y="931.00158"
-       id="tspan26539">Time
+       id="tspan32446">Time
 </tspan></text>
   <g
      id="g3212"
@@ -964,14 +946,14 @@
      style="font-size:16px;white-space:pre;shape-inside:url(#rect3188);display:inline;fill:#000000"><tspan
        x="139.49219"
        y="931.00158"
-       id="tspan26541">Exports (from blue)</tspan></text>
+       id="tspan32448">Exports (from blue)</tspan></text>
   <rect
-     style="opacity:0.2;fill:#ff0000;stroke:#ffcccc;stroke-width:0.198425;stroke-linecap:square;stroke-linejoin:round"
+     style="opacity:0.2;fill:#800080;fill-opacity:1;stroke:#ffcccc;stroke-width:0.198425;stroke-linecap:square;stroke-linejoin:round"
      id="rect1025"
-     width="199.21964"
-     height="39.843929"
+     width="199.2196"
+     height="34.301163"
      x="323.56018"
-     y="92.040359" />
+     y="97.58313" />
   <path
      style="fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:1.60157;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:9.60945, 9.60945;stroke-dashoffset:0.320315;stroke-opacity:0.333333"
      d="M 134.55472,343.93178 V 765.82167"
@@ -1014,11 +996,11 @@
      sodipodi:nodetypes="cc" />
   <path
      id="rect939"
-     style="opacity:0.2;fill:#3eb4ec;stroke:#ffcccc;stroke-width:0.198425;stroke-linecap:square;stroke-linejoin:round"
+     style="opacity:0.2;fill:#008000;stroke:#ffcccc;stroke-width:0.198425;stroke-linecap:square;stroke-linejoin:round;fill-opacity:1"
      d="M 127.08838,37.769531 V 77.73633 78.987307 H 112.6626 59.765625 v 43.278803 118.1587 H 112.6626 v -118.1587 h 14.42578 v 1.61719 37.54101 h 42.59179 33.66065 v 21.2959 h 44.65283 32.28808 112.66114 v -30.22705 l -135.33126,6e-5 3e-4,-28.16607 h -7.93222 V 123.8833 H 169.68017 V 122.26611 81.036622 78.987307 77.73633 H 286.59668 V 37.769531 H 169.68017 Z"
      sodipodi:nodetypes="cccccccccccccccccccccccccccccccc" />
   <rect
-     style="opacity:0.2;fill:#ff0000;stroke:#ffcccc;stroke-width:0.198425;stroke-linecap:square;stroke-linejoin:round"
+     style="opacity:0.2;fill:#800080;stroke:#ffcccc;stroke-width:0.198425;stroke-linecap:square;stroke-linejoin:round;fill-opacity:1"
      id="rect956"
      width="190.90254"
      height="32.059967"
@@ -1026,15 +1008,15 @@
      y="257.95276" />
   <path
      id="rect958"
-     style="opacity:0.2;fill:#ff0000;stroke:#ffcccc;stroke-width:0.198425;stroke-linecap:square;stroke-linejoin:round"
+     style="opacity:0.2;fill:#800080;stroke:#ffcccc;stroke-width:0.198425;stroke-linecap:square;stroke-linejoin:round;fill-opacity:1"
      d="m 346.34473,281.26904 v 36.43213 h 88.40771 v 24.28711 h 30.60352 118.52343 V 312.35742 H 465.35596 v -31.08838 z" />
   <path
      id="rect967"
-     style="opacity:0.2;fill:#3eb4ec;fill-opacity:1;stroke:#ffcccc;stroke-width:0.198425;stroke-linecap:square;stroke-linejoin:round"
+     style="opacity:0.2;fill:#008000;fill-opacity:1;stroke:#ffcccc;stroke-width:0.198425;stroke-linecap:square;stroke-linejoin:round"
      d="m 224.63671,204.70312 v 35.03467 H 165.5581 v 41.21777 38.46973 h -31.5996 v 48.08789 h 31.5996 v 85.87061 h 45.33985 53.58398 v 39.15673 h 111.28711 v -39.15673 -3.43506 h 165.55811 v -32.28662 h -165.55811 -37.0957 v 32.28662 3.43506 h -34.34766 v -45.33985 -9.61816 h 63.8877 v -36.40869 h -63.8877 -39.84375 v 36.40869 9.61816 H 210.89795 V 280.95556 h 53.58398 v -41.21777 h 140.14014 v -35.03467 z" />
   <path
      id="rect1005"
-     style="opacity:0.2;fill:#3eb4ec;fill-opacity:1;stroke:#ffcccc;stroke-width:0.198425;stroke-linecap:square;stroke-linejoin:round"
+     style="opacity:0.2;fill:#008000;fill-opacity:1;stroke:#ffcccc;stroke-width:0.198425;stroke-linecap:square;stroke-linejoin:round"
      d="m 486.3706,471.24463 v 26.10498 h -55.64355 v 32.28662 h 54.95654 v 21.98291 H 634.75488 V 525.51416 H 522.09229 V 500.78467 H 614.146 v -29.54004 h -92.05371 z" />
   <path
      style="fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:1.60157;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:9.60945, 9.60945;stroke-dashoffset:0.320315;stroke-opacity:0.333333"
@@ -1121,11 +1103,11 @@
      style="font-size:16px;white-space:pre;shape-inside:url(#rect2736-3-4);display:inline;fill:#000000"><tspan
        x="139.49219"
        y="931.00158"
-       id="tspan26543">Local transmission
+       id="tspan32450">Local transmission
 </tspan><tspan
        x="139.49219"
        y="951.00158"
-       id="tspan26545">(in red Tls)</tspan></text>
+       id="tspan32452">(in red Tls)</tspan></text>
   <circle
      style="opacity:0.9;fill:#000000;fill-opacity:0.733333;stroke:#2564d6;stroke-width:0.198425;stroke-linecap:square;stroke-linejoin:round;stroke-opacity:1"
      id="circle1052"
@@ -1191,7 +1173,7 @@
      style="font-size:16px;white-space:pre;shape-inside:url(#rect6029);display:inline;fill:#000000"><tspan
        x="139.49219"
        y="931.00158"
-       id="tspan26547">Exports (from red)</tspan></text>
+       id="tspan32454">Exports (from red)</tspan></text>
   <circle
      style="opacity:0.9;fill:#000000;fill-opacity:0.733333;stroke:#2564d6;stroke-width:0.198425;stroke-linecap:square;stroke-linejoin:round;stroke-opacity:1"
      id="circle6133"
@@ -1279,11 +1261,11 @@
      style="font-size:16px;white-space:pre;shape-inside:url(#rect6452);display:inline;fill:#000000"><tspan
        x="139.49219"
        y="931.00158"
-       id="tspan26549">Local transmission
+       id="tspan32456">Local transmission
 </tspan><tspan
        x="139.49219"
        y="951.00158"
-       id="tspan26551">(in blue Tls) 
+       id="tspan32458">(in blue Tls) 
 </tspan></text>
   <circle
      style="opacity:0.9;fill:#000000;fill-opacity:0.733333;stroke:#2564d6;stroke-width:0.198425;stroke-linecap:square;stroke-linejoin:round;stroke-opacity:1"
@@ -1355,15 +1337,6 @@
      clip-path="url(#clipPath3315)"
      transform="translate(0,27)" />
   <line
-     x1="85.07"
-     y1="574.56"
-     x2="85.07"
-     y2="581.76001"
-     style="fill:#030101;fill-opacity:0.972549;stroke-width:1.5"
-     id="line12304"
-     clip-path="url(#clipPath3309)"
-     transform="translate(0,27)" />
-  <line
      x1="677.76001"
      y1="574.56"
      x2="677.76001"
@@ -1379,7 +1352,7 @@
      style="font-size:16px;white-space:pre;shape-inside:url(#rect12326);display:inline;fill:#000000"><tspan
        x="139.49219"
        y="931.00158"
-       id="tspan26553">Imports (to blue)</tspan></text>
+       id="tspan32460">Imports (to blue)</tspan></text>
   <circle
      style="opacity:0.9;fill:#000000;fill-opacity:0.733333;stroke:#2564d6;stroke-width:0.198425;stroke-linecap:square;stroke-linejoin:round;stroke-opacity:1"
      id="circle12316"
