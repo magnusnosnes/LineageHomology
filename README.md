@@ -70,29 +70,30 @@ tiplabels(pie=tips, cex=0.7,piecol=c("Red","Blue"))
 
 <img src="man/figures/README-unnamed-chunk-6-1.png" alt="Test" width="100%" />
 
-The tree shows the reconstructed states using the ace function in the
-ape package. Each node is coloured according as a piechart with the
-probability of the location (red vs blue). For this example red
-represents Norway, and blue represents the rest of the world (RoW).
+**Figure 1:** The tree shows the reconstructed states using the ace
+function in the ape package. Each node is coloured according as a
+piechart with the probability of the location (red vs blue). For this
+example red represents Norway, and blue represents the rest of the world
+(RoW).
 
 ![LineageHomology_procedure](./Examples_and_plotting_methods/How_it_works.png)
 
-This figure shows how LineageHomology estimates transmission lineages,
-singletons, importation, exportation and local transmission events. The
-green-shaded background represents transmission lineages and encompasses
-the tips that are included in the group. The transmission lineages are
-defined based on a 50 percent probability of the same state on every
-node within the TL. The pink-shaded background denotes singletons, which
-are unconnected to any other tips as per the rule that defines TLs. The
-areas showing TLs and singletons extend back to the importation date,
-which is the midpoint of the edge ancestral to the most recent common
-ancestor (MRCA) for the TLs and the midpoint on the ancestral edge
-leading to the first geographical transitions for singletons. Exports
-are set to the estimated time at the midpoint of the branch that leads
-to a different geographical location. Branching events within TLs are
-used as estimates of local transmission. All types of events are
-projected down as black points to individual axes to show the events
-with respect to the focal location (red or blue / Norway or RoW).
+**Figure 2:** This figure shows how LineageHomology estimates
+transmission lineages, singletons, importation, exportation and local
+transmission events. The green-shaded background represents transmission
+lineages and encompasses the tips that are included in the group. The
+transmission lineages are defined based on a 50 percent probability of
+the same state on every node within the TL. The pink-shaded background
+denotes singletons, which are unconnected to any other tips as per the
+rule that defines TLs. The areas showing TLs and singletons extend back
+to the importation date, which is the midpoint of the edge ancestral to
+the most recent common ancestor (MRCA) for the TLs and the midpoint on
+the ancestral edge leading to the first geographical transitions for
+singletons. Exports are set to the estimated time at the midpoint of the
+branch that leads to a different geographical location. Branching events
+within TLs are used as estimates of local transmission. All types of
+events are projected down as black points to individual axes to show the
+events with respect to the focal location (red or blue / Norway or RoW).
 
 Next we run LineageHomology on the output from ace according to the
 approach outlined above.
@@ -150,9 +151,10 @@ LineageHomology::treemap_lineagehomology(Return)
 
 <img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
 
-The figure shows squares with areas representing the transmission
-lineages’ sizes. The text on the squares gives the estimated time of the
-MRCA and the number of tips in the transmission lineages.
+**Figure 3:** The figure shows squares with areas representing the
+transmission lineages’ sizes. The text on the squares gives the
+estimated time of the MRCA and the number of tips in the transmission
+lineages.
 
 ## Tutorial
 
