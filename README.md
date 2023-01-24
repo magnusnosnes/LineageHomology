@@ -81,21 +81,24 @@ probability of the location (red vs blue). For this example red
 represents Norway, and blue represents the rest of the world (RoW).
 
 ![LineageHomology_procedure](./Examples_and_plotting_methods/How_it_works.png)This
-figure shows how LineageHomology can be used to estimate transmission
-lineages, singletons, importation, exportation and local transmission
-events. The green-shaded background represents transmission lineages and
-encompasses the tips that are included in the group. The transmission
-lineages are defined based on a 50 percent probability of the same state
-on every node within the TL. The pink-shaded background denotes
-singletons, which are unconnected to any other tips as per the rule that
-defines TLs. The areas showing TLs and singletons extend back to the
-importation date, which is the midpoint of the edge ancestral to the
-most recent common ancestor (MRCA) for the TLs and the midpoint on the
-ancestral edge leading to the first geographical transitions for
-singletons. Importation dates are also indicated by blue stippled lines
-ending in blue dots on the time axis. Branching events are used as
-estimates of local transmission within transmission lineages, which is
-represented by red stippled lines ending in red dots on the time axis.
+figure shows how LineageHomology estimates transmission lineages,
+singletons, importation, exportation and local transmission events. The
+green-shaded background represents transmission lineages and encompasses
+the tips that are included in the group. The transmission lineages are
+defined based on a 50 percent probability of the same state on every
+node within the TL. The pink-shaded background denotes singletons, which
+are unconnected to any other tips as per the rule that defines TLs. The
+areas showing TLs and singletons extend back to the importation date,
+which is the midpoint of the edge ancestral to the most recent common
+ancestor (MRCA) for the TLs and the midpoint on the ancestral edge
+leading to the first geographical transitions for singletons. Exports
+are set to the times of the midpoint of the branches that leads to a
+different geographical location. Importation dates are also indicated by
+blue stippled lines ending in blue dots on the time axis. Branching
+events within TLs are used as estimates of local transmission. All types
+of events are projected down as black points to individual axes to show
+the events with respect to the focal location (red or blue / Norway or
+RoW).
 
 Next we run LineageHomology on the output from ace according to the
 approach outlined above.
