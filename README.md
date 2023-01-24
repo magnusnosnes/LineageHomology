@@ -76,9 +76,9 @@ tiplabels(pie=tips, cex=0.7,piecol=c("Red","Blue"))
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
 The tree shows the reconstructed states using the ace function in the
-ape package. Each node is coloured according to the probability of the
-location. Here red represents Norway, and blue represents the rest of
-the world (RoW).
+ape package. Each node is coloured according as a piechart with the
+probability of the location (red vs blue). For this example red
+represents Norway, and blue represents the rest of the world (RoW).
 
 ![LineageHomology_procedure](./Examples_and_plotting_methods/How_it_works.png)This
 figure shows how LineageHomology can be used to estimate transmission
