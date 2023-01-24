@@ -80,7 +80,7 @@ ape package. Each node is coloured according to the probability of the
 location. Here red represents Norway, and blue represents the rest of
 the world (RoW).
 
-![LineageHomology_procedure](./Examples_and_plotting_methods/Fig4_local_imp.png)This
+![LineageHomology_procedure](./Examples_and_plotting_methods/How_it_works.png)This
 figure shows how LineageHomology estimates transmission lineages,
 singletons, importation and local transmission events. The blue-shaded
 background represents transmission lineages and encompasses the tips
@@ -97,7 +97,7 @@ blue dots on the time axis. Branching events are used as estimates of
 local transmission within transmission lineages, which is represented by
 red stippled lines ending in red dots on the time axis.
 
-Next we run lineageHomology on the output from ace according to the
+Next we run LineageHomology on the output from ace according to the
 approach outlined above.
 
 ``` r
@@ -160,5 +160,5 @@ MRCA and the number of tips in the transmission lineages.
 ## Tutorial
 
 See the full tutorial below for a full introduction to the package and
-more methods for visualizing the results. [Tutorial and plotting
+more methods for visualizing the results: [Tutorial and plotting
 methods](https://github.com/magnusnosnes/LineageHomology/blob/master/Examples_and_plotting_methods/Simple_example/Basic_plotting.md)

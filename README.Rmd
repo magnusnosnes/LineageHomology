@@ -88,9 +88,9 @@ tiplabels(pie=tips, cex=0.7,piecol=c("Red","Blue"))
 
 The tree shows the reconstructed states using the ace function in the ape package. Each node is coloured according to the probability of the location. Here red represents Norway, and blue represents the rest of the world (RoW).
 
-![LineageHomology_procedure](./Examples_and_plotting_methods/Fig4_local_imp.png)This figure shows how LineageHomology estimates transmission lineages, singletons, importation and local transmission events. The blue-shaded background represents transmission lineages and encompasses the tips that are included in the group. The transmission lineages are defined based on a 50 percent probability of the same state on every node within the TL. The red-shaded background denotes singletons, which are unconnected to any other tips as per the rule that defines TLs. The areas showing TLs and singletons extend back to the importation date, which is the midpoint of the edge ancestral to the most recent common ancestor (MRCA) for the TLs and the midpoint on the ancestral edge leading to the first geographical transitions for singletons. Importation dates are also indicated by blue stippled lines ending in blue dots on the time axis. Branching events are used as estimates of local transmission within transmission lineages, which is represented by red stippled lines ending in red dots on the time axis.
+![LineageHomology_procedure](./Examples_and_plotting_methods/How_it_works.png)This figure shows how LineageHomology estimates transmission lineages, singletons, importation and local transmission events. The blue-shaded background represents transmission lineages and encompasses the tips that are included in the group. The transmission lineages are defined based on a 50 percent probability of the same state on every node within the TL. The red-shaded background denotes singletons, which are unconnected to any other tips as per the rule that defines TLs. The areas showing TLs and singletons extend back to the importation date, which is the midpoint of the edge ancestral to the most recent common ancestor (MRCA) for the TLs and the midpoint on the ancestral edge leading to the first geographical transitions for singletons. Importation dates are also indicated by blue stippled lines ending in blue dots on the time axis. Branching events are used as estimates of local transmission within transmission lineages, which is represented by red stippled lines ending in red dots on the time axis.
 
-Next we run lineageHomology on the output from ace according to the approach outlined above.
+Next we run LineageHomology on the output from ace according to the approach outlined above.
 
 ```{r,fig.width=10,fig.height=7}
 Return = LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
@@ -110,4 +110,4 @@ The figure shows squares with areas representing the transmission lineages' size
 
 ## Tutorial {#tutorial}
 
-See the full tutorial below for a full introduction to the package and more methods for visualizing the results. [Tutorial and plotting methods](https://github.com/magnusnosnes/LineageHomology/blob/master/Examples_and_plotting_methods/Simple_example/Basic_plotting.md)
+See the full tutorial below for a full introduction to the package and more methods for visualizing the results: [Tutorial and plotting methods](https://github.com/magnusnosnes/LineageHomology/blob/master/Examples_and_plotting_methods/Simple_example/Basic_plotting.md)
