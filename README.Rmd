@@ -113,6 +113,8 @@ To obtain estimates of import, export and local transmission we first redo trans
 Then we counts import, export and local transmission events in time intervals of sizes specified by using the time_interval_size argument. 
 
 ```{r}
+
+# Redo transmission lineage assignment based on the observed probability of the geographical state of each node in the phylogeny. 
 multi_counts = replicate(
   100,
   LineageHomology::LineageHomology_w_uncertainty_v2(
@@ -122,13 +124,23 @@ multi_counts = replicate(
     start_time = 2000)
   )
 
+# Calculate estimates of import, export, and local transmissions
 import_export_local_transmission_counts = import_export_local_transmission(
   tree_test,LineageHomology_replicates = multi_counts,
   start_time=2000,
   time_interval_size=0.5,
   focal_location = "Norway")
 
-plot_import_export_local_transmission(result_import_export_local_transmission = import_export_local_transmission_counts,time_interval_size = 0.5,start_time=2000,date_breaks = 1, main_title = "Imports, exports, and local transmission wrt. Norway (red nodes)", time_interval=c("2000-05-01", "2007-01-01") ,tree = tree_test, text_size = 10)
+# plot results with TL assignment uncertainty. 
+plot_import_export_local_transmission(
+  result_import_export_local_transmission = import_export_local_transmission_counts,
+  time_interval_size = 0.5,
+  start_time=2000,
+  date_breaks = 1, 
+  main_title = "Imports, exports, and local transmission wrt. Norway (red nodes)", 
+  time_interval=c("2000-05-01", "2007-01-01") ,
+  tree = tree_test, 
+  text_size = 10)
 
 ```
 
