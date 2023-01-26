@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 -   [Installation](#installation)
 -   [Introduction](#introduction)
 -   [Function reference](#function-reference)
--   [Tutorial and gallery of plotting methods](#tutorial)
+-   [Tutorial and plotting methods](#tutorial)
 
 LineageHomology is an R-package that offers a set of functions for analyzing the outputs of ancestral state reconstructions. The package defines transmission lineages (TLs) and singletons based on state probabilities at each node in the reconstruction. TLs are defined as connected groups of tips where state transitions between ancestral and descendant nodes have a probability lower than 50 percent, while singletons are tips not connected to any other tips in this way. The method used in LineageHomology is similar to that introduced by [du Plessis et al. (2021)](https://www.science.org/doi/10.1126/science.abf2946) (DOI: 10.1126/science.abf2946). The package also provides functions to calculate the sizes of TLs, the number of singletons, estimates of importation and local transmission, and other useful summaries, as well as various plotting functions to visualize the results.
 
@@ -94,8 +94,11 @@ tiplabels(pie=tips, cex=0.7,piecol=c("Red","Blue"))
 Next we run LineageHomology on the output from ace according to the approach outlined above.
 
 ```{r,fig.width=10,fig.height=7}
-Return = LineageHomology(tree_test, ace_nodes=fit1$lik.anc,
-                        ace_tips = to.matrix(loc, seq=c("Norway", "RoW")), start_time=2000)
+Return = LineageHomology(
+  tree_test,
+  ace_nodes=fit1$lik.anc,
+  ace_tips = to.matrix(loc, seq=c("Norway", "RoW")),
+  start_time=2000)
 Return
 ```
 
@@ -117,8 +120,8 @@ To obtain estimates of import, export and local transmission we first redo trans
 multi_counts = replicate(
   100,
   LineageHomology::LineageHomology_w_uncertainty_v2(
-    tree=tree_test,
-    ace_nodes=fit1$lik.anc,
+    tree= tree_test,
+    ace_nodes= fit1$lik.anc,
     ace_tips = to.matrix(loc, seq=c("Norway", "RoW")),
     start_time = 2000)
   )
@@ -127,18 +130,18 @@ multi_counts = replicate(
 import_export_local_transmission_counts = import_export_local_transmission(
   tree_test,
   LineageHomology_replicates = multi_counts,
-  start_time=2000,
-  time_interval_size=0.5,
+  start_time= 2000,
+  time_interval_size= 0.5,
   focal_location = "Norway")
 
 # plot results with TL assignment uncertainty. 
 plot_import_export_local_transmission(
   result_import_export_local_transmission = import_export_local_transmission_counts,
   time_interval_size = 0.5,
-  start_time=2000,
+  start_time= 2000,
   date_breaks = 1, 
   main_title = "Imports, exports, and local transmission wrt. Norway (red nodes)", 
-  time_interval=c("2000-05-01", "2007-01-01") ,
+  time_interval= c("2000-05-01", "2007-01-01") ,
   tree = tree_test, 
   text_size = 10)
 
