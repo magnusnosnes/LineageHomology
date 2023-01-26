@@ -54,8 +54,33 @@ lineage_info = function(Result_Lineage_homology, name_date) {
 #'
 #' @examples
 treemap_lineagehomology = function(Result_LineageHomology) {
+  Result_LineageHomology = reorder_LH(Result_LineageHomology) #Reorder results after increasing sizes.
   atreemap = data.frame(group=paste0("G:",1:length(Result_LineageHomology$Lineage_sizes)," S: ", Result_LineageHomology$Lineage_sizes, "\n TMRCA: ", round(Result_LineageHomology$`MRCA's`,2)),Value=Result_LineageHomology$Lineage_sizes)
   treemap::treemap(atreemap,index=("group"),vSize="Value", type="index", palette="Paired")
+}
+
+
+#' treemap_TLs
+#' @description
+#' treemap_TLs creates a treemap visualization of the Lineage Homology results, showing the group number, group size, and time-to-most-recent-common-ancestor (TMRCA) for each lineage.
+#' The treemap is color-coded based on the TMRCA values, with a user-specified range or calculated range from the data.
+#' @param Result_LineageHomology The output from LineageHomology.
+#' @param date_gradient A user-specified range for the TMRCA values to be plotted. If not provided, the range will be calculated from the data.
+#' @return A treemap visualization of the results in the TL assignment from LineageHomology, showing the group number, group size, and TMRCA for each lineage.
+#' @export
+#'
+#' @examples
+treemap_TLs = function(Result_LineageHomology,date_gradient=NULL) {
+  atreemap = data.frame(group=paste0("G:",1:length(Result_LineageHomology$Lineage_sizes)," S: ", Result_LineageHomology$Lineage_sizes, "\n TMRCA: ", round(Result_LineageHomology$`MRCA's`,2)),Value=Result_LineageHomology$Lineage_sizes,root=round(Result_LineageHomology$`MRCA's`,2))
+
+  # If the user did not provide a range for the dates, calculate it from the observed TLs
+  if(is.null(date_gradient)) {
+    daterange = quantile(atreemap$root,c(0.025, 0.5, 0.975))
+  }
+
+  treemap::treemap(atreemap,index=("group"),vSize="Value", vColor="root",
+                   type="value", palette=rev(RColorBrewer::brewer.pal(name = "RdYlBu",n=5)),
+                   mapping=daterange, range=daterange[c(1,3)])
 }
 
 

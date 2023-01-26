@@ -147,7 +147,7 @@ under “\$Taxa_names”. Lineages that only contain one tip are singletons.
 The size distributions can be visualised by, e.g. using a treemap plot:
 
 ``` r
-LineageHomology::treemap_lineagehomology(Return)
+LineageHomology::treemap_TLs(Return)
 ```
 
 <img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />

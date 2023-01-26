@@ -1,16 +1,6 @@
 library(ape)
 library(lubridate)
 
-
-#Pseudocode:
-#Fint the parent nodes of all tips.
-#For each tip; check for transition to its parent node
-#If transition, the algorithm has found a singleton.
-#If not, move on a branch up and check any new descendant emerging from the parent node.
-#If any descendant is found, this is no longer a singleton but represents a local transmission event.
-#If no descendants are found, this is just a singleton with a long branch.
-
-
 #   ____________________________________________________________________________
 #   Main functions                                                          ####
 
@@ -416,18 +406,17 @@ find_observed_TLs = function(tip_nodes, tip_states, node_draws, parent, child){
   #Pseudocode:
   #1. Define the current state, a nodeset, mrca_node, remaining_nodes, current_node_set, counter for indexes to fill.
   #2. while lenght(remaining_nodes)
+  #2. Check for parents and children not in the nodeset.
+  #3. Grow the nodeset if any of the possible new nodes matches the current state.
+  #4. Update mrca node if a new parent node is found.
+  #5. Check if nodeset includes any tip nodes, if so remove them from the remaining nodes.
+  #6.
+
   while(length(remaining_nodes)>0) {
-    #2. Check for parents and children not in the nodeset.
-    #3. Grow the nodeset if any of the possible new nodes matches the current state.
-    #4. Update mrca node if a new parent node is found.
-    #5. Check if nodeset includes any tip nodes, if so remove them from the remaining nodes.
   counter = counter+1
   }
 
-  #6.
-
-
-  return(list("tl_size"=lineage_size,
+    return(list("tl_size"=lineage_size,
               "tl_states"=lineage_state,
               "tl_tips" = lineage_tips,
               "tl_nodes"=lineage_nodes,
@@ -522,10 +511,12 @@ find_observed_TLs = function(tip_nodes, tip_states, node_draws, parent, child){
     lineage_tips[[counter]]=tip_label_list
     lineage_nodes[[counter]] = node_label_list
     mrca_list[counter] = current_node
-    counter = counter+1 #move one up to fill the next index on in the next loop iteration.
+
+    #move one up to fill the next index on in the next loop iteration.
+    counter = counter+1
+
     #debug: print(paste0("imports are:",importations))
     #debug: print(paste0("Local transmissions are:",local_transmissions))
-    #
 
   }
 

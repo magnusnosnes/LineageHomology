@@ -302,8 +302,10 @@ FitTransitionFreeX<-function(tree,x,model=NA, scaling_factor = 10){
 
 
   #fit<-nlminb(q.init,function(p) lik(makeQ(m,p,index.matrix),pi=pi),lower=c(rep(0,k),-1e50),upper=rep(1e50,k+1), control=list(iter.max=400, eval.max=400, trace=5))
+
   #Unconstrained fit
   fit_unconstrained<-optim(q.init,function(p) lik(makeQ(m,p,index.matrix),pi=pi),method="Nelder-Mead",control=list(trace=5, maxit=5000), hessian =T)
+
   #Constrained fit.
   fit_constrainedFreeX<-optim(q.init,function(p) lik(makeQfreeX(m,p,index.matrix,scaling_factor),pi=pi),method="Nelder-Mead",control=list(trace=5, maxit=5000), hessian =T)
   fit_constrainedFreeX_2<-optim(q.init,function(p) lik(makeQfreeX(m,p,index.matrix,scaling_factor),pi=pi),method="BFGS", control=list(trace=5, maxit=5000), hessian =T)
