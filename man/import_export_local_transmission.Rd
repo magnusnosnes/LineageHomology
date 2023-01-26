@@ -21,8 +21,7 @@ import_export_local_transmission(
 The function returns matrices with counts of local transmission ("LC") and importation events ("Import") on the time intervals, where each row contains the results from one replicate. The function also returns the times of the midpoints of the time intervals ("week_time")
 }
 \description{
-import_export_local_transmission takes the output of LineageHomology_w_uncertainty_v2 and produces estimates of
-the number of importation, exportation and local transmission events.
+import_export_local_transmission takes the output of LineageHomology_w_uncertainty_v2 and produces estimates of the number of importation, exportation and local transmission events. The results are aggregated in time intervals specified by the user (the default is 1 week intervals).
 }
 \details{
 Singletons are translated directly to importation events.

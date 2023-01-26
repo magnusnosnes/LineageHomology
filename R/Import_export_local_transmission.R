@@ -1,7 +1,6 @@
 #' import_export_local_transmission
 #' @description
-#' import_export_local_transmission takes the output of LineageHomology_w_uncertainty_v2 and produces estimates of
-#' the number of importation, exportation and local transmission events.
+#' import_export_local_transmission takes the output of LineageHomology_w_uncertainty_v2 and produces estimates of the number of importation, exportation and local transmission events. The results are aggregated in time intervals specified by the user (the default is 1 week intervals).
 #' @param tree
 #' @param LineageHomology_replicates
 #' @param start_time The numeric date of the root of the tree.
