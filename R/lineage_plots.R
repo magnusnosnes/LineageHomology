@@ -4,14 +4,14 @@ library(forcats)
 library(scales)
 
 #' lineage_info
-#' @description
-#'  lineage_info formats the outputs from LineageHomology to be plotted easily.
-#'  ridgeplot_lineagedensities and lineage_growth_cumulative both require this function to process the results from Lineagehomology first.
-#'  See the full tutorial at \url{https://github.com/magnusnosnes/LineageHomology/blob/master/Examples_and_plotting_methods/Simple_example/Basic_plotting.md}
-#' @param Result_Lineage_homology The output from LineageHomology.
-#' @param name_date #Data frame with taxa names in one column and numeric dates of sampling in another. The column names should be c("name", "date")
 #'
-#' @return
+#' @description
+#' The function takes in the output from the LineageHomology algorithm and a data frame with taxa names and numeric dates of sampling. It formats the output to be easily plotted by other functions, such as ridgeplot_lineagedensities and lineage_growth_cumulative. See the full tutorial at \url{https://github.com/magnusnosnes/LineageHomology/blob/master/Examples_and_plotting_methods/Simple_example/Basic_plotting.md}
+#'
+#' @param Result_Lineage_homology The output from LineageHomology. This should be the object returned from running the LineageHomology algorithm.
+#' @param name_date A data frame with taxa names in one column and numeric dates of sampling in another. The column names should be c("name", "date"). This data frame is used to match the taxa names in the output from LineageHomology with the dates of sampling.
+#'
+#' @return A data frame with columns "dates", "group_no", "group_size", "range_group", and "lineage_state". These columns are used to plot the output from LineageHomology.
 #' @export
 #'
 #' @examples
@@ -124,16 +124,15 @@ ridgeplot_lineagedensities = function(Result_lineage_info, datelims,groups_large
 
 
 #' Lineage growth cumulative
-#' @description
-#'lineage_growth_cumulative plots the cumulative number of observed tips that belong to each transmission lineage (TL).
-#'  Each line thus corresponds to a different TL,
-#'  and the function can be used to visualize the difference in growth rates and size reached over time.
-#'  See the full tutorial at \url{https://github.com/magnusnosnes/LineageHomology/blob/master/Examples_and_plotting_methods/Simple_example/Basic_plotting.md}
-#' @param Result_lineage_info The output from the function lineage_info. Typical workflows run the functions in the order LineageHomology -> lineage_info -> lineage_growth_cumulative.
-#' @param datelims Limits of the dates in format c("yyyy-mm-dd","yyyy-mm-dd", ""). The last argument can be e.g. "1 week"/"1 year"/"1 month".
-#' @param color_by_state Color by the state of the TL.
 #'
-#' @return
+#' @description
+#' The lineage_growth_cumulative function takes the input from the lineage_info function and plots the cumulative number of observed tips that belong to each transmission lineage (TL). Each line corresponds to a different TL and the function can be used to visualize the difference in growth rates and size reached over time. See the full tutorial at \url{https://github.com/magnusnosnes/LineageHomology/blob/master/Examples_and_plotting_methods/Simple_example/Basic_plotting.md}
+#'
+#' @param Result_lineage_info The output from the lineage_info function. A typical workflow would run the functions in the order LineageHomology -> lineage_info -> lineage_growth_cumulative.
+#' @param datelims Limits of the dates in format c("yyyy-mm-dd","yyyy-mm-dd", ""). The last argument can be e.g. "1 week"/"1 year"/"1 month".
+#' @param color_by_state A logical value indicating whether to color the lines by the state of the TL.
+#'
+#' @return A plot showing the cumulative number of observed tips that belong to each transmission lineage.
 #' @export
 #'
 #' @examples

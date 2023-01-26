@@ -288,20 +288,19 @@ Summarize_import_export_local_transmission = function(result_import_export_local
 
 
 #' plot_import_export_local_transmission
-#' @description
-#' plot_importation_local_transmission plots the estimates of importation and local
-#' transmission events that are obtained from running the import_local_transmission function.
-#' @param tree tree for which the geographical estimation has been done.
-#' @param result_import_export_local_transmission results from running import_local_transmission
-#' @param time_interval_size size of the time intervals used in import_local_transmission
-#' @param start_time date of the root of the phylogeny
-#' @param date_breaks The interval between dates plotted on the x-axis. Takes arguments such as "1 week", "2 months","1 year" etc..
-#' @param importation_or_local
-#' Whether to plot importation, local transmission or both. The variable takes the arguments: "importation","local" or "both".
-#' For plotting both the function requires the grid r-package.
 #'
-#' @return
-
+#' @description This function plots the estimates of import, export and local transmission events that are obtained from running the import_export_local_transmission function. It takes the tree for which the geographical estimation has been done, the results from running import_local_transmission, the size of the time intervals used in import_local_transmission, the date of the root of the phylogeny, and the interval between dates plotted on the x-axis as input arguments.
+#'
+#' @param tree A tree object for which the geographical estimation has been done.
+#' @param result_import_export_local_transmission A list object containing the results from running the import_local_transmission function.
+#' @param time_interval_size A numeric value representing the size of the time intervals used in import_local_transmission.
+#' @param start_time A date object representing the root of the phylogeny.
+#' @param date_breaks A string representing the interval between dates plotted on the x-axis. Acceptable arguments include "1 week", "2 months","1 year" etc.
+#' @param importation_or_local A string argument that specifies whether to plot importation, local transmission or both. Acceptable arguments are: "importation","local" or "both".
+#' Note: For plotting both importation and local transmission, the grid r-package is required.
+#'
+#' @return This function returns a plot of importation and/or local transmission events over time.
+#'
 #' @export
 #'
 #' @examples
@@ -310,12 +309,13 @@ plot_import_export_local_transmission = function(tree,
                                                  time_interval_size=1/52,
                                                  start_time,date_breaks=2,
                                                  time_interval=c("2000-05-01","2016-05-01"),
-                                                 main_title = "") {
+                                                 main_title = "",
+                                                 text_size=10) {
 
   #   ____________________________________________________________________________
   #   Debug                                                                   ####
-
-  #result_import_export_local_transmission = repli_cats;tree = tree_test; start_time = 2000; date_breaks=1;time_interval=c("2000-01-01","2007-01-01")
+  #result_import_export_local_transmission = import_export_local_transmission_counts;time_interval_size = 0.5;start_time=2000;date_breaks = 1; main_title = "Imports / exports / LocalTransmission wrt. Norway"; time_interval=c("2000-05-01", "2007-01-01") ;tree = tree_test
+  #result_import_export_local_transmission = repli_cats; tree = tree_test; start_time = 2000; date_breaks=1;time_interval=c("2000-01-01","2007-01-01")
 
   #   ____________________________________________________________________________
   #   End debug                                                               ####
@@ -337,7 +337,7 @@ plot_import_export_local_transmission = function(tree,
   library(ggplot2)
   library(scales)
   library(grid) #Requires the grid package for plotting
-  g1_1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Blue")+theme_minimal(base_size=20)+ggtitle(main_title)+
+  g1_1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Blue")+theme_minimal(base_size=text_size)+ggtitle(main_title)+
     theme(axis.title.x = element_blank(), axis.text.x = element_blank())+
     geom_ribbon(aes(ymin=i2.5, ymax=i97.5,alpha=0.2), fill="blue")+
     scale_x_continuous(breaks=seq(decimal_date(as.Date(time_interval))[1], decimal_date(as.Date(time_interval))[2], date_breaks), expand=c(0,0))+
@@ -345,14 +345,14 @@ plot_import_export_local_transmission = function(tree,
     theme(legend.position = "none")
   #g1_1
 
-  g2_2 = ggplot(dat, aes(x=dates,y=lc50))+geom_line(col="red")+theme_minimal(base_size=20)+
+  g2_2 = ggplot(dat, aes(x=dates,y=lc50))+geom_line(col="red")+theme_minimal(base_size=text_size)+
     theme(axis.title.x = element_blank(), axis.text.x = element_blank())+
     geom_ribbon(aes(ymin=lc2.5, ymax=lc97.5,alpha=0.2), fill="red")+
     scale_x_continuous(breaks=seq(decimal_date(as.Date(time_interval))[1], decimal_date(as.Date(time_interval))[2], date_breaks), expand=c(0,0))+
     ylab("Local transmissions")+
     theme(legend.position = "none")
 
-  g3_3 = ggplot(dat, aes(x=dates,y=ex50))+geom_line(col="green")+theme_minimal(base_size=20)+
+  g3_3 = ggplot(dat, aes(x=dates,y=ex50))+geom_line(col="green")+theme_minimal(base_size=text_size)+
     theme(axis.title.x = element_blank())+
     geom_ribbon(aes(ymin=ex2.5, ymax=ex97.5,alpha=0.2), fill="darkgreen")+
     scale_x_continuous(breaks=seq(decimal_date(as.Date(time_interval))[1], decimal_date(as.Date(time_interval))[2], date_breaks), expand=c(0,0))+

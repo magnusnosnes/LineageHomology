@@ -7,15 +7,13 @@
 lineage_info(Result_Lineage_homology, name_date)
 }
 \arguments{
-\item{Result_Lineage_homology}{The output from LineageHomology.}
+\item{Result_Lineage_homology}{The output from LineageHomology. This should be the object returned from running the LineageHomology algorithm.}
 
-\item{name_date}{#Data frame with taxa names in one column and numeric dates of sampling in another. The column names should be c("name", "date")}
+\item{name_date}{A data frame with taxa names in one column and numeric dates of sampling in another. The column names should be c("name", "date"). This data frame is used to match the taxa names in the output from LineageHomology with the dates of sampling.}
 }
 \value{
-
+A data frame with columns "dates", "group_no", "group_size", "range_group", and "lineage_state". These columns are used to plot the output from LineageHomology.
 }
 \description{
-lineage_info formats the outputs from LineageHomology to be plotted easily.
- ridgeplot_lineagedensities and lineage_growth_cumulative both require this function to process the results from Lineagehomology first.
- See the full tutorial at \url{https://github.com/magnusnosnes/LineageHomology/blob/master/Examples_and_plotting_methods/Simple_example/Basic_plotting.md}
+The function takes in the output from the LineageHomology algorithm and a data frame with taxa names and numeric dates of sampling. It formats the output to be easily plotted by other functions, such as ridgeplot_lineagedensities and lineage_growth_cumulative. See the full tutorial at \url{https://github.com/magnusnosnes/LineageHomology/blob/master/Examples_and_plotting_methods/Simple_example/Basic_plotting.md}
 }

@@ -11,27 +11,27 @@ plot_import_export_local_transmission(
   start_time,
   date_breaks = 2,
   time_interval = c("2000-05-01", "2016-05-01"),
-  main_title = ""
+  main_title = "",
+  text_size = 10
 )
 }
 \arguments{
-\item{tree}{tree for which the geographical estimation has been done.}
+\item{tree}{A tree object for which the geographical estimation has been done.}
 
-\item{result_import_export_local_transmission}{results from running import_local_transmission}
+\item{result_import_export_local_transmission}{A list object containing the results from running the import_local_transmission function.}
 
-\item{time_interval_size}{size of the time intervals used in import_local_transmission}
+\item{time_interval_size}{A numeric value representing the size of the time intervals used in import_local_transmission.}
 
-\item{start_time}{date of the root of the phylogeny}
+\item{start_time}{A date object representing the root of the phylogeny.}
 
-\item{date_breaks}{The interval between dates plotted on the x-axis. Takes arguments such as "1 week", "2 months","1 year" etc..}
+\item{date_breaks}{A string representing the interval between dates plotted on the x-axis. Acceptable arguments include "1 week", "2 months","1 year" etc.}
 
-\item{importation_or_local}{Whether to plot importation, local transmission or both. The variable takes the arguments: "importation","local" or "both".
-For plotting both the function requires the grid r-package.}
+\item{importation_or_local}{A string argument that specifies whether to plot importation, local transmission or both. Acceptable arguments are: "importation","local" or "both".
+Note: For plotting both importation and local transmission, the grid r-package is required.}
 }
 \value{
-
+This function returns a plot of importation and/or local transmission events over time.
 }
 \description{
-plot_importation_local_transmission plots the estimates of importation and local
-transmission events that are obtained from running the import_local_transmission function.
+This function plots the estimates of import, export and local transmission events that are obtained from running the import_export_local_transmission function. It takes the tree for which the geographical estimation has been done, the results from running import_local_transmission, the size of the time intervals used in import_local_transmission, the date of the root of the phylogeny, and the interval between dates plotted on the x-axis as input arguments.
 }

@@ -11,18 +11,15 @@ lineage_growth_cumulative(
 )
 }
 \arguments{
-\item{Result_lineage_info}{The output from the function lineage_info. Typical workflows run the functions in the order LineageHomology -> lineage_info -> lineage_growth_cumulative.}
+\item{Result_lineage_info}{The output from the lineage_info function. A typical workflow would run the functions in the order LineageHomology -> lineage_info -> lineage_growth_cumulative.}
 
 \item{datelims}{Limits of the dates in format c("yyyy-mm-dd","yyyy-mm-dd", ""). The last argument can be e.g. "1 week"/"1 year"/"1 month".}
 
-\item{color_by_state}{Color by the state of the TL.}
+\item{color_by_state}{A logical value indicating whether to color the lines by the state of the TL.}
 }
 \value{
-
+A plot showing the cumulative number of observed tips that belong to each transmission lineage.
 }
 \description{
-lineage_growth_cumulative plots the cumulative number of observed tips that belong to each transmission lineage (TL).
- Each line thus corresponds to a different TL,
- and the function can be used to visualize the difference in growth rates and size reached over time.
- See the full tutorial at \url{https://github.com/magnusnosnes/LineageHomology/blob/master/Examples_and_plotting_methods/Simple_example/Basic_plotting.md}
+The lineage_growth_cumulative function takes the input from the lineage_info function and plots the cumulative number of observed tips that belong to each transmission lineage (TL). Each line corresponds to a different TL and the function can be used to visualize the difference in growth rates and size reached over time. See the full tutorial at \url{https://github.com/magnusnosnes/LineageHomology/blob/master/Examples_and_plotting_methods/Simple_example/Basic_plotting.md}
 }
