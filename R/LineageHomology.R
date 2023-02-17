@@ -1170,7 +1170,7 @@ LineageHomology_v2 = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=N
 
 
   return(list("Lineage_sizes" = lineage_size,
-              "Import_Export_LocalTransmission" = c(importations, local_transmissions, export_list$Exports),
+              "Import_Export_LocalTransmission" = c("Imports"=importations, "Exports"=export_list$Exports, "LocalTransmission"=local_transmissions),
               "Import_times" = halfedge_over_mrca,
               "Exports_from_TL" = export_list$Exports_in_TL,
               "Exports_times_from_TL" = export_list$Export_times_from_TL,
