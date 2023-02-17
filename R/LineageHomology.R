@@ -1091,10 +1091,6 @@ LineageHomology_v2 = function(tree,ace_nodes,ace_tips, give_tips=NA,start_time=N
       tip_search_subspace = descendants(tree, current_node)
       subspace=tip_search_subspace[tip_search_subspace%in%tip_nodes] #Find all from the set that can be included.
 
-      ####  Must add one section for the nodepath we just went through sampling up to the ancestor.###
-      # Nodepath from current_node to tip node - all the internal will be the same state since we were allowed to move.
-      # Add a starting node in the script, then find the nodepath to this one. Setup a list with these nodes, and replace the
-      # whichmax nodes - soon to be sampled nodes, with these.
 
       if(length(subspace)!=0) { #Check if there are any descendant tips that haven´t been removed from the search space yet.
         for(i in 1:length(subspace)) { #Check for transitions on nodepath to each tip this
